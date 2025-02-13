@@ -1,0 +1,127 @@
+.course-card {
+    display: flex;
+    flex-direction: column;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    background: #fff;
+    padding: 16px;
+    max-width: 280px;
+    min-height: 400px; /* กำหนดความสูงขั้นต่ำ */
+    text-align: center;
+}
+
+.course-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+}
+
+.course-image {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.course-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.course-overlay {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+}
+
+.favorite-btn, .cart-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    padding: 6px;
+    border-radius: 50%;
+    transition: all 0.2s ease-in-out;
+}
+
+.favorite-btn .heart-icon {
+    color: #bbb;
+    transition: color 0.2s ease;
+}
+
+.favorite-btn.active .heart-icon {
+    color: #ff4757;
+}
+
+.cart-btn .cart-icon {
+    color: #bbb;
+    transition: color 0.2s ease;
+}
+
+.cart-btn.in-cart .cart-icon {
+    color: #2ecc71;
+}
+
+.course-category-badge {
+    display: inline-block;
+    padding: 6px 12px;
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 6px;
+    color: white;
+    margin-bottom: 8px;
+}
+
+.course-details {
+    flex-grow: 1; /* ดันปุ่มลงล่าง */
+    padding: 10px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.course-details h3 {
+    font-size: 17px;
+    font-weight: 600;
+    color: #333;
+    margin: 6px 0;
+}
+
+.course-description {
+    font-size: 13px;
+    color: #666;
+    line-height: 1.4;
+}
+
+.course-price {
+    font-size: 15px;
+    font-weight: 600;
+    color: #222;
+    margin-top: auto; /* ทำให้ราคาอยู่บนปุ่มเสมอ */
+}
+
+.course-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.course-learn-more-btn {
+    flex: 1;
+    padding: 8px 14px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s ease-in-out;
+    background-color: hsl(207, 5%, 54%);
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.course-learn-more-btn:hover {
+    background-color: hsl(207, 5%, 44%);
+}

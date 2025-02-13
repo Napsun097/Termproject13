@@ -1,7 +1,7 @@
 
 
 function MockExam(){
-    return (
+    return(
         <div>
             <h1>MockExam</h1>
         </div>

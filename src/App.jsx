@@ -1,41 +1,29 @@
-
-import './App.css'
-import Header from './Header/header'
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Home from './Home/home';
-import Course from './Components/Course/course';
-import Tgat from './Components/Course/tgat';
-import Tpat from './Components/Course/tpat';
-import Alevel from './Components/Course/alevel';
-import MockExam from './Components/Course/mockexam';
+import './style/App.css';
+import Navbar from './Components/Navbar';
+import { Route, Routes } from 'react-router-dom';
+import Home from './pages/Home';
+import Tgat from './pages/Tgat';
+import Tpat from './pages/Tpat';
+import Alevel from './pages/Alevel';
+import MockExam from './pages/MockExam';
+import Footer from './Components/Footer';
 
 function App() {
-
   return (
-    
-      <Router>
-        <Header />
+    <div>
+      <Navbar />
+      <main className="main-content">
         <Routes>
-          <Route path='/' element={<Home/>} />
+          <Route path="/" element={<Home />} />
+          <Route path="/tgat" element={<Tgat />} />
+          <Route path="/tpat" element={<Tpat />} />
+          <Route path="/a-level" element={<Alevel />} />
+          <Route path="/mock-exam" element={<MockExam />} />
         </Routes>
-        <Routes>
-          <Route path='/all-course' element={<Course/>} />
-        </Routes>
-        <Routes>
-          <Route path='/tgat' element={<Tgat/>} />
-        </Routes>
-        <Routes>
-          <Route path='/tpat' element={<Tpat/>} />
-        </Routes>
-        <Routes>
-          <Route path='/a-level' element={<Alevel/>} />
-        </Routes>
-        <Routes>
-          <Route path='/mock-exam' element={<MockExam />} />
-        </Routes>
-      </Router>
-    
-  )
+      </main>
+      <Footer />
+    </div>
+  );
 }
 
-export default App
+export default App;
