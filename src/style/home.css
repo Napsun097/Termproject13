@@ -1,22 +1,44 @@
+/* รีเซ็ตค่าพื้นฐาน */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ทำให้ body และ html เต็มจอ */
+body, html {
+  height: 100%;
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+}
+
+/* ตั้งค่าหน้าเว็บให้ขยายเต็ม */
 .home-page {
   text-align: center;
   padding: 20px;
+  min-height: 100vh; /* ทำให้เต็มความสูงของ viewport */
+  display: flex;
+  flex-direction: column;
 }
 
+/* สไตล์หัวข้อ */
 h1 {
   font-size: 32px;
   color: #333;
 }
 
+/* สไตล์ข้อความ */
 p {
   font-size: 18px;
   color: #666;
 }
 
-/* แสดง CourseCard เป็น Grid */
-  .course-list {
+/* ปรับแต่ง .course-list ให้เต็มหน้า */
+.course-list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(600px, 1fr)); /* ปรับ minmax ให้เริ่มที่ 600px */
     gap: 20px;
     padding: 20px;
-  }
+}
+
+
