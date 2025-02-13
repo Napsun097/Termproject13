@@ -1,7 +1,4 @@
-############################
-# OS X
-############################
-
+# OS X, Linux, Windows system files
 .DS_Store
 .AppleDouble
 .LSOverride
@@ -9,123 +6,44 @@ Icon
 .Spotlight-V100
 .Trashes
 ._*
-
-
-############################
-# Linux
-############################
-
 *~
-
-
-############################
-# Windows
-############################
-
 Thumbs.db
 ehthumbs.db
 Desktop.ini
 $RECYCLE.BIN/
-*.cab
-*.msi
-*.msm
-*.msp
 
+# Node.js dependencies
+node_modules/
+yarn.lock
+package-lock.json
 
-############################
-# Packages
-############################
+# Strapi build & cache files
+.cache/
+build/
+dist/
+.strapi/
+exports/
+.strapi-updater.json
+.strapi-cloud.json
 
-*.7z
-*.csv
-*.dat
-*.dmg
-*.gz
-*.iso
-*.jar
-*.rar
-*.tar
-*.zip
-*.com
-*.class
-*.dll
-*.exe
-*.o
-*.seed
-*.so
-*.swo
-*.swp
-*.swn
-*.swm
-*.out
+# Logs and temporary files
+logs/
+*.log
+*.tmp
+pids/
 *.pid
 
-
-############################
-# Logs and databases
-############################
-
-.tmp
-*.log
-*.sql
-*.sqlite
-*.sqlite3
-
-
-############################
-# Misc.
-############################
-
-*#
-ssl
-.idea
-nbproject
+# Public uploads (แต่เก็บ .gitkeep ไว้)
 public/uploads/*
 !public/uploads/.gitkeep
+
+# Environment variables
+.env
+
+# Tests & coverage
+coverage/
 .tsbuildinfo
 .eslintcache
 
-############################
-# Node.js
-############################
-
-lib-cov
-lcov.info
-pids
-logs
-results
-node_modules
-.node_history
-
-############################
-# Package managers
-############################
-
-.yarn/*
-!.yarn/cache
-!.yarn/unplugged
-!.yarn/patches
-!.yarn/releases
-!.yarn/sdks
-!.yarn/versions
-.pnp.*
-yarn-error.log
-
-############################
-# Tests
-############################
-
-coverage
-
-############################
-# Strapi
-############################
-
-
-license.txt
-exports
-.strapi
-dist
-build
-.strapi-updater.json
-.strapi-cloud.json
+# ✅ อนุญาตให้แชร์ไฟล์ Database SQLite ของ Strapi
+!.tmp/data.db
