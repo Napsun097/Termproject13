@@ -33,9 +33,11 @@ logs/
 pids/
 *.pid
 
-# Public uploads (แต่เก็บ .gitkeep ไว้)
-public/uploads/*
-!public/uploads/.gitkeep
+# อนุญาตให้ Push รูปภาพใน Strapi
+public/uploads/
+!public/uploads/*
+!public/uploads/**/*
+
 
 # Environment variables
 .env
