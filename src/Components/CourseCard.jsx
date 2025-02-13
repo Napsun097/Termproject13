@@ -6,7 +6,6 @@ function CourseCard({ course }) {
     const [isFavorite, setIsFavorite] = useState(false);
     const [isInCart, setIsInCart] = useState(false);
 
-    // ตรวจสอบค่า Favorite และ Cart จาก localStorage
     useEffect(() => {
         const savedFavorite = localStorage.getItem(`favorite-${course.id}`);
         const savedCart = localStorage.getItem(`cart-${course.id}`);
@@ -15,31 +14,36 @@ function CourseCard({ course }) {
         if (savedCart === "true") setIsInCart(true);
     }, [course.id]);
 
-    // ฟังก์ชันเมื่อคลิก Favorite
     function onFavoriteClick() {
         setIsFavorite(!isFavorite);
         localStorage.setItem(`favorite-${course.id}`, !isFavorite);
     }
 
-    // ฟังก์ชันเมื่อคลิกเพิ่มลงตะกร้า
     function onCartClick() {
         setIsInCart(!isInCart);
         localStorage.setItem(`cart-${course.id}`, !isInCart);
     }
 
-    // สีของหมวดหมู่คอร์ส
     const categoryColors = {
-        "tgat": "#FF5733",  // สีส้ม
-        "tpat": "#3498DB",  // สีน้ำเงิน
-        "a-level": "#2ECC71" // สีเขียว
+        "tgat": "#FF5733",
+        "tpat": "#3498DB",
+        "a-level": "#2ECC71"
     };
+
+    // ตรวจสอบว่ามีค่า `image` หรือไม่ก่อนแสดงผล
+    const imageUrl = course.image && course.image.length > 0
+        ? `http://localhost:1337${course.image[0].formats.large.url}` 
+        : null;
 
     return (
         <div className="course-card">
-            {/* แสดงรูปภาพคอร์ส */}
             <div className="course-image">
-                <img src={course.image} alt={course.title} />
-                {/* ปุ่ม Favorite */}
+                {/* ตรวจสอบค่า imageUrl ว่ามีหรือไม่ก่อนแสดง */}
+                {imageUrl ? (
+                    <img src={imageUrl} alt={course.title} />
+                ) : (
+                    <p>No Image Available</p>
+                )}
                 <div className="course-overlay">
                     <button
                         className={`favorite-btn ${isFavorite ? "active" : ""}`}
@@ -50,28 +54,22 @@ function CourseCard({ course }) {
                 </div>
             </div>
 
-            {/* แสดงรายละเอียดคอร์ส */}
             <div className="course-details">
-                {/* แสดงหมวดหมู่ */}
-                <span 
-                    className="course-category-badge" 
+                <span
+                    className="course-category-badge"
                     style={{ backgroundColor: categoryColors[course.category] }}
                 >
                     {course.category.toUpperCase()}
                 </span>
-                {/* แสดงชื่อคอร์ส */}
-                <h3>{course.title}</h3>
-                {/* แสดงคำอธิบาย */}
-                <p className="course-description">{course.description}</p>
-                
-                {/* แสดงราคา */}
-                <p className="course-price">ราคา: {course.price} บาท</p>
+                <h3 className="course-title">{course.title}</h3>
+                <p className="course-description">{course.shortDescription}</p>
+                <p className="course-hours"> ชั่วโมงเรียน:{course.courseHours} ชั่วโมง</p>
+                <p className="course-price"> ราคา: {course.price} บาท</p>
 
-                {/* ปุ่มดูรายละเอียด และ เพิ่มลงตะกร้า */}
                 <div className="course-actions">
-                    <button className="course-learn-more-btn">ดูรายละเอียด</button>
-                    <button 
-                        className={`cart-btn ${isInCart ? "in-cart" : ""}`} 
+                    <button className="course-learn-more-btn">รายละเอียด</button>
+                    <button
+                        className={`cart-btn ${isInCart ? "in-cart" : ""}`}
                         onClick={onCartClick}
                     >
                         {isInCart ? <FaShoppingCart className="cart-icon" /> : <FaCartPlus className="cart-icon" />}

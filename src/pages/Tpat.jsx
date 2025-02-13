@@ -1,21 +1,63 @@
-import React from "react";
-import CourseCard from "../Components/CourseCard"; 
-import { courses } from "../Components/AllCourse";
+import React, { useState, useEffect } from "react";
+import CourseCard from "../Components/CourseCard";
+import "../style/tpat.css";
+import { fetchCoursesByCategory } from "../api/api"; 
 
 function Tpat() {
-    // กรองคอร์สที่มี category เป็น "tpat"
-    const tpatCourses = courses.filter(course => course.category === "tpat");
+  const [courses, setCourses] = useState([]); // State สำหรับเก็บข้อมูลคอร์ส
+  const [filteredCourses, setFilteredCourses] = useState([]); // State สำหรับเก็บคอร์สที่กรองแล้ว
+  const [loading, setLoading] = useState(true); // State สำหรับโหลดข้อมูล
+  const [error, setError] = useState(null); // State สำหรับจัดการข้อผิดพลาด
 
-    return (
-        <div className="tpat-page">
-            {/* เพิ่ม Nav ด้านข้าง */}
-            <div className="course-list">
-                {tpatCourses.map((course) => (
-                    <CourseCard key={course.id} course={course} />
-                ))}
-            </div>
-        </div>
+  useEffect(() => {
+    async function getCourses() {
+      setLoading(true);
+      const { courses, error } = await fetchCoursesByCategory("tpat");
+      setCourses(courses);
+      setFilteredCourses(courses); // เริ่มต้นแสดงทั้งหมด
+      setError(error);
+      setLoading(false);
+    }
+    getCourses();
+  }, []);
+
+  // ฟังก์ชันกรองคอร์สตามรหัส TPAT
+  function filterCoursesByCode(code) {
+    const filtered = courses.filter(course =>
+      course.subjectName.toLowerCase().includes(code.toLowerCase())
     );
+    setFilteredCourses(filtered); // อัพเดตคอร์สที่กรองแล้ว
+  }
+
+  // ฟังก์ชันรีเซ็ตการกรองทั้งหมด
+  function showAllCourses() {
+    setFilteredCourses(courses); // แสดงคอร์สทั้งหมด
+  }
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>{error}</p>;
+
+  return (
+    <div className="tpat-page">
+      {/* Sidebar */}
+      <div className="sidebar">
+        <h2>เลือก TPAT</h2>
+        <button onClick={() => filterCoursesByCode("TPAT1")}>TPAT 1</button>
+        <button onClick={() => filterCoursesByCode("TPAT2")}>TPAT 2</button>
+        <button onClick={() => filterCoursesByCode("TPAT3")}>TPAT 3</button>
+        <button onClick={() => filterCoursesByCode("TPAT4")}>TPAT 4</button>
+        <button onClick={() => filterCoursesByCode("TPAT5")}>TPAT 5</button>
+        <button onClick={showAllCourses}>แสดงทั้งหมด</button>
+      </div>
+
+      {/* แสดงรายการคอร์ส */}
+      <div className="course-list">
+        {filteredCourses.map((course) => (
+          <CourseCard key={course.id} course={course} />
+        ))}
+      </div>
+    </div>
+  );
 }
 
 export default Tpat;

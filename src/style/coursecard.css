@@ -84,7 +84,7 @@
 .course-details h3 {
     font-size: 17px;
     font-weight: 600;
-    color: #333;
+    color: #000000;
     margin: 6px 0;
 }
 
@@ -93,7 +93,12 @@
     color: #666;
     line-height: 1.4;
 }
-
+.course-hours {
+    font-size: 15px;
+    font-weight: 600;
+    color: #222;
+    margin-top: auto; /* ทำให้ราคาอยู่บนปุ่มเสมอ */
+}
 .course-price {
     font-size: 15px;
     font-weight: 600;

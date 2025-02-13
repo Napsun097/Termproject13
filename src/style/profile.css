@@ -1,0 +1,21 @@
+.profile-page {
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .profile-info {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .profile-item {
+    text-align: left;
+    font-size: 1.1rem;
+  }
+  
+  .profile-item label {
+    font-weight: bold;
+  }
+  

@@ -1,5 +1,5 @@
 /* กำหนดตำแหน่งให้ sidebar */
-.tgat-page {
+.tpat-page {
     display: flex;
     margin: 20px;
     gap: 20px; /* ใช้ gap แทน margin-right เพื่อให้มีระยะห่างที่เหมาะสม */

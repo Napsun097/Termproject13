@@ -1,21 +1,32 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/images/logo.png";
 import "../style/navbar.css";
 
-function Navbar() {
-  const [searchTerm, setSearchTerm] = useState('');
+function Navbar({ user, setUser }) { // รับ user และ setUser จาก App.js
+  const [searchTerm, setSearchTerm] = useState("");
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const navigate = useNavigate();
 
-  // ฟังก์ชันค้นหา
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    setUser(null); // รีเซ็ต user โดยไม่ต้องรีเฟรชหน้า
+    setIsDropdownOpen(false);
+    navigate("/");
+  };
+
   const handleSearch = (e) => {
     e.preventDefault();
+    if (searchTerm.trim() !== "") {
+      navigate(`/search?query=${encodeURIComponent(searchTerm)}`);
+    }
   };
 
   return (
-    <>
     <nav className="navbar">
       <div className="navbar-container">
-        {/* โลโก้  สามารถกดกลับหน้าแรก*/}
+        {/* โลโก้ */}
         <div className="navbar-brand">
           <Link to="/">
             <img src={logo} alt="Website Logo" className="logo-img" />
@@ -36,11 +47,10 @@ function Navbar() {
           <form onSubmit={handleSearch} className="search-form">
             <input
               type="text"
-              placeholder="พิมพ์รหัส, ชื่อคอร์ส"
+              placeholder="ค้นหาคอร์สเรียน..."
               className="search-bar"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              aria-label="Search for courses"
             />
             <button type="submit" className="search-btn">
               <i className="fas fa-search"></i>
@@ -48,21 +58,37 @@ function Navbar() {
           </form>
         </div>
 
-        
-
-        {/* ปุ่มไอคอนต่าง ๆ */}
+        {/* ไอคอนโปรไฟล์พร้อมเมนู */}
         <div className="navbar-icons">
           <Link to="/cart" className="nav-icon">
             <i className="fas fa-shopping-cart"></i>
           </Link>
-          <Link to="/login" className="nav-button login-btn">เข้าสู่ระบบ</Link>
+
+          {user ? (
+            <div
+              className={`profile-dropdown ${isDropdownOpen ? "open" : ""}`}
+            >
+              <button
+                className="profile-icon-btn"
+                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+              >
+                👤 {user.username} <i className="fas fa-caret-down"></i>
+              </button>
+
+              {/* เมนู dropdown */}
+              <div className="profile-menu">
+                <Link to="/profile" className="profile-menu-item">โปรไฟล์ของฉัน</Link>
+                <button className="profile-menu-item logout-btn" onClick={handleLogout}>
+                  ออกจากระบบ
+                </button>
+              </div>
+            </div>
+          ) : (
+            <Link to="/login" className="nav-button login-btn">เข้าสู่ระบบ</Link>
+          )}
         </div>
-        
       </div>
-      
     </nav>
-   
-    </>
   );
 }
 

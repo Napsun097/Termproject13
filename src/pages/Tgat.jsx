@@ -1,48 +1,60 @@
-import React, { useState } from "react";
-import CourseCard from "../Components/CourseCard"; 
-import { courses } from "../Components/AllCourse";
+import React, { useState, useEffect } from "react";
+import CourseCard from "../Components/CourseCard";
 import "../style/tgat.css";
+import { fetchCoursesByCategory } from "../api/api"; 
 
 function Tgat() {
-    // กรองคอร์สที่มี category เป็น "tgat"
-    const tgatCourses = courses.filter(course => course.category === "tgat");
+  const [courses, setCourses] = useState([]); // State สำหรับเก็บข้อมูลคอร์ส
+  const [filteredCourses, setFilteredCourses] = useState([]); // State สำหรับเก็บคอร์สที่กรองแล้ว
+  const [loading, setLoading] = useState(true); // State สำหรับโหลดข้อมูล
+  const [error, setError] = useState(null); // State สำหรับจัดการข้อผิดพลาด
 
-    // สร้าง state สำหรับกรองตามรหัสวิชา
-    const [filteredCourses, setFilteredCourses] = useState(tgatCourses);
-
-    // ฟังก์ชันกรองคอร์สตามรหัสวิชา
-    function filterCoursesByCode(code) {
-        const filtered = tgatCourses.filter(course => 
-            course.title.toLowerCase().replace(/\s/g, "").includes(code.toLowerCase().replace(/\s/g, ""))
-        );
-        setFilteredCourses(filtered);
-    }
-    
-    // ฟังก์ชันสำหรับรีเซ็ตการกรองและแสดงคอร์สทั้งหมด
-    function showAllCourses() {
-        setFilteredCourses(tgatCourses); // รีเซ็ตกลับมาแสดงคอร์สทั้งหมด
-    }
-
-    return (
-        <div className="tgat-page">
-            {/* Sidebar (Nav ด้านข้าง) */}
-            <div className="sidebar">
-                <h2>รายวิชา</h2>
-                <button onClick={() => filterCoursesByCode("TGAT1")}>TGAT 1</button>
-                <button onClick={() => filterCoursesByCode("TGAT2")}>TGAT 2</button>
-                <button onClick={() => filterCoursesByCode("TGAT3")}>TGAT 3</button>
-                {/* ปุ่มรวมทุกวิชา */}
-                <button onClick={showAllCourses}>รวมทุกวิชา</button>
-            </div>
-
-            {/* แสดงรายการคอร์ส */}
-            <div className="course-list">
-                {filteredCourses.map((course) => (
-                    <CourseCard key={course.id} course={course} />
-                ))}
-            </div>
-        </div>
+  useEffect(() => {
+      async function getCourses() {
+        setLoading(true);
+        const { courses, error } = await fetchCoursesByCategory("tgat");
+        setCourses(courses);
+        setFilteredCourses(courses); // เริ่มต้นแสดงทั้งหมด
+        setError(error);
+        setLoading(false);
+      }
+      getCourses();
+    }, []);
+  // ฟังก์ชันกรองคอร์สตามรหัส TGAT
+  function filterCoursesByCode(code) {
+    const filtered = courses.filter(course =>
+      course.subjectName.toLowerCase().includes(code.toLowerCase())
     );
+    setFilteredCourses(filtered); // อัพเดตคอร์สที่กรองแล้ว
+  }
+
+  // ฟังก์ชันรีเซ็ตการกรองทั้งหมด
+  function showAllCourses() {
+    setFilteredCourses(courses); // แสดงคอร์สทั้งหมด
+  }
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>{error}</p>;
+
+  return (
+    <div className="tgat-page">
+      {/* Sidebar */}
+      <div className="sidebar">
+        <h2>เลือก TGAT</h2>
+        <button onClick={() => filterCoursesByCode("TGAT1")}>TGAT 1</button>
+        <button onClick={() => filterCoursesByCode("TGAT2")}>TGAT 2</button>
+        <button onClick={() => filterCoursesByCode("TGAT3")}>TGAT 3</button>
+        <button onClick={showAllCourses}>แสดงทั้งหมด</button>
+      </div>
+
+      {/* แสดงรายการคอร์ส */}
+      <div className="course-list">
+        {filteredCourses.map((course) => (
+          <CourseCard key={course.id} course={course} />
+        ))}
+      </div>
+    </div>
+  );
 }
 
 export default Tgat;
