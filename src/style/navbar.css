@@ -258,3 +258,21 @@
     text-align: center; /* จัดข้อความตรงกลาง */
   }
 }
+
+.profile-menu-item{
+  padding: 12px 16px;
+  border: none;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+  width: 100%;
+  font-size: 15px;
+  color: #000;
+  text-decoration: none;
+
+}
+
+.profile-menu-item:hover{
+  background: #f8f9fa;
+}
+
