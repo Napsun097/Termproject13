@@ -81,4 +81,3 @@ function CourseCard({ course }) {
 }
 
 export default CourseCard;
-lrml;gm;lewmg;lweflewkfewkfkkfelwkfewl
