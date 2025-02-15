@@ -33,7 +33,6 @@ function App() {
           <Route path="/tgat" element={<Tgat />} />
           <Route path="/tpat" element={<Tpat />} />
           <Route path="/a-level" element={<Alevel />} />
-          <Route path="/mock-exam" element={<MockExam />} />
           <Route path="/login" element={<Login setUser={setUser} />} />
           <Route path="/search" element={<SearchResults />} />
           <Route path="/profile" element={<Profile />} />
