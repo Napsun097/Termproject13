@@ -2,8 +2,23 @@
     background-color: hsl(0, 0%, 30%);
     color: white;
     padding: 20px 0;
-    text-align: center;
+    text-align: left;
+    padding: 20px 0;
+  }
+
+  .footer-content p{  
+    padding-left: 25px;
+    font-size: 1.2rem;
+    color: white;
+
   }
   
+ .footer-links a{
+  padding: 20px;
+  color: white;
+
+ } 
+
+ 
 
   

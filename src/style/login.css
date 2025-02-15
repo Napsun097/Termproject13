@@ -1,50 +1,97 @@
+/* ตั้งค่าพื้นฐาน */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Arial', sans-serif;
+}
+
+body {
+  background-color: #f4f4f4;
+}
+
+/* กล่องหลัก แบ่ง 2 ส่วน */
 .login-container {
-    max-width: 400px;
-    margin: 50px auto;
-    padding: 20px;
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  height: 100vh;
+}
+
+/* ฝั่งซ้าย: รูปภาพ */
+.login-image {
+  flex: 1;
+  background: url('/login-bg.jpg') no-repeat center center;
+  background-size: cover;
+}
+
+/* ฝั่งขวา: ฟอร์มล็อกอิน */
+.login-form {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: white;
+  padding: 40px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* ฟอร์ม */
+form {
+  width: 100%;
+  max-width: 350px;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  text-decoration: none;
+}
+
+.input-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.login-btn {
+  width: 100%;
+  padding: 10px;
+  background-color: #6c757d; /* สีเทากลาง */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.3s ease;
+}
+
+.login-btn:hover {
+  background-color: #495057; /* สีเทาเข้มเมื่อ hover */
+}
+
+.error-message {
+  color: red;
+  text-align: center;
+}
+
+/* ซ่อนรูปในมือถือ */
+@media (max-width: 768px) {
+  .login-container {
+      flex-direction: column;
   }
-  
-  h2 {
-    text-align: center;
+  .login-image {
+      display: none;
   }
-  
-  .input-group {
-    margin-bottom: 15px;
-  }
-  
-  label {
-    display: block;
-    font-weight: bold;
-  }
-  
-  input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-  }
-  
-  .login-btn {
-    width: 100%;
-    padding: 10px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-  }
-  
-  .login-btn:hover {
-    background-color: #0056b3;
-  }
-  
-  .error-message {
-    color: red;
-    text-align: center;
-  }
-  
+}

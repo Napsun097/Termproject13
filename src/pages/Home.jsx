@@ -20,7 +20,13 @@ function Home() {
     getCourses();
   }, []);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading)
+    return (
+      <div className="loading-container">
+        <div className="spinner"></div>
+        <p>กำลังโหลด... ใจเย็นๆ น่ะจ่ะ</p>
+      </div>
+    );
   if (error) return <p>{error}</p>;
 
   return (

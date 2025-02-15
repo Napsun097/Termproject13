@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { Route, Routes, useLocation } from "react-router-dom"; 
 import "./style/App.css";
-import { Route, Routes } from "react-router-dom";
 import Navbar from "./Components/Navbar";
 import Home from "./pages/Home";
 import Tgat from "./pages/Tgat";
@@ -13,7 +13,8 @@ import Footer from "./Components/Footer";
 import Profile from "./pages/Profile";
 
 function App() {
-  const [user, setUser] = useState(null); // เก็บข้อมูล user
+  const [user, setUser] = useState(null); 
+  const location = useLocation(); // ดึง path ปัจจุบัน
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -24,7 +25,9 @@ function App() {
 
   return (
     <div>
-      <Navbar user={user} setUser={setUser} /> {/* ส่ง user และ setUser ไป Navbar */}
+      {/* 🔥 ซ่อน Navbar และ Footer ถ้าอยู่ที่หน้า /login */}
+      {location.pathname !== "/login" && <Navbar user={user} setUser={setUser} />}
+
       <main className="main-content">
         <Routes>
           <Route path="/" element={<Home />} />
@@ -32,13 +35,13 @@ function App() {
           <Route path="/tpat" element={<Tpat />} />
           <Route path="/a-level" element={<Alevel />} />
           <Route path="/mock-exam" element={<MockExam />} />
-          <Route path="/login" element={<Login setUser={setUser} />} /> {/* ส่ง setUser ไป Login */}
+          <Route path="/login" element={<Login setUser={setUser} />} />
           <Route path="/search" element={<SearchResults />} />
           <Route path="/profile" element={<Profile />} />
-
         </Routes>
       </main>
-      <Footer />
+
+      {location.pathname !== "/login" && <Footer />}
     </div>
   );
 }

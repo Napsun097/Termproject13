@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import CourseCard from "../Components/CourseCard";
 import "../style/tpat.css";
-import { fetchCoursesByCategory } from "../api/api"; 
+import { fetchCoursesByCategory } from "../api/api";
 
 function Tpat() {
   const [courses, setCourses] = useState([]); // State สำหรับเก็บข้อมูลคอร์ส
@@ -28,33 +28,45 @@ function Tpat() {
     );
     setFilteredCourses(filtered); // อัพเดตคอร์สที่กรองแล้ว
   }
+  
+
+  
 
   // ฟังก์ชันรีเซ็ตการกรองทั้งหมด
   function showAllCourses() {
     setFilteredCourses(courses); // แสดงคอร์สทั้งหมด
   }
 
-  if (loading) return <p>Loading...</p>;
+  if (loading)
+    return (
+      <div className="loading-container">
+        <div className="spinner"></div>
+        <p>กำลังโหลด...ใจเย็นๆ น่ะจ่ะ</p>
+      </div>
+    );
+    
   if (error) return <p>{error}</p>;
 
   return (
     <div className="tpat-page">
       {/* Sidebar */}
       <div className="sidebar">
-        <h2>เลือก TPAT</h2>
+        <h2>รายวิชา</h2>
         <button onClick={() => filterCoursesByCode("TPAT1")}>TPAT 1</button>
         <button onClick={() => filterCoursesByCode("TPAT2")}>TPAT 2</button>
         <button onClick={() => filterCoursesByCode("TPAT3")}>TPAT 3</button>
         <button onClick={() => filterCoursesByCode("TPAT4")}>TPAT 4</button>
         <button onClick={() => filterCoursesByCode("TPAT5")}>TPAT 5</button>
-        <button onClick={showAllCourses}>แสดงทั้งหมด</button>
+        <button onClick={showAllCourses}>ทุกวิชา</button>
       </div>
 
       {/* แสดงรายการคอร์ส */}
       <div className="course-list">
-        {filteredCourses.map((course) => (
-          <CourseCard key={course.id} course={course} />
-        ))}
+        {filteredCourses.length > 0 ? (
+          filteredCourses.map((course) => <CourseCard key={course.id} course={course} />)
+        ) : (
+          <p className="no-courses">ไม่พบรายวิชา</p>
+        )}
       </div>
     </div>
   );
