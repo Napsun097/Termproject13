@@ -6,7 +6,6 @@ import Home from "./pages/Home";
 import Tgat from "./pages/Tgat";
 import Tpat from "./pages/Tpat";
 import Alevel from "./pages/Alevel";
-import MockExam from "./pages/MockExam";
 import Login from "./pages/Login";
 import SearchResults from "./pages/SearchResults";
 import Footer from "./Components/Footer";
