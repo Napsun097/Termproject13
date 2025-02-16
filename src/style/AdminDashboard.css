@@ -1,0 +1,39 @@
+/* ✅ ทำให้หน้า Admin Dashboard เต็มจอ */
+.admin-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* เต็มจอ */
+    background-color: #f4f4f4; /* สีพื้นหลัง */
+  }
+  
+  /* ✅ หัวข้อ */
+  .admin-title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  /* ✅ ข้อความ */
+  .admin-text {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+  }
+  
+  /* ✅ ปุ่มกลับ */
+  .admin-button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    transition: background 0.3s;
+  }
+  
+  .admin-button:hover {
+    background-color: #0056b3;
+  }
+  

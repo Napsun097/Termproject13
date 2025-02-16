@@ -4,26 +4,34 @@ import { login } from "../api/auth"; // ฟังก์ชัน login API
 import "../style/login.css"; // ใช้ไฟล์ CSS ที่แก้ไข
 
 const Login = ({ setUser }) => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState(null);
-  const navigate = useNavigate();
+  const [username, setUsername] = useState("");   // สร้าง state สำหรับเก็บชื่อผู้ใช้
+  const [password, setPassword] = useState("");   // สร้าง state สำหรับเก็บรหัสผ่าน
+  const [error, setError] = useState(null);       // สร้าง state สำหรับจัดการข้อผิดพลาด
+  const navigate = useNavigate();                 // เรียกใช้ hook useNavigate       
 
+//  สร้างฟังก์ชัน handleLogin เพื่อจัดการการล็อกอิน
   const handleLogin = async (e) => {
-    e.preventDefault();
-    setError(null);
+  e.preventDefault(); 
+  setError(null); 
 
-    try {
-      // เรียกฟังก์ชัน login และจัดการการเข้าสู่ระบบ
-      const data = await login(username, password);
-      localStorage.setItem("token", data.jwt); // เก็บ token ใน localStorage
-      localStorage.setItem("user", JSON.stringify(data.user)); // เก็บข้อมูลผู้ใช้ใน localStorage
-      setUser(data.user); // ตั้งค่าผู้ใช้ในแอป
-      navigate("/"); // ไปที่หน้า Home หลังจากเข้าสู่ระบบสำเร็จ
-    } catch (err) {
-      setError("ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง"); // แสดงข้อความเมื่อเกิดข้อผิดพลาด
+  try {
+    const data = await login(username, password);     
+
+    localStorage.setItem("token", data.jwt);
+    localStorage.setItem("user", JSON.stringify(data.user));
+    setUser(data.user);
+
+    // ตรวจสอบ roles ถ้าเป็น Admin ให้ไปหน้า Admin Dashboard
+    if (data.user.roles && data.user.roles.includes("Admin")) {
+      navigate("/admin-dashboard");
+    } else {
+      navigate("/");
     }
-  };
+  } catch (err) {
+    setError("ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง");
+  }
+};
+
 
   return (
     <div className="login-container">

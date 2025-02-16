@@ -10,6 +10,8 @@ import Login from "./pages/Login";
 import SearchResults from "./pages/SearchResults";
 import Footer from "./Components/Footer";
 import Profile from "./pages/Profile";
+import AdminDashboard from "./pages/AdminDashboard";
+import Payment from "./pages/Payment";
 
 function App() {
   const [user, setUser] = useState(null); 
@@ -22,10 +24,12 @@ function App() {
     }
   }, []);
 
+  // ✅ ซ่อน Navbar และ Footer ถ้าอยู่ที่หน้า /login หรือ /admin-dashboard
+  const hideNavbarFooter = location.pathname === "/login" || location.pathname === "/admin-dashboard" || location.pathname === "/payment";
+
   return (
     <div>
-      {/* 🔥 ซ่อน Navbar และ Footer ถ้าอยู่ที่หน้า /login */}
-      {location.pathname !== "/login" && <Navbar user={user} setUser={setUser} />}
+      {!hideNavbarFooter && <Navbar user={user} setUser={setUser} />}
 
       <main className="main-content">
         <Routes>
@@ -36,10 +40,13 @@ function App() {
           <Route path="/login" element={<Login setUser={setUser} />} />
           <Route path="/search" element={<SearchResults />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/admin-dashboard" element={<AdminDashboard />} />
+          <Route path="/payment" element={<Payment />} />
+          
         </Routes>
       </main>
 
-      {location.pathname !== "/login" && <Footer />}
+      {!hideNavbarFooter && <Footer />}
     </div>
   );
 }

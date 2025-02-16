@@ -1,97 +1,97 @@
 /* ตั้งค่าพื้นฐาน */
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Arial', sans-serif;
+  margin: 0; /* ลบช่องว่างภายนอกของทุกองค์ประกอบ */
+  padding: 0; /* ลบช่องว่างภายในของทุกองค์ประกอบ */
+  box-sizing: border-box; /* ใช้การคำนวณขนาดรวมกรอบและช่องว่าง */
+  font-family: 'Arial', sans-serif; /* กำหนดฟอนต์เป็น Arial */
 }
 
 body {
-  background-color: #f4f4f4;
+  background-color: #f4f4f4; /* กำหนดสีพื้นหลังของทั้งหน้า */
 }
 
-/* กล่องหลัก แบ่ง 2 ส่วน */
+/* กล่องหลัก แบ่ง 2 ส่วน (ด้านซ้ายสำหรับรูปภาพ, ด้านขวาสำหรับฟอร์ม) */
 .login-container {
-  display: flex;
-  height: 100vh;
+  display: flex; /* ใช้ flexbox สำหรับการจัดวาง */
+  height: 100vh; /* ความสูง 100% ของหน้าจอ */
 }
 
 /* ฝั่งซ้าย: รูปภาพ */
 .login-image {
-  flex: 1;
-  background: url('/login-bg.jpg') no-repeat center center;
-  background-size: cover;
+  flex: 1; /* ใช้ flex ให้พื้นที่รูปภาพครอบคลุมครึ่งหนึ่ง */
+  background: url('../assets/images/TCAS.webp') no-repeat center center; /* ตั้งค่าสำหรับรูปภาพพื้นหลัง */
+  background-size: cover; /* ทำให้รูปภาพเต็มพื้นที่ โดยรักษาอัตราส่วน */
 }
 
 /* ฝั่งขวา: ฟอร์มล็อกอิน */
 .login-form {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background: white;
-  padding: 40px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  flex: 1; /* ใช้ flex ให้พื้นที่ฟอร์มครอบคลุมครึ่งหนึ่ง */
+  display: flex; /* ใช้ flexbox สำหรับการจัดองค์ประกอบในฟอร์ม */
+  flex-direction: column; /* จัดองค์ประกอบในแนวตั้ง */
+  justify-content: center; /* จัดตำแหน่งฟอร์มให้อยู่กลางในแนวตั้ง */
+  align-items: center; /* จัดตำแหน่งฟอร์มให้อยู่กลางในแนวนอน */
+  background: white; /* กำหนดพื้นหลังเป็นสีขาว */
+  padding: 40px; /* เพิ่มช่องว่างภายในฟอร์ม */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* เพิ่มเงาให้กับฟอร์ม */
 }
 
 /* ฟอร์ม */
 form {
-  width: 100%;
-  max-width: 350px;
+  width: 100%; /* ความกว้าง 100% */
+  max-width: 350px; /* กำหนดความกว้างสูงสุดเป็น 350px */
 }
 
 h2 {
-  text-align: center;
-  margin-bottom: 20px;
-  text-decoration: none;
+  text-align: center; /* จัดหัวข้อให้อยู่กลาง */
+  margin-bottom: 20px; /* เพิ่มช่องว่างด้านล่างของหัวข้อ */
+  text-decoration: none; /* ลบการตกแต่งข้อความ (เช่น ขีดเส้นใต้) */
 }
 
 .input-group {
-  margin-bottom: 15px;
+  margin-bottom: 15px; /* เพิ่มช่องว่างด้านล่างระหว่างฟิลด์ */
 }
 
 label {
-  display: block;
-  font-weight: bold;
-  margin-bottom: 5px;
+  display: block; /* แสดง label เป็นบล็อกเพื่อให้ขยายเต็มความกว้าง */
+  font-weight: bold; /* ทำให้ตัวหนังสือใน label หนากว่า */
+  margin-bottom: 5px; /* เพิ่มช่องว่างด้านล่างของ label */
 }
 
 input {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 16px;
+  width: 100%; /* ความกว้าง 100% */
+  padding: 10px; /* เพิ่มช่องว่างภายในฟิลด์ */
+  border: 1px solid #ccc; /* ขอบของฟิลด์เป็นสีเทาอ่อน */
+  border-radius: 5px; /* มุมโค้งของขอบ */
+  font-size: 16px; /* ขนาดฟอนต์ในฟิลด์ */
 }
 
 .login-btn {
-  width: 100%;
-  padding: 10px;
-  background-color: #6c757d; /* สีเทากลาง */
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background 0.3s ease;
+  width: 100%; /* ปุ่มล็อกอินมีความกว้าง 100% */
+  padding: 10px; /* เพิ่มช่องว่างภายในปุ่ม */
+  background-color: #6c757d; /* สีพื้นหลังของปุ่มเป็นสีเทากลาง */
+  color: white; /* ข้อความในปุ่มเป็นสีขาว */
+  border: none; /* ไม่มีขอบของปุ่ม */
+  border-radius: 5px; /* มุมโค้งของขอบปุ่ม */
+  cursor: pointer; /* แสดงว่าปุ่มสามารถคลิกได้ */
+  font-size: 16px; /* ขนาดฟอนต์ในปุ่ม */
+  transition: background 0.3s ease; /* การเปลี่ยนแปลงสีพื้นหลังเมื่อ hover */
 }
 
 .login-btn:hover {
-  background-color: #495057; /* สีเทาเข้มเมื่อ hover */
+  background-color: #495057; /* สีพื้นหลังของปุ่มเมื่อ hover */
 }
 
 .error-message {
-  color: red;
-  text-align: center;
+  color: red; /* ข้อความแจ้งข้อผิดพลาดเป็นสีแดง */
+  text-align: center; /* จัดข้อความให้อยู่กลาง */
 }
 
 /* ซ่อนรูปในมือถือ */
 @media (max-width: 768px) {
   .login-container {
-      flex-direction: column;
+      flex-direction: column; /* เปลี่ยนการจัดวางเป็นแนวตั้งในหน้าจอขนาดเล็ก */
   }
   .login-image {
-      display: none;
+      display: none; /* ซ่อนรูปภาพเมื่อหน้าจอมีขนาดเล็กกว่า 768px */
   }
 }

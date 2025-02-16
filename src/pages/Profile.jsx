@@ -31,10 +31,6 @@ function Profile() {
           <label>Email</label>
           <p>{user.email}</p>
         </div>
-        <div className="profile-item">
-          <label>Role</label>
-          <p>{user.role?.type || "User"}</p>
-        </div>
       </div>
     </div>
   );

@@ -6,7 +6,7 @@ import "../style/navbar.css";
 function Navbar({ user, setUser }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [isNavbarOpen, setIsNavbarOpen] = useState(false); // State สำหรับควบคุมการเปิด/ปิด Navbar
+  const [isNavbarOpen, setIsNavbarOpen] = useState(false);
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -14,7 +14,7 @@ function Navbar({ user, setUser }) {
     localStorage.removeItem("user");
     setUser(null);
     setIsDropdownOpen(false);
-    setIsNavbarOpen(false); // ปิด Navbar เมื่อออกจากระบบ
+    setIsNavbarOpen(false); // Close navbar on logout
     navigate("/");
   };
 
@@ -26,31 +26,27 @@ function Navbar({ user, setUser }) {
   };
 
   const toggleNavbar = () => {
-    setIsNavbarOpen(!isNavbarOpen); // สลับสถานะการเปิด/ปิด Navbar
+    setIsNavbarOpen(!isNavbarOpen);
   };
 
   const closeNavbar = () => {
-    setIsNavbarOpen(false); // ปิด Navbar เมื่อคลิกลิงก์
+    setIsNavbarOpen(false);
   };
 
   return (
     <nav className="navbar">
-      {/* ปุ่มเปิด/ปิด Navbar สำหรับโหมดมือถือ */}
       <button className="navbar-toggle" onClick={toggleNavbar}>
         <i className={`fas ${isNavbarOpen ? "fa-times" : "fa-bars"}`}></i>
       </button>
 
       <div className="navbar-container">
-        {/* โลโก้ */}
         <div className="navbar-brand">
           <Link to="/" onClick={closeNavbar}>
             <img src={logo} alt="Website Logo" className="logo-img" />
           </Link>
         </div>
 
-        {/* ส่วนอื่นๆ ของ Navbar */}
         <div className={`navbar-content ${isNavbarOpen ? "active" : ""}`}>
-          {/* ปุ่มนำทาง */}
           <div className="navbar-links">
             <Link to="/" className="nav-link" onClick={closeNavbar}>หน้าแรก</Link>
             <Link to="/tgat" className="nav-link" onClick={closeNavbar}>TGAT</Link>
@@ -58,7 +54,6 @@ function Navbar({ user, setUser }) {
             <Link to="/a-level" className="nav-link" onClick={closeNavbar}>A-level</Link>
           </div>
 
-          {/* แถบค้นหา */}
           <div className="search-container">
             <form onSubmit={handleSearch} className="search-form">
               <input
@@ -74,13 +69,14 @@ function Navbar({ user, setUser }) {
             </form>
           </div>
 
-          {/* ไอคอนโปรไฟล์พร้อมเมนู */}
           <div className="navbar-icons">
-            <Link to="/cart" className="nav-icon" onClick={() => setIsNavbarOpen(false)}>
-              <i className="fas fa-shopping-cart"></i>
-              {/* เพิ่มข้อความหรือจำนวนในตะกร้า */}
-              <span className="cart-item-count">3</span> {/* ตัวอย่างการเพิ่มข้อความจำนวนสินค้า */}
-            </Link>
+            {/* ซ่อนไอคอนตะกร้าสินค้าเมื่อผู้ใช้ไม่ได้มี role เป็น "User" */}
+            {user && user.roles && user.roles.includes("User") && (
+              <Link to="/cart" className="nav-icon" onClick={() => setIsNavbarOpen(false)}>
+                <i className="fas fa-shopping-cart"></i>
+                <span className="cart-item-count">3</span> {/* สมมุติว่ามีจำนวนสินค้าในตะกร้า */}
+              </Link>
+            )}
 
             {user ? (
               <div className={`profile-dropdown ${isDropdownOpen ? "open" : ""}`}>
@@ -91,11 +87,20 @@ function Navbar({ user, setUser }) {
                   👤 {user.username} <i className="fas fa-caret-down"></i>
                 </button>
 
-                {/* เมนู dropdown */}
                 <div className="profile-menu">
                   <Link to="/profile" className="profile-menu-item" onClick={closeNavbar}>
                     โปรไฟล์ของฉัน
                   </Link>
+                  {user.roles && user.roles.includes("Admin") && (
+                    <Link to="/admin-dashboard" className="profile-menu-item" onClick={closeNavbar}>
+                      จัดการคอร์ส
+                    </Link>
+                  )}
+                  {user.roles && user.roles.includes("User") && (
+                    <Link to="/payment" className="profile-menu-item" onClick={closeNavbar}>
+                      ชำระเงิน
+                    </Link>
+                  )}
                   <button className="profile-menu-item logout-btn" onClick={handleLogout}>
                     ออกจากระบบ
                   </button>

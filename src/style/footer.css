@@ -1,24 +1,76 @@
+/* สไตล์หลักของ Footer */
 .footer {
-    background-color: hsl(0, 0%, 30%);
-    color: white;
-    padding: 20px 0;
-    text-align: left;
-    padding: 20px 0;
-  }
-
-  .footer-content p{  
-    padding-left: 25px;
-    font-size: 1.2rem;
-    color: white;
-
-  }
-  
- .footer-links a{
-  padding: 20px;
+  background-color: #333;
   color: white;
+  padding: 20px 0;
+  font-family: Arial, sans-serif;
+}
 
- } 
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  text-align: center;
+}
 
- 
+.footer p {
+  font-size: 1rem;
+  margin: 10px 0;
+}
 
-  
+.footer-links {
+  margin: 15px 0;
+}
+
+.footer-links a {
+  color: #fff;
+  margin: 0 15px;
+  text-decoration: none;
+  font-size: 1.1rem;
+  transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+  color: #4CAF50;
+}
+
+/* สไตล์ปุ่มโซเชียล */
+.footer-social {
+  margin-top: 20px;
+}
+
+.social-icon {
+  color: #fff;
+  margin: 0 10px;
+  font-size: 1.8rem;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.social-icon:hover {
+  color: #4CAF50;
+  transform: scale(1.2);
+}
+
+/* รองรับหน้าจอเล็ก ๆ */
+@media (max-width: 768px) {
+  .footer-links {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+  }
+
+  .footer-links a {
+    margin: 0 10px;
+  }
+
+  .footer-social {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+  }
+
+  .social-icon {
+    margin: 0 8px;
+    font-size: 1.5rem;
+  }
+}
