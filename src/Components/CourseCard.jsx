@@ -32,7 +32,7 @@ function CourseCard({ course }) {
 
     // ตรวจสอบว่ามีค่า `image` หรือไม่ก่อนแสดงผล
     const imageUrl = course.image && course.image.length > 0
-        ? `http://localhost:1337${course.image[0].formats.large.url}` 
+        ? `http://localhost:1337${course.image[0].formats.large.url}`
         : null;
 
     return (
@@ -44,17 +44,17 @@ function CourseCard({ course }) {
                 ) : (
                     <p>No Image Available</p>
                 )}
-                <div className="course-overlay">
-                    <button
-                        className={`favorite-btn ${isFavorite ? "active" : ""}`}
-                        onClick={onFavoriteClick}
-                    >
-                        {isFavorite ? <FaHeart className="heart-icon" /> : <FaRegHeart className="heart-icon" />}
-                    </button>
-                </div>
             </div>
 
             <div className="course-details">
+
+                <button
+                    className={`favorite-btn ${isFavorite ? "active" : ""}`}
+                    onClick={onFavoriteClick}
+                >
+                    {isFavorite ? <FaHeart className="heart-icon" /> : <FaRegHeart className="heart-icon" />}
+                </button>
+
                 <span
                     className="course-category-badge"
                     style={{ backgroundColor: categoryColors[course.category] }}
