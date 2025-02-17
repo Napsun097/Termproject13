@@ -52,6 +52,7 @@ function Navbar({ user, setUser }) {
             <Link to="/tgat" className="nav-link" onClick={closeNavbar}>TGAT</Link>
             <Link to="/tpat" className="nav-link" onClick={closeNavbar}>TPAT</Link>
             <Link to="/a-level" className="nav-link" onClick={closeNavbar}>A-level</Link>
+            <Link to="/favorite" className="nav-link" onClick={closeNavbar}>Favorite</Link>
           </div>
 
           <div className="search-container">
