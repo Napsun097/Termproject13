@@ -1,0 +1,75 @@
+{
+  "kind": "collectionType",
+  "collectionName": "favorites",
+  "info": {
+    "singularName": "favorite",
+    "pluralName": "favorites",
+    "displayName": "Favorite"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "title": {
+      "type": "text"
+    },
+    "category": {
+      "type": "enumeration",
+      "enum": [
+        "tgat",
+        "tpat",
+        "a-level"
+      ]
+    },
+    "image": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "price": {
+      "type": "integer"
+    },
+    "isPopular": {
+      "type": "boolean"
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "standard",
+        "premium"
+      ]
+    },
+    "courseHours": {
+      "type": "integer"
+    },
+    "fullDescription": {
+      "type": "richtext"
+    },
+    "shortDescription": {
+      "type": "text"
+    },
+    "subjectName": {
+      "type": "enumeration",
+      "enum": [
+        "TGAT1",
+        "TGAT2",
+        "TGAT3",
+        "TPAT1",
+        "TPAT2",
+        "TPAT3",
+        "TPAT4",
+        "TPAT5",
+        "A-LEVEL PHYSICS",
+        "A-LEVEL MATH1",
+        "A-LEVEL MATH2",
+        "A-LEVEL CHEMISTRY"
+      ]
+    }
+  }
+}

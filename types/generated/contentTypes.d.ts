@@ -425,6 +425,61 @@ export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiFavoriteFavorite extends Struct.CollectionTypeSchema {
+  collectionName: 'favorites';
+  info: {
+    displayName: 'Favorite';
+    pluralName: 'favorites';
+    singularName: 'favorite';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    category: Schema.Attribute.Enumeration<['tgat', 'tpat', 'a-level']>;
+    courseHours: Schema.Attribute.Integer;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    fullDescription: Schema.Attribute.RichText;
+    image: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios',
+      true
+    >;
+    isPopular: Schema.Attribute.Boolean;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::favorite.favorite'
+    > &
+      Schema.Attribute.Private;
+    price: Schema.Attribute.Integer;
+    publishedAt: Schema.Attribute.DateTime;
+    shortDescription: Schema.Attribute.Text;
+    subjectName: Schema.Attribute.Enumeration<
+      [
+        'TGAT1',
+        'TGAT2',
+        'TGAT3',
+        'TPAT1',
+        'TPAT2',
+        'TPAT3',
+        'TPAT4',
+        'TPAT5',
+        'A-LEVEL PHYSICS',
+        'A-LEVEL MATH1',
+        'A-LEVEL MATH2',
+        'A-LEVEL CHEMISTRY',
+      ]
+    >;
+    title: Schema.Attribute.Text;
+    type: Schema.Attribute.Enumeration<['standard', 'premium']>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface PluginContentReleasesRelease
   extends Struct.CollectionTypeSchema {
   collectionName: 'strapi_releases';
@@ -936,6 +991,7 @@ declare module '@strapi/strapi' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
       'api::course.course': ApiCourseCourse;
+      'api::favorite.favorite': ApiFavoriteFavorite;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;
