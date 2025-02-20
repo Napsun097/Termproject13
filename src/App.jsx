@@ -12,6 +12,7 @@ import Footer from "./Components/Footer";
 import Profile from "./pages/Profile";
 import AdminDashboard from "./pages/AdminDashboard";
 import Payment from "./pages/Payment";
+import Favorite from "./pages/Favorite";
 
 function App() {
   const [user, setUser] = useState(null); 
@@ -42,6 +43,7 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/admin-dashboard" element={<AdminDashboard />} />
           <Route path="/payment" element={<Payment />} />
+          <Route path="/favorite" element={<Favorite />} />
           
         </Routes>
       </main>

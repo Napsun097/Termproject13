@@ -1,45 +1,55 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import FavoriteCard from "../Components/FavoriteCard";
+import "../style/favorite.css";
 
 const Favorite = () => {
-  const [favorites, setFavorites] = useState([]);
+    const [favorites, setFavorites] = useState([]);
 
-  useEffect(() => {
-    // Fetch the favorite courses from the database when the component mounts
-    axios.get('/api/favorites')
-      .then(response => {
-        setFavorites(response.data);
-      })
-      .catch(error => {
-        console.error('There was an error fetching the favorite courses!', error);
-      });
-  }, []);
+    useEffect(() => {
+        axios.get("http://localhost:1337/api/favorites")
+            .then(response => {
+                console.log("Favorites fetched:", response.data); // Debugging log
 
-  const handleFavoriteClick = (courseId) => {
-    // Add the course to the favorite database
-    axios.post('/api/favorites', { courseId })
-      .then(response => {
-        // Update the favorites state to include the new favorite course
-        setFavorites([...favorites, response.data]);
-      })
-      .catch(error => {
-        console.error('There was an error adding the course to favorites!', error);
-      });
-  };
+                // ✅ Ensure we correctly extract data from Strapi's structure
+                if (response.data && response.data.data) {
+                    setFavorites(response.data.data); // Set entire favorites list
+                }
+            })
+            .catch(error => {
+                console.error("Error fetching favorite courses!", error);
+            });
+    }, []);
 
-  return (
-    <div>
-      <h1>Favorite Courses</h1>
-      <ul>
-        {favorites.map(course => (
-          <li key={course.id}>
-            {course.name}
-            <button onClick={() => handleFavoriteClick(course.id)}>Favorite</button>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
+    const handleRemoveFavorite = (favoriteId) => {
+        axios.delete(`http://localhost:1337/api/favorites/${favoriteId}`)
+            .then(() => {
+                setFavorites(favorites.filter(fav => fav.id !== favoriteId));
+            })
+            .catch(error => {
+                console.error("Error removing favorite!", error);
+            });
+    };
+
+    return (
+        <div className="Favorite-page">
+            <h1>Favorite Courses</h1>
+
+            <div className="course-list">
+                {favorites.length > 0 ? (
+                    favorites.map(fav => (
+                        <FavoriteCard
+                            key={fav.id}
+                            favorite={fav} // ✅ Correctly extract attributes
+                            onRemoveFavorite={() => handleRemoveFavorite(fav.id)}
+                        />
+                    ))
+                ) : (
+                    <p className="no-favorites">No favorite courses found.</p>
+                )}
+            </div>
+        </div>
+    );
 };
 
 export default Favorite;
