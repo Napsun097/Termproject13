@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Route, Routes, useLocation } from "react-router-dom"; 
+import { Route, Routes, useLocation } from "react-router-dom";
 import "./style/App.css";
 import Navbar from "./Components/Navbar";
 import Home from "./pages/Home";
@@ -13,10 +13,11 @@ import Profile from "./pages/Profile";
 import AdminDashboard from "./pages/AdminDashboard";
 import Payment from "./pages/Payment";
 import Favorite from "./pages/Favorite";
+import Cart from "./pages/Cart"; // Import Cart component
 
 function App() {
-  const [user, setUser] = useState(null); 
-  const location = useLocation(); // ดึง path ปัจจุบัน
+  const [user, setUser] = useState(null);
+  const location = useLocation(); // Get current path
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -25,8 +26,11 @@ function App() {
     }
   }, []);
 
-  // ✅ ซ่อน Navbar และ Footer ถ้าอยู่ที่หน้า /login หรือ /admin-dashboard
-  const hideNavbarFooter = location.pathname === "/login" || location.pathname === "/admin-dashboard" || location.pathname === "/payment";
+  // Hide Navbar and Footer on certain pages
+  const hideNavbarFooter =
+    location.pathname === "/login" ||
+    location.pathname === "/admin-dashboard" ||
+    location.pathname === "/payment";
 
   return (
     <div>
@@ -44,7 +48,7 @@ function App() {
           <Route path="/admin-dashboard" element={<AdminDashboard />} />
           <Route path="/payment" element={<Payment />} />
           <Route path="/favorite" element={<Favorite />} />
-          
+          <Route path="/cart" element={<Cart />} /> {/* Add Cart route */}
         </Routes>
       </main>
 

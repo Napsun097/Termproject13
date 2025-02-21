@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/images/logo.png";
 import "../style/navbar.css";
@@ -7,7 +7,15 @@ function Navbar({ user, setUser }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isNavbarOpen, setIsNavbarOpen] = useState(false);
+  const [cartItems, setCartItems] = useState([]); // Track cart items
   const navigate = useNavigate();
+
+  // Get cart items from localStorage (or from context/state management)
+  useEffect(() => {
+    const storedCartItems = JSON.parse(localStorage.getItem("cartItems") || "[]");
+    console.log(storedCartItems); // Debug cart items
+    setCartItems(storedCartItems);
+  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -71,11 +79,14 @@ function Navbar({ user, setUser }) {
           </div>
 
           <div className="navbar-icons">
-            {/* ซ่อนไอคอนตะกร้าสินค้าเมื่อผู้ใช้ไม่ได้มี role เป็น "User" */}
+            {/* Debug user and roles */}
+            {console.log(user)} 
+
             {user && user.roles && user.roles.includes("User") && (
               <Link to="/cart" className="nav-icon" onClick={() => setIsNavbarOpen(false)}>
                 <i className="fas fa-shopping-cart"></i>
-                <span className="cart-item-count">3</span> {/* สมมุติว่ามีจำนวนสินค้าในตะกร้า */}
+                {/* Display cart item count */}
+                <span className="cart-item-count">{cartItems.length}</span>
               </Link>
             )}
 
