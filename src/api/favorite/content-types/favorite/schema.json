@@ -4,7 +4,8 @@
   "info": {
     "singularName": "favorite",
     "pluralName": "favorites",
-    "displayName": "Favorite"
+    "displayName": "Favorite",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -70,6 +71,15 @@
         "A-LEVEL MATH2",
         "A-LEVEL CHEMISTRY"
       ]
+    },
+    "course": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::course.course",
+      "inversedBy": "favorite"
+    },
+    "courseDoc": {
+      "type": "string"
     }
   }
 }

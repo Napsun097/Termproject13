@@ -449,6 +449,7 @@ export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    favorite: Schema.Attribute.Relation<'oneToOne', 'api::favorite.favorite'>;
     fullDescription: Schema.Attribute.RichText;
     image: Schema.Attribute.Media<
       'images' | 'files' | 'videos' | 'audios',
@@ -491,6 +492,7 @@ export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
 export interface ApiFavoriteFavorite extends Struct.CollectionTypeSchema {
   collectionName: 'favorites';
   info: {
+    description: '';
     displayName: 'Favorite';
     pluralName: 'favorites';
     singularName: 'favorite';
@@ -500,6 +502,8 @@ export interface ApiFavoriteFavorite extends Struct.CollectionTypeSchema {
   };
   attributes: {
     category: Schema.Attribute.Enumeration<['tgat', 'tpat', 'a-level']>;
+    course: Schema.Attribute.Relation<'oneToOne', 'api::course.course'>;
+    courseDoc: Schema.Attribute.String;
     courseHours: Schema.Attribute.Integer;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
