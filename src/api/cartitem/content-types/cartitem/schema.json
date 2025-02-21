@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "cartitems",
+  "info": {
+    "singularName": "cartitem",
+    "pluralName": "cartitems",
+    "displayName": "Cartitem",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "cart": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::cart.cart",
+      "inversedBy": "cartitems"
+    },
+    "course": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::course.course",
+      "inversedBy": "cartitems"
+    },
+    "quantity": {
+      "type": "integer"
+    }
+  }
+}

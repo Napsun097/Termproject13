@@ -71,6 +71,12 @@
         "A-LEVEL MATH2",
         "A-LEVEL CHEMISTRY"
       ]
+    },
+    "cartitems": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::cartitem.cartitem",
+      "mappedBy": "course"
     }
   }
 }
