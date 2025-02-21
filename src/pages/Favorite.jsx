@@ -7,7 +7,7 @@ const Favorite = () => {
     const [favorites, setFavorites] = useState([]);
 
     useEffect(() => {
-        axios.get("http://localhost:1337/api/favorites")
+        axios.get("http://localhost:1337/api/favorites?populate[course][populate]=image")
             .then(response => {
                 console.log("Favorites fetched:", response.data); // Debugging log
 

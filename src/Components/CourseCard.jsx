@@ -55,6 +55,9 @@ function CourseCard({ course }) {
                     fullDescription: course.fullDescription,
                     shortDescription: course.shortDescription,
                     subjectName: course.subjectName,
+                    course: {
+                        connect: [course.documentId],
+                    }
                 }
             };
             console.log("Sending data:", JSON.stringify(favoriteData, null, 2));

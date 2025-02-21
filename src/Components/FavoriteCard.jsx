@@ -23,7 +23,7 @@ function FavoriteCard({ favorite, onRemoveFavorite }) {
         if (savedCart === "true") setIsInCart(true);
 
         // Fetch favorite status from the database
-        axios.get(`http://localhost:1337/api/courses/${favorite.documentId}`)
+        axios.get(`http://localhost:1337/api/favorites/${favorite.documentId}`)
 
             .then(response => {
                 console.log("API Response:", response.data);
@@ -38,38 +38,16 @@ function FavoriteCard({ favorite, onRemoveFavorite }) {
     }, [favorite.documentId]);
 
     function onFavoriteClick() {
-        const newFavoriteStatus = !isFavorite;
-        setIsFavorite(newFavoriteStatus);
-        localStorage.setItem(`favorite-${course.documentId}`, newFavoriteStatus);
-
-        if (newFavoriteStatus) {
-            // Extract only the required fields
-            const favoriteData = {
-                data: {
-                    title: course.title,
-                    category: course.category,
-                    price: course.price,
-                    isPopular: course.isPopular,
-                    type: course.type,
-                    courseHours: course.courseHours,
-                    fullDescription: course.fullDescription,
-                    shortDescription: course.shortDescription,
-                    subjectName: course.subjectName,
-                }
-            };
-            console.log("Sending data:", JSON.stringify(favoriteData, null, 2));
-            if (newFavoriteStatus) {
-                axios.post('http://localhost:1337/api/favorites', favoriteData)
-                    .then(response => {
-                        console.log('Course added to favorites:', response.data);
-                    })
-                    .catch(error => {
-                        console.error('There was an error adding the course to favorites!', error);
-                    });
-            }
-        } else {
-            // Optionally, handle removing the course from favorites here
-        }
+            // Remove from favorites
+            axios.delete(`http://localhost:1337/api/favorites/${favorite.documentId}`)
+                .then(() => {
+                    console.log("Removed from favorites:", favorite.documentId);
+                    setIsFavorite(false);
+                    onRemoveFavorite(favorite.documentId); // Remove from UI
+                })
+                .catch(error => {
+                    console.error("Error removing from favorites!", error);
+                });
     }
 
     function onCartClick() {
@@ -82,46 +60,57 @@ function FavoriteCard({ favorite, onRemoveFavorite }) {
         "tpat": "#3498DB",
         "a-level": "#2ECC71"
     };
-    
+
     if (!favorite) {
         return <p>Error: Favorite data is missing!</p>;
     }
 
+    const imageUrl = favorite.course.image?.[0]?.formats?.large?.url
+        ? `http://localhost:1337${favorite.course.image[0].formats.large.url}`
+        : null;
+
     return (
-            <div className="course-card">
-    
-                <div className="course-details">
-    
+        <div className="course-card">
+            <div className="course-image">
+                {imageUrl ? (
+                    <img src={imageUrl} alt={favorite.course.title} />
+                ) : (
+                    <p>No Image Available</p>
+                )}
+            </div>
+
+            <div className="course-details">
+
+                <button
+                    className="favorite-btn active"
+                    onClick={onFavoriteClick}
+                >
+                    {<FaHeart className="heart-icon" />}
+                </button>
+
+                <span
+                    className="course-category-badge"
+                    style={{ backgroundColor: categoryColors[favorite.category] }}
+                >
+                    {favorite.category.toUpperCase()}
+                </span>
+                <h3 className="course-title">{favorite.title}</h3>
+                <p className="course-description">{favorite.shortDescription}</p>
+                <p className="course-hours"> ชั่วโมงเรียน:{favorite.courseHours} ชั่วโมง</p>
+                <p className="course-price"> ราคา: {favorite.price} บาท</p>
+
+                <div className="course-actions">
+                    <button className="course-learn-more-btn">รายละเอียด</button>
                     <button
-                        className={`favorite-btn ${isFavorite ? "active" : ""}`}
-                        onClick={onFavoriteClick}
+                        className={`cart-btn ${isInCart ? "in-cart" : ""}`}
+                        onClick={onCartClick}
                     >
-                        {isFavorite ? <FaHeart className="heart-icon" /> : <FaRegHeart className="heart-icon" />}
+                        {isInCart ? <FaShoppingCart className="cart-icon" /> : <FaCartPlus className="cart-icon" />}
                     </button>
-    
-                    <span
-                        className="course-category-badge"
-                        style={{ backgroundColor: categoryColors[favorite.category] }}
-                    >
-                        {favorite.category.toUpperCase()}
-                    </span>
-                    <h3 className="course-title">{favorite.title}</h3>
-                    <p className="course-description">{favorite.shortDescription}</p>
-                    <p className="course-hours"> ชั่วโมงเรียน:{favorite.courseHours} ชั่วโมง</p>
-                    <p className="course-price"> ราคา: {favorite.price} บาท</p>
-    
-                    <div className="course-actions">
-                        <button className="course-learn-more-btn">รายละเอียด</button>
-                        <button
-                            className={`cart-btn ${isInCart ? "in-cart" : ""}`}
-                            onClick={onCartClick}
-                        >
-                            {isInCart ? <FaShoppingCart className="cart-icon" /> : <FaCartPlus className="cart-icon" />}
-                        </button>
-                    </div>
                 </div>
             </div>
-        );
-    }
+        </div>
+    );
+}
 
 export default FavoriteCard;
