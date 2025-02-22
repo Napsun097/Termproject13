@@ -23,13 +23,12 @@ function CourseCard({ course }) {
         if (savedCart === "true") setIsInCart(true);
 
         // Fetch favorite status from the database
-        axios.get(`http://localhost:1337/api/courses/${course.documentId}`)
-
+        axios.get(`http://localhost:1337/api/courses/${course.documentId}?populate=*`)
             .then(response => {
                 console.log("API Response:", response.data);
-                if (response.data.isFavorite) {
+                console.log("fav response:", response.data.data.favorite);
+                if (response.data.data.favorite && response.data.data.favorite) {
                     setIsFavorite(true);
-                    localStorage.setItem(`favorite-${course.documentId}`, true);
                 }
             })
             .catch(error => {
@@ -40,7 +39,6 @@ function CourseCard({ course }) {
     function onFavoriteClick() {
         const newFavoriteStatus = !isFavorite;
         setIsFavorite(newFavoriteStatus);
-        localStorage.setItem(`favorite-${course.documentId}`, newFavoriteStatus);
 
         if (newFavoriteStatus) {
             // Extract only the required fields
