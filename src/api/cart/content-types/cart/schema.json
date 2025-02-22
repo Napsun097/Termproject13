@@ -11,20 +11,75 @@
     "draftAndPublish": true
   },
   "attributes": {
-    "total_price": {
-      "type": "biginteger"
+    "title": {
+      "type": "text"
     },
-    "users_permissions_user": {
+    "category": {
+      "type": "enumeration",
+      "enum": [
+        "tgat",
+        "tpat",
+        "a-level"
+      ]
+    },
+    "image": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "price": {
+      "type": "integer"
+    },
+    "isPopular": {
+      "type": "boolean"
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "standard",
+        "premium"
+      ]
+    },
+    "courseHours": {
+      "type": "integer"
+    },
+    "fullDescription": {
+      "type": "richtext"
+    },
+    "shortDescription": {
+      "type": "text"
+    },
+    "subjectName": {
+      "type": "enumeration",
+      "enum": [
+        "TGAT1",
+        "TGAT2",
+        "TGAT3",
+        "TPAT1",
+        "TPAT2",
+        "TPAT3",
+        "TPAT4",
+        "TPAT5",
+        "A-LEVEL PHYSICS",
+        "A-LEVEL MATH1",
+        "A-LEVEL MATH2",
+        "A-LEVEL CHEMISTRY"
+      ]
+    },
+    "quantity": {
+      "type": "integer"
+    },
+    "course": {
       "type": "relation",
       "relation": "oneToOne",
-      "target": "plugin::users-permissions.user",
+      "target": "api::course.course",
       "inversedBy": "cart"
-    },
-    "cartitems": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::cartitem.cartitem",
-      "mappedBy": "cart"
     }
   }
 }

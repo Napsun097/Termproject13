@@ -74,12 +74,6 @@
         "Admin",
         "User"
       ]
-    },
-    "cart": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::cart.cart",
-      "mappedBy": "users_permissions_user"
     }
   }
 }

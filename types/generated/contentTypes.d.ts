@@ -381,50 +381,43 @@ export interface ApiCartCart extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    cartitems: Schema.Attribute.Relation<'oneToMany', 'api::cartitem.cartitem'>;
+    category: Schema.Attribute.Enumeration<['tgat', 'tpat', 'a-level']>;
+    course: Schema.Attribute.Relation<'oneToOne', 'api::course.course'>;
+    courseHours: Schema.Attribute.Integer;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    fullDescription: Schema.Attribute.RichText;
+    image: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios',
+      true
+    >;
+    isPopular: Schema.Attribute.Boolean;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::cart.cart'> &
       Schema.Attribute.Private;
-    publishedAt: Schema.Attribute.DateTime;
-    total_price: Schema.Attribute.BigInteger;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    users_permissions_user: Schema.Attribute.Relation<
-      'oneToOne',
-      'plugin::users-permissions.user'
-    >;
-  };
-}
-
-export interface ApiCartitemCartitem extends Struct.CollectionTypeSchema {
-  collectionName: 'cartitems';
-  info: {
-    description: '';
-    displayName: 'Cartitem';
-    pluralName: 'cartitems';
-    singularName: 'cartitem';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    cart: Schema.Attribute.Relation<'manyToOne', 'api::cart.cart'>;
-    course: Schema.Attribute.Relation<'manyToOne', 'api::course.course'>;
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::cartitem.cartitem'
-    > &
-      Schema.Attribute.Private;
+    price: Schema.Attribute.Integer;
     publishedAt: Schema.Attribute.DateTime;
     quantity: Schema.Attribute.Integer;
+    shortDescription: Schema.Attribute.Text;
+    subjectName: Schema.Attribute.Enumeration<
+      [
+        'TGAT1',
+        'TGAT2',
+        'TGAT3',
+        'TPAT1',
+        'TPAT2',
+        'TPAT3',
+        'TPAT4',
+        'TPAT5',
+        'A-LEVEL PHYSICS',
+        'A-LEVEL MATH1',
+        'A-LEVEL MATH2',
+        'A-LEVEL CHEMISTRY',
+      ]
+    >;
+    title: Schema.Attribute.Text;
+    type: Schema.Attribute.Enumeration<['standard', 'premium']>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -443,7 +436,7 @@ export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    cartitems: Schema.Attribute.Relation<'oneToMany', 'api::cartitem.cartitem'>;
+    cart: Schema.Attribute.Relation<'oneToOne', 'api::cart.cart'>;
     category: Schema.Attribute.Enumeration<['tgat', 'tpat', 'a-level']>;
     courseHours: Schema.Attribute.Integer;
     createdAt: Schema.Attribute.DateTime;
@@ -1004,7 +997,6 @@ export interface PluginUsersPermissionsUser
   };
   attributes: {
     blocked: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
-    cart: Schema.Attribute.Relation<'oneToOne', 'api::cart.cart'>;
     confirmationToken: Schema.Attribute.String & Schema.Attribute.Private;
     confirmed: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     createdAt: Schema.Attribute.DateTime;
@@ -1058,7 +1050,6 @@ declare module '@strapi/strapi' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
       'api::cart.cart': ApiCartCart;
-      'api::cartitem.cartitem': ApiCartitemCartitem;
       'api::course.course': ApiCourseCourse;
       'api::favorite.favorite': ApiFavoriteFavorite;
       'plugin::content-releases.release': PluginContentReleasesRelease;

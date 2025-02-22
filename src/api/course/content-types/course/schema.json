@@ -72,16 +72,16 @@
         "A-LEVEL CHEMISTRY"
       ]
     },
-    "cartitems": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::cartitem.cartitem",
-      "mappedBy": "course"
-    },
     "favorite": {
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::favorite.favorite",
+      "mappedBy": "course"
+    },
+    "cart": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::cart.cart",
       "mappedBy": "course"
     }
   }
