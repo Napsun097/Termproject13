@@ -1,41 +1,55 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import CartCard from "../Components/CartCard";
+import "../style/cart.css";
 
 const Cart = () => {
-  return (
-    <div className="bg-white min-h-screen p-6 text-black">
-      <h1 className="text-3xl font-bold">My Cart</h1>
-      <div className="flex flex-col md:flex-row mt-6 gap-6">
-        {/* Cart Items */}
-        <div className="w-full md:w-3/4 p-4 border border-gray-200">
-          <div className="flex items-center gap-4">
-            {/* Cart Item Content */}
-          </div>
-        </div>
+    const [carts, setCarts] = useState([]);
 
-        {/* Summary Section */}
-        <div className="w-full md:w-1/4 p-4 border border-gray-200">
-          <div>
-            <h2 className="text-xl font-bold">Course Summary</h2>
-            <div className="flex justify-between mt-4">
-              <p>Price</p>
-              <p>THB --.--</p>
+    useEffect(() => {
+        axios.get("http://localhost:1337/api/carts?populate[course][populate]=image")
+            .then(response => {
+                console.log("Carts fetched:", response.data); // Debugging log
+
+                // ✅ Ensure we correctly extract data from Strapi's structure
+                if (response.data && response.data.data) {
+                    setCarts(response.data.data); // Set entire favorites list
+                }
+            })
+            .catch(error => {
+                console.error("Error fetching cart courses!", error);
+            });
+    }, []);
+
+    const handleRemoveCart = (cartId) => {
+        axios.delete(`http://localhost:1337/api/carts/${cartId}`)
+            .then(() => {
+                setCarts(carts.filter(cart => cart.id !== cartId));
+            })
+            .catch(error => {
+                console.error("Error removing cart courses!", error);
+            });
+    };
+
+    return (
+        <div className="Favorite-page">
+            <h1>Cart Courses</h1>
+
+            <div className="course-list">
+                {carts.length > 0 ? (
+                    carts.map(cart => (
+                        <CartCard
+                            key={cart.id}
+                            cart={cart} // ✅ Correctly extract attributes
+                            onRemoveCart={() => handleRemoveCart(cart.id)}
+                        />
+                    ))
+                ) : (
+                    <p className="no-carts">No cart courses found.</p>
+                )}
             </div>
-            <div className="flex justify-between text-gray-500 text-sm">
-              <p>Taxes</p>
-              <p>Calculated at Checkout</p>
-            </div>
-            <div className="flex justify-between font-semibold mt-4">
-              <p>Subtotal</p>
-              <p>THB --.--</p>
-            </div>
-            <button className="w-full mt-4 bg-blue-600 text-white hover:bg-blue-700">
-              Check Out
-            </button>
-          </div>
         </div>
-      </div>
-    </div>
-  );
+    );
 };
 
 export default Cart;

@@ -19,9 +19,6 @@ function CourseCard({ course }) {
         setIsFavorite(!isFavorite);
         localStorage.setItem(`favorite-${course.id}`, !isFavorite);
     }*/
-        const savedCart = localStorage.getItem(`cart-${course.id}`);
-        if (savedCart === "true") setIsInCart(true);
-
         // Fetch favorite status from the database
         axios.get(`http://localhost:1337/api/courses/${course.documentId}?populate=*`)
             .then(response => {
@@ -30,9 +27,12 @@ function CourseCard({ course }) {
                 if (response.data.data.favorite && response.data.data.favorite) {
                     setIsFavorite(true);
                 }
+                if (response.data.data.cart && response.data.data.cart) {
+                    setIsInCart(true);
+                }
             })
             .catch(error => {
-                console.error('There was an error fetching the favorite status!', error);
+                console.error('There was an error fetching the favorite or cart status!', error);
             });
     }, [course.documentId]);
 
@@ -89,8 +89,55 @@ function CourseCard({ course }) {
     }
 
     function onCartClick() {
-        setIsInCart(!isInCart);
-        localStorage.setItem(`cart-${course.id}`, !isInCart);
+        const newCartStatus = !isInCart;
+        setIsInCart(newCartStatus);
+
+        if (newCartStatus) {
+            // Extract only the required fields
+            const cartData = {
+                data: {
+                    title: course.title,
+                    category: course.category,
+                    price: course.price,
+                    isPopular: course.isPopular,
+                    type: course.type,
+                    courseHours: course.courseHours,
+                    fullDescription: course.fullDescription,
+                    shortDescription: course.shortDescription,
+                    subjectName: course.subjectName,
+                    course: {
+                        connect: [course.documentId],
+                    }
+                }
+            };
+            console.log("Sending data:", JSON.stringify(cartData, null, 2));
+            if (newCartStatus) {
+                axios.post('http://localhost:1337/api/carts', cartData)
+                    .then(response => {
+                        console.log('Course added to carts:', response.data);
+                    })
+                    .catch(error => {
+                        console.error('There was an error adding the course to carts!', error);
+                    });
+            }
+        } else {
+            axios.get(`http://localhost:1337/api/courses/${course.documentId}?populate=cart`)
+                .then(response => {
+                    const cartId = response.data.data.cart.documentId;
+                    if (cartId) {
+                        axios.delete(`http://localhost:1337/api/carts/${cartId}`)
+                            .then(() => {
+                                console.log("Course removed from carts");
+                            })
+                            .catch(error => {
+                                console.error("Error removing course from carts", error);
+                            });
+                    }
+                })
+                .catch(error => {
+                    console.error("Error fetching cart entry", error);
+                });
+        }
     }
 
     const categoryColors = {
