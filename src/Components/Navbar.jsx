@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/images/logo.png";
 import "../style/navbar.css";
+import { FaShoppingCart, FaHeart } from "react-icons/fa";
 
 function Navbar({ user, setUser }) {
   const [searchTerm, setSearchTerm] = useState("");
@@ -60,7 +61,8 @@ function Navbar({ user, setUser }) {
             <Link to="/tgat" className="nav-link" onClick={closeNavbar}>TGAT</Link>
             <Link to="/tpat" className="nav-link" onClick={closeNavbar}>TPAT</Link>
             <Link to="/a-level" className="nav-link" onClick={closeNavbar}>A-level</Link>
-            <Link to="/favorite" className="nav-link" onClick={closeNavbar}>Favorite</Link>
+            <Link to="/favorite" className="nav-link" onClick={closeNavbar}><FaHeart size={30}/></Link>
+            <Link to="/cart" className="nav-link" onClick={closeNavbar}><FaShoppingCart size={30}/></Link>
           </div>
 
           <div className="search-container">
