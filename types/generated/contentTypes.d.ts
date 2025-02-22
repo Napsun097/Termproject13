@@ -503,7 +503,6 @@ export interface ApiFavoriteFavorite extends Struct.CollectionTypeSchema {
   attributes: {
     category: Schema.Attribute.Enumeration<['tgat', 'tpat', 'a-level']>;
     course: Schema.Attribute.Relation<'oneToOne', 'api::course.course'>;
-    courseDoc: Schema.Attribute.String;
     courseHours: Schema.Attribute.Integer;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &

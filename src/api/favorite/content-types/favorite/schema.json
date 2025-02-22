@@ -77,9 +77,6 @@
       "relation": "oneToOne",
       "target": "api::course.course",
       "inversedBy": "favorite"
-    },
-    "courseDoc": {
-      "type": "string"
     }
   }
 }
