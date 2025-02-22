@@ -69,7 +69,22 @@ function CourseCard({ course }) {
                     });
             }
         } else {
-            // Optionally, handle removing the course from favorites here
+            axios.get(`http://localhost:1337/api/courses/${course.documentId}?populate=favorite`)
+                .then(response => {
+                    const favoriteId = response.data.data.favorite.documentId;
+                    if (favoriteId) {
+                        axios.delete(`http://localhost:1337/api/favorites/${favoriteId}`)
+                            .then(() => {
+                                console.log("Course removed from favorites");
+                            })
+                            .catch(error => {
+                                console.error("Error removing course from favorites", error);
+                            });
+                    }
+                })
+                .catch(error => {
+                    console.error("Error fetching favorite entry", error);
+                });
         }
     }
 
