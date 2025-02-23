@@ -1,39 +1,45 @@
 import React, { useState, useEffect } from "react";
 import CourseCard from "../Components/CourseCard";
-import "../style/tgat.css";
 import { fetchCoursesByCategory } from "../api/api";
+import "../style/tgat.css";
 
 function Tgat() {
-  const [courses, setCourses] = useState([]); // State สำหรับเก็บข้อมูลคอร์ส
-  const [filteredCourses, setFilteredCourses] = useState([]); // State สำหรับเก็บคอร์สที่กรองแล้ว
-  const [loading, setLoading] = useState(true); // State สำหรับโหลดข้อมูล
-  const [error, setError] = useState(null); // State สำหรับจัดการข้อผิดพลาด
+  const [courses, setCourses] = useState([]);
+  const [filteredCourses, setFilteredCourses] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
   useEffect(() => {
     async function getCourses() {
       setLoading(true);
       const { courses, error } = await fetchCoursesByCategory("tgat");
       setCourses(courses);
-      setFilteredCourses(courses); // เริ่มต้นแสดงทั้งหมด
+      setFilteredCourses(courses);
       setError(error);
       setLoading(false);
     }
     getCourses();
   }, []);
 
-  // ฟังก์ชันกรองคอร์สตามรหัส TGAT
-  function filterCoursesByCode(code) {
-    const filtered = courses.filter(course =>
-      course.subjectName.toLowerCase().includes(code.toLowerCase())
-    );
-    setFilteredCourses(filtered); // อัพเดตคอร์สที่กรองแล้ว
-  }
+  useEffect(() => {
+    function handleResize() {
+      setIsMobile(window.innerWidth <= 768);
+    }
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
-  
-
-  // ฟังก์ชันรีเซ็ตการกรองทั้งหมด
-  function showAllCourses() {
-    setFilteredCourses(courses); // แสดงคอร์สทั้งหมด
+  function handleDropdownChange(event) {
+    const selectedValue = event.target.value;
+    if (selectedValue === "all") {
+      setFilteredCourses(courses);
+    } else {
+      const filtered = courses.filter((course) =>
+        course.subjectName?.toLowerCase().includes(selectedValue.toLowerCase())
+      );
+      setFilteredCourses(filtered);
+    }
   }
 
   if (loading)
@@ -43,21 +49,21 @@ function Tgat() {
         <p>กำลังโหลด... ใจเย็นๆ น่ะจ่ะ</p>
       </div>
     );
-
   if (error) return <p>{error}</p>;
 
   return (
     <div className="tgat-page">
-      {/* Sidebar */}
-      <div className="sidebar">
-        <h2>รายวิชา</h2>
-        <button onClick={() => filterCoursesByCode("TGAT1")}>TGAT 1</button>
-        <button onClick={() => filterCoursesByCode("TGAT2")}>TGAT 2</button>
-        <button onClick={() => filterCoursesByCode("TGAT3")}>TGAT 3</button>
-        <button onClick={showAllCourses}>ทุกวิชา</button>
+      <div className="subject-selector">
+        <h2></h2>
+        <select className="dropdown" onChange={handleDropdownChange}>
+          <option value="all">ทุกวิชา</option>
+          {["TGAT1", "TGAT2", "TGAT3"].map((subject) => (
+            <option key={subject} value={subject}>
+              {subject}
+            </option>
+          ))}
+        </select>
       </div>
-
-      {/* แสดงรายการคอร์ส */}
       <div className="course-list">
         {filteredCourses.length > 0 ? (
           filteredCourses.map((course) => <CourseCard key={course.id} course={course} />)

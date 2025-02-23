@@ -10,7 +10,7 @@
   top: 0;
   z-index: 1000;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  height: 70px;
+  height: 100px;
   white-space: nowrap; /* ป้องกันการตัดบรรทัดใหม่ */
 }
 
@@ -205,26 +205,9 @@
 /* สไตล์สำหรับไอคอนตะกร้า */
 .navbar-icons .nav-icon {
   position: relative;
-  display: inline-block;
 }
 
-/* เพิ่มสไตล์สำหรับข้อความที่แสดงในตะกร้า */
-.navbar-icons .nav-icon .cart-item-count {
-  position: absolute;
-  top: -5px;
-  right: -10px;
-  background-color: red;
-  color: white;
-  font-size: 12px;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-weight: bold;
-  white-space: nowrap; /* ป้องกันการตัดบรรทัดใหม่ */
-}
+
 
 /* สำหรับอุปกรณ์มือถือ */
 @media (max-width: 768px) {
@@ -236,7 +219,7 @@
     display: none;
     flex-direction: column-reverse;
     position: absolute;
-    top: 60px;
+    top: 80px;
     left: 0;
     width: 100%;
     background-color: #ffffff;
@@ -291,3 +274,5 @@
     margin-top: 10px;
   }
 }
+
+

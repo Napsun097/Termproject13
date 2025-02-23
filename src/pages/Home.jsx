@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import CourseCard from "../Components/CourseCard";
 import { fetchCourses } from "../api/api";
 import "../style/home.css";
-import picpromotion from "../assets/images/TCAS.webp";
+import picpromotion from "../assets/images/promotion.webp";
+import Link from "antd/es/typography/Link";
 
 function Home() {
   const [courses, setCourses] = useState([]); {/* State สำหรับเก็บข้อมูลคอร์ส */ }
@@ -38,21 +39,29 @@ function Home() {
   return (
     <>
       <div className="home-page">
-        <h1>Welcome to UniMaster</h1>
-        <p>Master Your Future with UniMaster</p><br />
+
 
         {/* ส่วนของโปรโมชั่น */}
-        <div className="promotion">
-          <p>promotion</p>
-          <img src={picpromotion} alt="" />
-          <p>promotion</p>
+        <div className="head-promotion">
+          <div className="head-welcome">
+            <h1 className="text-welcome"> Welcome to <span>UniMaster</span> </h1>
+            <p className="text-welcome">Master Your Future with UniMaster</p><br />
+            <button className="about-welcome-btn">
+              <Link to=""> เกี่ยวกับสถาบัน </Link>
+            </button>
+            
+          </div>
+          <div className="img-promotion">
+            <img src={picpromotion} alt="" />
+          </div>
+
         </div>
         <br />
 
         {/* ส่วนของคอร์สยอดนิยม */}
         {premiumCourses.length > 0 ? (
           <div className="course-category">
-            <h2>คอร์สยอดนิยม</h2>
+            <h2>| คอร์สเรียน Hot Selling</h2>
             <div className="course-list">
               {premiumCourses.map((course) => (
                 <CourseCard key={course.id} course={course} />
@@ -67,7 +76,7 @@ function Home() {
         {/* ส่วนของคอร์สอื่นๆ */}
         {standardCourses.length > 0 ? (
           <div className="course-category">
-            <h2>คอร์สอื่นๆ</h2>
+            <h2>| คอร์สอื่นๆ</h2>
             <div className="course-list">
               {standardCourses.map((course) => (
                 <CourseCard key={course.id} course={course} />
@@ -77,6 +86,64 @@ function Home() {
         ) : (
           <p>No standard courses available at the moment.</p>
         )}
+
+        <br />
+        {standardCourses.length > 0 ? (
+          <div className="course-category">
+            <h2>| คอร์สอื่นๆ</h2>
+            <div className="course-list">
+              {standardCourses.map((course) => (
+                <CourseCard key={course.id} course={course} />
+              ))}
+            </div>
+          </div>
+        ) : (
+          <p>No standard courses available at the moment.</p>
+        )}
+
+        <br />
+        {standardCourses.length > 0 ? (
+          <div className="course-category">
+            <h2> | แพ็คคู่ มาราธอน </h2>
+            <div className="course-list">
+              {standardCourses.map((course) => (
+                <CourseCard key={course.id} course={course} />
+              ))}
+            </div>
+          </div>
+        ) : (
+          <p>No standard courses available at the moment.</p>
+        )}
+        <br />
+
+        {standardCourses.length > 0 ? (
+          <div className="course-category">
+            <h2>คอร์สเสริมตะลุยโจทย์</h2>
+            <div className="course-list">
+              {standardCourses.map((course) => (
+                <CourseCard key={course.id} course={course} />
+              ))}
+            </div>
+          </div>
+        ) : (
+          <p>No standard courses available at the moment.</p>
+        )}
+
+        <br />
+
+        {standardCourses.length > 0 ? (
+          <div className="course-category">
+            <h2>| ทดลองเรียน พื้นฐาน</h2>
+            <div className="course-list">
+              {standardCourses.map((course) => (
+                <CourseCard key={course.id} course={course} />
+              ))}
+            </div>
+          </div>
+        ) : (
+          <p>No standard courses available at the moment.</p>
+        )}
+        
       </div>
 
     </>

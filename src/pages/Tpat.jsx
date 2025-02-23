@@ -1,66 +1,70 @@
 import React, { useState, useEffect } from "react";
 import CourseCard from "../Components/CourseCard";
-import "../style/tpat.css";
 import { fetchCoursesByCategory } from "../api/api";
+import "../style/tpat.css";
 
 function Tpat() {
-  const [courses, setCourses] = useState([]); // State สำหรับเก็บข้อมูลคอร์ส
-  const [filteredCourses, setFilteredCourses] = useState([]); // State สำหรับเก็บคอร์สที่กรองแล้ว
-  const [loading, setLoading] = useState(true); // State สำหรับโหลดข้อมูล
-  const [error, setError] = useState(null); // State สำหรับจัดการข้อผิดพลาด
+  const [courses, setCourses] = useState([]); // State for all courses
+  const [filteredCourses, setFilteredCourses] = useState([]); // State for filtered courses
+  const [loading, setLoading] = useState(true); // State for loading status
+  const [error, setError] = useState(null); // State for error handling
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768); // State to handle screen size for mobile responsiveness
 
   useEffect(() => {
     async function getCourses() {
       setLoading(true);
       const { courses, error } = await fetchCoursesByCategory("tpat");
       setCourses(courses);
-      setFilteredCourses(courses); // เริ่มต้นแสดงทั้งหมด
+      setFilteredCourses(courses); // Initially show all courses
       setError(error);
       setLoading(false);
     }
     getCourses();
   }, []);
 
-  // ฟังก์ชันกรองคอร์สตามรหัส TPAT
-  function filterCoursesByCode(code) {
-    const filtered = courses.filter(course =>
-      course.subjectName.toLowerCase().includes(code.toLowerCase())
-    );
-    setFilteredCourses(filtered); // อัพเดตคอร์สที่กรองแล้ว
-  }
-  
+  useEffect(() => {
+    function handleResize() {
+      setIsMobile(window.innerWidth <= 768);
+    }
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
-  
-
-  // ฟังก์ชันรีเซ็ตการกรองทั้งหมด
-  function showAllCourses() {
-    setFilteredCourses(courses); // แสดงคอร์สทั้งหมด
+  // Handle dropdown selection
+  function handleDropdownChange(event) {
+    const selectedValue = event.target.value;
+    if (selectedValue === "all") {
+      setFilteredCourses(courses);
+    } else {
+      const filtered = courses.filter((course) =>
+        course.subjectName?.toLowerCase().includes(selectedValue.toLowerCase())
+      );
+      setFilteredCourses(filtered);
+    }
   }
 
   if (loading)
     return (
       <div className="loading-container">
         <div className="spinner"></div>
-        <p>กำลังโหลด...ใจเย็นๆ น่ะจ่ะ</p>
+        <p>กำลังโหลด... ใจเย็นๆ น่ะจ่ะ</p>
       </div>
     );
-    
   if (error) return <p>{error}</p>;
 
   return (
     <div className="tpat-page">
-      {/* Sidebar */}
-      <div className="sidebar">
-        <h2>รายวิชา</h2>
-        <button onClick={() => filterCoursesByCode("TPAT1")}>TPAT 1</button>
-        <button onClick={() => filterCoursesByCode("TPAT2")}>TPAT 2</button>
-        <button onClick={() => filterCoursesByCode("TPAT3")}>TPAT 3</button>
-        <button onClick={() => filterCoursesByCode("TPAT4")}>TPAT 4</button>
-        <button onClick={() => filterCoursesByCode("TPAT5")}>TPAT 5</button>
-        <button onClick={showAllCourses}>ทุกวิชา</button>
+      <div className="subject-selector">
+        <h2></h2>
+        <select className="dropdown" onChange={handleDropdownChange}>
+          <option value="all">ทุกวิชา</option>
+          {["TPAT1", "TPAT2", "TPAT3", "TPAT4", "TPAT5"].map((subject) => (
+            <option key={subject} value={subject}>
+              {subject}
+            </option>
+          ))}
+        </select>
       </div>
-
-      {/* แสดงรายการคอร์ส */}
       <div className="course-list">
         {filteredCourses.length > 0 ? (
           filteredCourses.map((course) => <CourseCard key={course.id} course={course} />)

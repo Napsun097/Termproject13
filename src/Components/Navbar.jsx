@@ -44,9 +44,6 @@ function Navbar({ user, setUser }) {
 
   return (
     <nav className="navbar">
-      <button className="navbar-toggle" onClick={toggleNavbar}>
-        <i className={`fas ${isNavbarOpen ? "fa-times" : "fa-bars"}`}></i>
-      </button>
 
       <div className="navbar-container">
         <div className="navbar-brand">
@@ -61,8 +58,6 @@ function Navbar({ user, setUser }) {
             <Link to="/tgat" className="nav-link" onClick={closeNavbar}>TGAT</Link>
             <Link to="/tpat" className="nav-link" onClick={closeNavbar}>TPAT</Link>
             <Link to="/a-level" className="nav-link" onClick={closeNavbar}>A-level</Link>
-            <Link to="/favorite" className="nav-link" onClick={closeNavbar}><FaHeart size={30}/></Link>
-            <Link to="/cart" className="nav-link" onClick={closeNavbar}><FaShoppingCart size={30}/></Link>
           </div>
 
           <div className="search-container">
@@ -78,9 +73,12 @@ function Navbar({ user, setUser }) {
                 <i className="fas fa-search"></i>
               </button>
             </form>
+            <Link to="/favorite" className="nav-link" onClick={closeNavbar}><FaHeart size={30}/></Link>
+            <Link to="/cart" className="nav-link" onClick={closeNavbar}><FaShoppingCart size={30}/></Link>
           </div>
 
           <div className="navbar-icons">
+            
             {/* Debug user and roles */}
             {console.log(user)} 
 
@@ -128,6 +126,9 @@ function Navbar({ user, setUser }) {
           </div>
         </div>
       </div>
+      <button className="navbar-toggle" onClick={toggleNavbar}>
+        <i className={`fas ${isNavbarOpen ? "fa-times" : "fa-bars"}`}></i>
+      </button>
     </nav>
   );
 }
