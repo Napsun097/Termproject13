@@ -20,9 +20,14 @@ const AdminDashboard = () => {
       <p className="admin-text">ยินดีต้อนรับสู่แผงควบคุมของแอดมิน</p>
 
       {/* ✅ ปุ่มกลับหน้า Home */}
-      <button className="admin-button" onClick={() => navigate("/")}>
-        กลับหน้า Home
-      </button>
+      <div className="button-group">
+        <button className="admin-button" onClick={() => navigate("/")}>
+          กลับหน้า Home
+        </button>
+        <button className="admin-button" onClick={() => navigate("/admin")}>
+          Admin Panel
+        </button>
+      </div>
     </div>
   );
 };

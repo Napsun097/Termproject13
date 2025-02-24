@@ -1,4 +1,10 @@
 /* ✅ ทำให้หน้า Admin Dashboard เต็มจอ */
+.button-group {
+  display: flex;
+  gap: 15px;  /* Adds space between buttons */
+  margin-top: 20px; /* Adjust spacing from text */
+}
+
 .admin-container {
     display: flex;
     flex-direction: column;

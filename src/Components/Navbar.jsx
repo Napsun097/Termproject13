@@ -105,7 +105,7 @@ function Navbar({ user, setUser }) {
                   </Link>
                   {user.roles && user.roles.includes("Admin") && (
                     <Link to="/admin-dashboard" className="profile-menu-item" onClick={closeNavbar}>
-                      จัดการคอร์ส
+                      Administration
                     </Link>
                   )}
                   {user.roles && user.roles.includes("User") && (
