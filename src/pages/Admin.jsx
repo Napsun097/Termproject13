@@ -64,7 +64,7 @@ const Admin = () => {
 
   const handleSave = async () => {
     if (!editingCourse) return;
-
+  
     try {
       const updatedData = {
         data: {
@@ -79,9 +79,10 @@ const Admin = () => {
           subjectName: formData.subjectName,
         },
       };
-
-      console.log("Sending updated data:", updatedData);
-
+  
+      console.log("Updating Course:", updatedData);
+  
+      // 1️⃣ Update Course
       await axios.put(
         `http://localhost:1337/api/courses/${editingCourse.documentId}`,
         updatedData,
@@ -91,20 +92,62 @@ const Admin = () => {
           },
         }
       );
-
-      // Update the UI
-      setCourses((prevCourses) =>
-        prevCourses.map((course) =>
-          course.documentId === editingCourse.documentId
-            ? { ...course, attributes: { ...course.attributes, ...updatedData.data } }
-            : course
+  
+      // 2️⃣ Find Related `favorites` & `cart` Items
+      const favoriteRes = await axios.get(
+        `http://localhost:1337/api/favorites?filters[course][documentId]=${editingCourse.documentId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+      );
+  
+      const cartRes = await axios.get(
+        `http://localhost:1337/api/carts?filters[course][documentId]=${editingCourse.documentId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+      );
+  
+      const favoriteItems = favoriteRes.data.data;
+      const cartItems = cartRes.data.data;
+  
+      // 3️⃣ Update Each Favorite Item
+      await Promise.all(
+        favoriteItems.map((fav) =>
+          axios.put(
+            `http://localhost:1337/api/favorites/${fav.documentId}`,
+            { data: updatedData.data },
+            {
+              headers: { Authorization: `Bearer ${authToken}` },
+            }
+          )
         )
       );
-
-      setModalOpen(false);
+  
+      // 4️⃣ Update Each Cart Item
+      await Promise.all(
+        cartItems.map((cart) =>
+          axios.put(
+            `http://localhost:1337/api/carts/${cart.documentId}`,
+            { data: updatedData.data },
+            {
+              headers: { Authorization: `Bearer ${authToken}` },
+            }
+          )
+        )
+      );
+  
+      // ✅ Refresh Data
       fetchCourses();
+      setModalOpen(false);
+  
+      console.log("Course & related data updated successfully!");
     } catch (error) {
-      console.error("Error updating course!", error);
+      console.error("Error updating course & related data:", error);
     }
   };
 
