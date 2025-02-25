@@ -2,12 +2,18 @@ import React, { useState, useEffect } from "react";
 import "../style/admin.css";
 import axios from "axios";
 import { Button, Modal, Input, Upload, Select, Checkbox } from "antd";
+import { EditOutlined, DeleteOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
+
+const { confirm } = Modal;
 
 const Admin = () => {
   const [activeTab, setActiveTab] = useState("course");
   const [courses, setCourses] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [editingCourse, setEditingCourse] = useState(null);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [courseToDelete, setCourseToDelete] = useState(null);
+
   const [formData, setFormData] = useState({
     title: "",
     category: "",
@@ -35,14 +41,14 @@ const Admin = () => {
         console.error("Error fetching courses!", error);
       });
   };
-  
+
   useEffect(() => {
     fetchCourses(); // Fetch courses when component mounts
   }, []);
 
   const handleEditClick = (course) => {
     setEditingCourse(course);
-    
+
     setFormData({
       title: course.title || "",
       category: course.category || "",
@@ -64,7 +70,7 @@ const Admin = () => {
 
   const handleSave = async () => {
     if (!editingCourse) return;
-  
+
     try {
       const updatedData = {
         data: {
@@ -79,9 +85,9 @@ const Admin = () => {
           subjectName: formData.subjectName,
         },
       };
-  
+
       console.log("Updating Course:", updatedData);
-  
+
       // 1️⃣ Update Course
       await axios.put(
         `http://localhost:1337/api/courses/${editingCourse.documentId}`,
@@ -92,7 +98,7 @@ const Admin = () => {
           },
         }
       );
-  
+
       // 2️⃣ Find Related `favorites` & `cart` Items
       const favoriteRes = await axios.get(
         `http://localhost:1337/api/favorites?filters[course][documentId]=${editingCourse.documentId}`,
@@ -102,7 +108,7 @@ const Admin = () => {
           },
         }
       );
-  
+
       const cartRes = await axios.get(
         `http://localhost:1337/api/carts?filters[course][documentId]=${editingCourse.documentId}`,
         {
@@ -111,10 +117,10 @@ const Admin = () => {
           },
         }
       );
-  
+
       const favoriteItems = favoriteRes.data.data;
       const cartItems = cartRes.data.data;
-  
+
       // 3️⃣ Update Each Favorite Item
       await Promise.all(
         favoriteItems.map((fav) =>
@@ -127,7 +133,7 @@ const Admin = () => {
           )
         )
       );
-  
+
       // 4️⃣ Update Each Cart Item
       await Promise.all(
         cartItems.map((cart) =>
@@ -140,14 +146,69 @@ const Admin = () => {
           )
         )
       );
-  
+
       // ✅ Refresh Data
       fetchCourses();
       setModalOpen(false);
-  
+
       console.log("Course & related data updated successfully!");
     } catch (error) {
       console.error("Error updating course & related data:", error);
+    }
+  };
+
+  const handleDeleteCourse = (course) => {
+    setCourseToDelete(course);
+    setDeleteModalOpen(true);
+  };
+
+  const confirmDelete = async () => {
+    if (!courseToDelete) return;
+
+    try {
+      console.log("Deleting course:", courseToDelete.documentId);
+
+      // 1️⃣ Delete Related `favorites`
+      const favoriteRes = await axios.get(
+        `http://localhost:1337/api/favorites?filters[course][documentId]=${courseToDelete.documentId}`,
+        { headers: { Authorization: `Bearer ${authToken}` } }
+      );
+      const favoriteItems = favoriteRes.data.data;
+      await Promise.all(
+        favoriteItems.map((fav) =>
+          axios.delete(`http://localhost:1337/api/favorites/${fav.documentId}`, {
+            headers: { Authorization: `Bearer ${authToken}` },
+          })
+        )
+      );
+
+      // 2️⃣ Delete Related `cart` Items
+      const cartRes = await axios.get(
+        `http://localhost:1337/api/carts?filters[course][documentId]=${courseToDelete.documentId}`,
+        { headers: { Authorization: `Bearer ${authToken}` } }
+      );
+      const cartItems = cartRes.data.data;
+      await Promise.all(
+        cartItems.map((cart) =>
+          axios.delete(`http://localhost:1337/api/carts/${cart.documentId}`, {
+            headers: { Authorization: `Bearer ${authToken}` },
+          })
+        )
+      );
+
+      // 3️⃣ Delete Course
+      await axios.delete(`http://localhost:1337/api/courses/${courseToDelete.documentId}`, {
+        headers: { Authorization: `Bearer ${authToken}` },
+      });
+
+      // ✅ Refresh Data
+      fetchCourses();
+      setDeleteModalOpen(false);
+      setCourseToDelete(null);
+      message.success("Course and related data deleted successfully!");
+    } catch (error) {
+      console.error("Error deleting course & related data:", error);
+      message.error("Failed to delete course!");
     }
   };
 
@@ -198,8 +259,13 @@ const Admin = () => {
                       ) : (
                         <p>No Image Available</p>
                       )}
-                      <Button type="primary" className="edit-button" onClick={() => handleEditClick(course)}>Edit</Button>
-                    </div>
+                        <Button type="primary" icon={<EditOutlined />} className="edit-button" onClick={() => handleEditClick(course)}>
+                          Edit
+                        </Button>
+                        <Button danger icon={<DeleteOutlined />} className="delete-button" onClick={() => handleDeleteCourse(course)}>
+                          Delete
+                        </Button>
+                      </div>
                   );
                 })
               ) : (
@@ -221,7 +287,7 @@ const Admin = () => {
           onChange={(e) => handleChange("title", e.target.value)}
           style={{ marginBottom: "10px" }}
         />
-        
+
         <label>Category</label>
         <Select
           placeholder="Select Category"
@@ -262,7 +328,7 @@ const Admin = () => {
           <Option value="standard">standard</Option>
           <Option value="premium">premium</Option>
         </Select>
-        
+
         <label>CourseHours</label>
         <Input
           type="number"
@@ -310,6 +376,18 @@ const Admin = () => {
           <Option value="A-LEVEL MATH2">A-LEVEL MATH2</Option>
           <Option value="A-LEVEL CHEMISTRY">A-LEVEL CHEMISTRY</Option>
         </Select>
+      </Modal>
+      <Modal
+        title="Delete Course"
+        open={deleteModalOpen}
+        onOk={confirmDelete}
+        onCancel={() => setDeleteModalOpen(false)}
+        okText="Yes, Delete"
+        okType="danger"
+        cancelText="Cancel"
+      >
+        <p>Are you sure you want to delete this course?</p>
+        <p>This will also delete related favorites and cart items.</p>
       </Modal>
     </div>
   );

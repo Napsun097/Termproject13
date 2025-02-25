@@ -72,5 +72,16 @@
 }
 
 .edit-button {
-margin-top: 15px; /* Adds space between the image and button */
+  margin-top: 15px; /* Adds space between the image and button */
+}
+
+.delete-button {
+  margin-top: 10px; /* Adds space between the edit and delete buttons */
+}
+
+.button-group {
+  display: flex;
+  justify-content: center;
+  gap: 10px; /* Adds space between buttons */
+  margin-top: 15px;
 }
