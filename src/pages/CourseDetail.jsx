@@ -42,7 +42,7 @@ function CourseDetail() {
             </div>
 
             {/* Sidebar Section */}
-            <div className="sidebar">
+            <div className="sidebar-detail">
                 <h2>Course Sections</h2>
                 <ul>
                     {course.sections && course.sections.map((section, index) => (
