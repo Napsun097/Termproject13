@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { login } from "../api/auth"; // ฟังก์ชัน login API
 import "../style/login.css"; // ใช้ไฟล์ CSS ที่แก้ไข
+import logo from "../assets/images/logo.png"
 
 const Login = ({ setUser }) => {
   const [username, setUsername] = useState("");   // สร้าง state สำหรับเก็บชื่อผู้ใช้
@@ -35,15 +36,11 @@ const Login = ({ setUser }) => {
 
   return (
     <div className="login-container">
-      {/* ฝั่งซ้าย: รูปภาพ */}
-      <div className="login-image"></div>
-
-      {/* ฝั่งขวา: ฟอร์มล็อกอิน */}
       <div className="login-form">
-        <h2>เข้าสู่ระบบ</h2>
+        <img className="logo-login-page" src={logo} alt="logo-web" />
         <form onSubmit={handleLogin}>
           <div className="input-group">
-            <label htmlFor="username">ชื่อผู้ใช้:</label>
+            <label htmlFor="username">username:</label>
             <input
               type="text"
               id="username"
@@ -55,7 +52,7 @@ const Login = ({ setUser }) => {
             />
           </div>
           <div className="input-group">
-            <label htmlFor="password">รหัสผ่าน:</label>
+            <label htmlFor="password">password:</label>
             <input
               type="password"
               id="password"

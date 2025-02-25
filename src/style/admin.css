@@ -1,72 +1,49 @@
 .admin-container {
-    display: flex;
-    height: 100vh;
-  }
-  
-  .sidebar {
-    width: 250px;
-    background: #1e1e2f;
-    color: white;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .sidebar-title {
-    font-size: 1.5rem;
-    margin-bottom: 20px;
-    text-align: center;
-  }
-  
-  .sidebar-menu {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .sidebar-menu li {
-    padding: 15px;
-    cursor: pointer;
-    border-radius: 5px;
-    margin-bottom: 10px;
-    transition: 0.3s;
-  }
-  
-  .sidebar-menu li:hover {
-    background: #373759;
-  }
-  
-  .sidebar-menu .active {
-    background: #4a4a72;
-    font-weight: bold;
-  }
-  
-  .content {
-    flex: 1;
-    padding: 20px;
-    overflow-y: auto; /* ✅ Allow scrolling inside content */
-    height: 100vh; /* ✅ Full viewport height */
+  display: flex;
+  height: 100vh;
 }
 
-.course-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: flex-start; /* ✅ Prevents overlap */
-    padding-bottom: 50px; /* ✅ Extra padding for footer spacing */
+.sidebar {
+  width: 250px;
+  background: #1e1e2f;
+  color: white;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
 }
 
-.course-card {
-    width: 250px;
-    padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    background: white;
+.sidebar-title {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  text-align: center;
 }
 
-.course-card img {
-    width: 100%;
-    border-radius: 5px;
-    margin-top: 10px;
+.sidebar-menu {
+  list-style: none;
+  padding: 0;
 }
+
+.sidebar-menu li {
+  padding: 15px;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  transition: 0.3s;
+}
+
+.sidebar-menu li:hover {
+  background: #373759;
+}
+
+.sidebar-menu .active {
+  background: #4a4a72;
+  font-weight: bold;
+}
+
+.content {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto; /* ✅ Allow scrolling inside content */
+  height: 100vh; /* ✅ Full viewport height */
+}
+

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { FaHeart, FaRegHeart, FaShoppingCart, FaCartPlus } from "react-icons/fa";
 import "../style/coursecard.css";
 import axios from 'axios';
+import { Link } from "react-router-dom";
 
 function FavoriteCard({ favorite, onRemoveFavorite }) {
     const [isFavorite, setIsFavorite] = useState(false);
@@ -55,11 +56,6 @@ function FavoriteCard({ favorite, onRemoveFavorite }) {
         localStorage.setItem(`cart-${course.id}`, !isInCart);
     }
 
-    const categoryColors = {
-        "tgat": "#FF5733",
-        "tpat": "#3498DB",
-        "a-level": "#2ECC71"
-    };
 
     if (!favorite) {
         return <p>Error: Favorite data is missing!</p>;
@@ -71,42 +67,42 @@ function FavoriteCard({ favorite, onRemoveFavorite }) {
 
     return (
         <div className="course-card">
-            <div className="course-image">
-                {imageUrl ? (
-                    <img src={imageUrl} alt={favorite.course.title} />
-                ) : (
-                    <p>No Image Available</p>
-                )}
-            </div>
+            <Link to={`/course/${favorite.documentId}`} className="course-link"> {/* ลิงก์ไปยังหน้ารายละเอียดคอร์ส */}
+                <div className="course-image">
+                    {imageUrl ? (
+                        <img src={imageUrl} alt={favorite.title} />
+                    ) : (
+                        <p>No Image Available</p>
+                    )}
+                </div>
+            </Link>
 
             <div className="course-details">
+                <div className="type1">
+                    <button
+                        className={`favorite-btn ${isFavorite ? "active" : ""}`}
+                        onClick={onFavoriteClick}
+                    >
+                        {isFavorite ? <FaHeart className="heart-icon" /> : <FaRegHeart className="heart-icon" />}
+                    </button>
+                    <h4 className="course-type"> video course </h4>
+                </div>
 
-                <button
-                    className="favorite-btn active"
-                    onClick={onFavoriteClick}
-                >
-                    {<FaHeart className="heart-icon" />}
-                </button>
-
-                <span
-                    className="course-category-badge"
-                    style={{ backgroundColor: categoryColors[favorite.category] }}
-                >
-                    {favorite.category.toUpperCase()}
-                </span>
                 <h3 className="course-title">{favorite.title}</h3>
                 <p className="course-description">{favorite.shortDescription}</p>
-                <p className="course-hours"> ชั่วโมงเรียน:{favorite.courseHours} ชั่วโมง</p>
-                <p className="course-price"> ราคา: {favorite.price} บาท</p>
 
                 <div className="course-actions">
-                    <button className="course-learn-more-btn">รายละเอียด</button>
-                    <button
-                        className={`cart-btn ${isInCart ? "in-cart" : ""}`}
-                        onClick={onCartClick}
-                    >
-                        {isInCart ? <FaShoppingCart className="cart-icon" /> : <FaCartPlus className="cart-icon" />}
-                    </button>
+                    <p className="course-hours"> ชั่วโมงเรียน: {favorite.courseHours} ชั่วโมง</p>
+
+                    <div className="price-and-cart">
+                        <p className="course-price"> ราคา: {favorite.price} บาท</p>
+                        <button
+                            className={`cart-btn ${isInCart ? "in-cart" : ""}`}
+                            onClick={onCartClick}
+                        >
+                            {isInCart ? <FaShoppingCart className="cart-icon" /> : <FaCartPlus className="cart-icon" />}
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

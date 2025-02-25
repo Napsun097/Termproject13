@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { FaHeart, FaRegHeart, FaShoppingCart, FaCartPlus } from "react-icons/fa";
-import "../style/coursecard.css";
+import { Link } from 'react-router-dom'; // นำเข้า Link จาก react-router-dom
 import axios from 'axios';
+import "../style/coursecard.css";
+
 
 function CourseCard({ course }) {
     const [isFavorite, setIsFavorite] = useState(false);
@@ -138,14 +140,9 @@ function CourseCard({ course }) {
                     console.error("Error fetching cart entry", error);
                 });
         }
+
+
     }
-
-    const categoryColors = {
-        "tgat": "#FF5733",
-        "tpat": "#3498DB",
-        "a-level": "#2ECC71"
-    };
-
     // ตรวจสอบว่ามีค่า `image` หรือไม่ก่อนแสดงผล
     const imageUrl = course.image && course.image.length > 0
         ? `http://localhost:1337${course.image[0].formats.large.url}`
@@ -153,43 +150,42 @@ function CourseCard({ course }) {
 
     return (
         <div className="course-card">
-            <div className="course-image">
-                {/* ตรวจสอบค่า imageUrl ว่ามีหรือไม่ก่อนแสดง */}
-                {imageUrl ? (
-                    <img src={imageUrl} alt={course.title} />
-                ) : (
-                    <p>No Image Available</p>
-                )}
-            </div>
+            <Link to={`/course/${course.documentId}`} className="course-link"> {/* ลิงก์ไปยังหน้ารายละเอียดคอร์ส */}
+                <div className="course-image">
+                    {imageUrl ? (
+                        <img src={imageUrl} alt={course.title} />
+                    ) : (
+                        <p>No Image Available</p>
+                    )}
+                </div>
+            </Link>
 
             <div className="course-details">
+                <div className="type1">
+                    <button
+                        className={`favorite-btn ${isFavorite ? "active" : ""}`}
+                        onClick={onFavoriteClick}
+                    >
+                        {isFavorite ? <FaHeart className="heart-icon" /> : <FaRegHeart className="heart-icon" />}
+                    </button>
+                    <h4 className="course-type"> video course </h4>
+                </div>
 
-                <button
-                    className={`favorite-btn ${isFavorite ? "active" : ""}`}
-                    onClick={onFavoriteClick}
-                >
-                    {isFavorite ? <FaHeart className="heart-icon" /> : <FaRegHeart className="heart-icon" />}
-                </button>
-
-                <span
-                    className="course-category-badge"
-                    style={{ backgroundColor: categoryColors[course.category] }}
-                >
-                    {course.category.toUpperCase()}
-                </span>
                 <h3 className="course-title">{course.title}</h3>
                 <p className="course-description">{course.shortDescription}</p>
-                <p className="course-hours"> ชั่วโมงเรียน:{course.courseHours} ชั่วโมง</p>
-                <p className="course-price"> ราคา: {course.price} บาท</p>
 
                 <div className="course-actions">
-                    <button className="course-learn-more-btn">รายละเอียด</button>
-                    <button
-                        className={`cart-btn ${isInCart ? "in-cart" : ""}`}
-                        onClick={onCartClick}
-                    >
-                        {isInCart ? <FaShoppingCart className="cart-icon" /> : <FaCartPlus className="cart-icon" />}
-                    </button>
+                    <p className="course-hours"> ชั่วโมงเรียน: {course.courseHours} ชั่วโมง</p>
+
+                    <div className="price-and-cart">
+                        <p className="course-price"> ราคา: {course.price} บาท</p>
+                        <button
+                            className={`cart-btn ${isInCart ? "in-cart" : ""}`}
+                            onClick={onCartClick}
+                        >
+                            {isInCart ? <FaShoppingCart className="cart-icon" /> : <FaCartPlus className="cart-icon" />}
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

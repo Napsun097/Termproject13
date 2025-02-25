@@ -66,11 +66,6 @@
   white-space: nowrap; /* ป้องกันการตัดบรรทัดใหม่ */
 }
 
-.nav-link:hover {
-  color: white;
-  background-color: #757483;
-  border-radius: 5px;
-}
 
 /* แถบค้นหา */
 .search-container {
@@ -123,6 +118,22 @@
   align-items: center;
   gap: 25px;
   white-space: nowrap; /* ป้องกันการตัดบรรทัดใหม่ */
+}
+.profile-icon-btn {
+  display: flex;
+  align-items: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px 10px;
+}
+
+.profile-image {
+  width: 35px;  /* ขนาดรูปโปรไฟล์ */
+  height: 35px;
+  border-radius: 50%; /* ทำให้เป็นวงกลม */
+  object-fit: cover; /* ป้องกันภาพยืด */
+  margin-right: 8px; /* เว้นระยะห่างจากชื่อ */
 }
 
 /* ปรับการจัดการโปรไฟล์ */
@@ -276,3 +287,46 @@
 }
 
 
+/* Minimalist Navigation Link Styles */
+.nav-link-icon, .nav-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  color: #333; /* Text color */
+  padding: 10px;
+  border-radius: 50%;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  text-decoration: none;
+}
+f
+
+/* Icon Styling */
+.nav-link-icon i, .nav-icon i {
+  margin-right: 5px; /* Space between icon and text */
+}
+
+/* Cart Item Count */
+.cart-item-count {
+  font-size: 0.8rem;
+  background-color: #ff4f4f; /* Cart count background color */
+  color: white;
+  padding: 2px 6px;
+  border-radius: 50%;
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  font-weight: bold;
+}
+
+/* Optional: Navbar toggle (if required) */
+.navbar-toggle {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .navbar-toggle {
+    display: block;
+    font-size: 1.5rem;
+  }
+}

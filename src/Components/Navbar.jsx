@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/images/logo.png";
 import "../style/navbar.css";
@@ -11,11 +11,27 @@ function Navbar({ user, setUser }) {
   const [cartItems, setCartItems] = useState([]); // Track cart items
   const navigate = useNavigate();
 
+  // Reference to the dropdown for detecting outside clicks
+  const dropdownRef = useRef(null);
+
   // Get cart items from localStorage (or from context/state management)
   useEffect(() => {
     const storedCartItems = JSON.parse(localStorage.getItem("cartItems") || "[]");
-    console.log(storedCartItems); // Debug cart items
     setCartItems(storedCartItems);
+  }, []);
+
+  // Close dropdown if clicked outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
   }, []);
 
   const handleLogout = () => {
@@ -44,7 +60,6 @@ function Navbar({ user, setUser }) {
 
   return (
     <nav className="navbar">
-
       <div className="navbar-container">
         <div className="navbar-brand">
           <Link to="/" onClick={closeNavbar}>
@@ -73,30 +88,35 @@ function Navbar({ user, setUser }) {
                 <i className="fas fa-search"></i>
               </button>
             </form>
-            <Link to="/favorite" className="nav-link" onClick={closeNavbar}><FaHeart size={30}/></Link>
-            <Link to="/cart" className="nav-link" onClick={closeNavbar}><FaShoppingCart size={30}/></Link>
           </div>
 
           <div className="navbar-icons">
-            
             {/* Debug user and roles */}
-            {console.log(user)} 
-
+            {console.log(user)}
+            {user && user.roles && user.roles.includes("User") && (
+              <Link to="/favorite" className="nav-link-icon" onClick={closeNavbar}>
+                <FaHeart size={24} />
+              </Link>
+            )}
             {user && user.roles && user.roles.includes("User") && (
               <Link to="/cart" className="nav-icon" onClick={() => setIsNavbarOpen(false)}>
                 <i className="fas fa-shopping-cart"></i>
-                {/* Display cart item count */}
                 <span className="cart-item-count">{cartItems.length}</span>
               </Link>
             )}
 
             {user ? (
-              <div className={`profile-dropdown ${isDropdownOpen ? "open" : ""}`}>
+              <div className={`profile-dropdown ${isDropdownOpen ? "open" : ""}`} ref={dropdownRef}>
                 <button
                   className="profile-icon-btn"
                   onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                 >
-                  👤 {user.username} <i className="fas fa-caret-down"></i>
+                  <img
+                    src={user.profileImage ? user.profileImage : "/3135715.png"}
+                    alt="Profile"
+                    className="profile-image"
+                  />
+                  {user.username} <i className="fas fa-caret-down"></i>
                 </button>
 
                 <div className="profile-menu">

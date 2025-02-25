@@ -57,8 +57,9 @@ function Home() {
 
         </div>
         <br />
+        <div className="course-container">
 
-        {/* ส่วนของคอร์สยอดนิยม */}
+           {/* ส่วนของคอร์สยอดนิยม */}
         {premiumCourses.length > 0 ? (
           <div className="course-category">
             <h2>| คอร์สเรียน Hot Selling</h2>
@@ -118,7 +119,7 @@ function Home() {
 
         {standardCourses.length > 0 ? (
           <div className="course-category">
-            <h2>คอร์สเสริมตะลุยโจทย์</h2>
+            <h2> | คอร์สเสริมตะลุยโจทย์</h2>
             <div className="course-list">
               {standardCourses.map((course) => (
                 <CourseCard key={course.id} course={course} />
@@ -145,6 +146,8 @@ function Home() {
         )}
         
       </div>
+        </div>
+       
 
     </>
   );
