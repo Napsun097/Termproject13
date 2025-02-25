@@ -24,7 +24,7 @@ const Login = ({ setUser }) => {
 
     // ตรวจสอบ roles ถ้าเป็น Admin ให้ไปหน้า Admin Dashboard
     if (data.user.roles && data.user.roles.includes("Admin")) {
-      navigate("/admin-dashboard");
+      navigate("/admin");
     } else {
       navigate("/");
     }

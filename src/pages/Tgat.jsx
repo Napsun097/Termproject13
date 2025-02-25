@@ -54,7 +54,7 @@ function Tgat() {
   return (
     <div className="tgat-page">
       <div className="subject-selector">
-        <h2></h2>
+        <h2 className="TGAT-head"> TGAT </h2>
         <select className="dropdown" onChange={handleDropdownChange}>
           <option value="all">ทุกวิชา</option>
           {["TGAT1", "TGAT2", "TGAT3"].map((subject) => (

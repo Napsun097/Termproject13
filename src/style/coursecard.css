@@ -50,9 +50,15 @@
 }
 
 .type1 h4 {
-    background-color: #bbb;
     border-radius: 4px;
     padding: 4px;
+}
+
+.course-type{
+    color: white;
+    background-color: hsl(192, 18%, 70%);
+    padding-left: 4px;
+    padding-right: 4px;
 }
 
 .favorite-btn, .cart-btn {

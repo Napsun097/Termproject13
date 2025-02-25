@@ -75,6 +75,8 @@ function Navbar({ user, setUser }) {
             <Link to="/a-level" className="nav-link" onClick={closeNavbar}>A-level</Link>
           </div>
 
+          
+
           <div className="search-container">
             <form onSubmit={handleSearch} className="search-form">
               <input
@@ -120,20 +122,20 @@ function Navbar({ user, setUser }) {
                 </button>
 
                 <div className="profile-menu">
-                  <Link to="/profile" className="profile-menu-item" onClick={closeNavbar}>
-                    โปรไฟล์ของฉัน
+                  <Link to="/profile"  onClick={closeNavbar}>
+                   <button className="my-profile-link">โปรไฟล์ของฉัน</button> 
                   </Link>
                   {user.roles && user.roles.includes("Admin") && (
-                    <Link to="/admin-dashboard" className="profile-menu-item" onClick={closeNavbar}>
-                      Administration
+                    <Link to="/admin" onClick={closeNavbar}>
+                      <button className="admin-page-link">Administration</button>
                     </Link>
                   )}
                   {user.roles && user.roles.includes("User") && (
-                    <Link to="/payment" className="profile-menu-item" onClick={closeNavbar}>
-                      ชำระเงิน
+                    <Link to="/payment" onClick={closeNavbar}>
+                      <button className="payment-menu">ชำระเงิน</button>
                     </Link>
                   )}
-                  <button className="profile-menu-item logout-btn" onClick={handleLogout}>
+                  <button className="logout-btn-navbar" onClick={handleLogout}>
                     ออกจากระบบ
                   </button>
                 </div>

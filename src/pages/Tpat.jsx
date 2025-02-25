@@ -55,7 +55,7 @@ function Tpat() {
   return (
     <div className="tpat-page">
       <div className="subject-selector">
-        <h2></h2>
+        <h2 className="TPAT-head"> TPAT </h2>
         <select className="dropdown" onChange={handleDropdownChange}>
           <option value="all">ทุกวิชา</option>
           {["TPAT1", "TPAT2", "TPAT3", "TPAT4", "TPAT5"].map((subject) => (

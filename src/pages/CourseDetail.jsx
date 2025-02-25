@@ -6,6 +6,15 @@ import "../style/Detail.css";
 function CourseDetail() {
     const { id } = useParams();  // Get the course ID from the URL
     const [course, setCourse] = useState(null);
+    const videos = [
+        "https://www.youtube.com/embed/g64BkZjSNBM?si=_JD5n2x3wesr-yi_", // Chapter 1
+        "https://www.youtube.com/embed/oBokMzyNz8o?si=oWuJfQ43wlHw2h9T", // Chapter 2
+        "https://www.youtube.com/embed/u5LJYVoWnIU?si=_wFPBVcOR_G6nITp", // Chapter 3
+        "https://www.youtube.com/embed/nA-7PjZrlpE?si=L4SGbro_liJ06PHt", // Chapter 4
+        "https://www.youtube.com/embed/465t5t8T4pU?si=NJReemoERN6k1LGb"  // Chapter 5
+    ];
+
+    const [currentVideo, setCurrentVideo] = useState(videos[0]);
 
     useEffect(() => {
         axios.get(`http://localhost:1337/api/courses/${id}?populate=*`)
@@ -25,29 +34,26 @@ function CourseDetail() {
             <div className="video-section">
                 <h1>{course.title}</h1>
                 <p>{course.fullDescription}</p>
-                
-                <div>
-                    {/* YouTube Embed */}
-                    <iframe
-                        width="100%"
-                        height="315"
-                        src="https://www.youtube.com/embed/g64BkZjSNBM?si=_JD5n2x3wesr-yi_"
-                        title="YouTube video player"
-                        frameBorder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        referrerPolicy="strict-origin-when-cross-origin"
-                        allowFullScreen
-                    ></iframe>
-                </div>
+
+                {/* วิดีโอหลักที่เปลี่ยนตาม Sidebar */}
+                <iframe
+                    width="100%"
+                    height="400"
+                    src={currentVideo}
+                    title="YouTube video player"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                ></iframe>
             </div>
 
             {/* Sidebar Section */}
             <div className="sidebar-detail">
-                <h2>Course Sections</h2>
+                <h2>Lessons</h2>
                 <ul>
-                    {course.sections && course.sections.map((section, index) => (
-                        <li key={index}>
-                            <a href={`#${section.id}`}>{section.title}</a>
+                    {videos.map((video, index) => (
+                        <li key={index} onClick={() => setCurrentVideo(video)} style={{ cursor: "pointer" }}>
+                            Chapter {index + 1}
                         </li>
                     ))}
                 </ul>

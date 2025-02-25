@@ -10,7 +10,6 @@ import Login from "./pages/Login";
 import SearchResults from "./pages/SearchResults";
 import Footer from "./Components/Footer";
 import Profile from "./pages/Profile";
-import AdminDashboard from "./pages/AdminDashboard";
 import Payment from "./pages/Payment";
 import Favorite from "./pages/Favorite";
 import Cart from "./pages/Cart"; // Import Cart component
@@ -48,12 +47,14 @@ function App() {
           <Route path="/login" element={<Login setUser={setUser} />} />
           <Route path="/search" element={<SearchResults />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/admin-dashboard" element={<AdminDashboard />} />
           <Route path="/payment" element={<Payment />} />
           <Route path="/favorite" element={<Favorite />} />
           <Route path="/cart" element={<Cart />} /> {/* Add Cart route */}
           <Route path="/course/:id" element={<CourseDetail />} /> {/* กำหนด Route สำหรับ CourseDetail */}
-          <Route path="/admin" element={<Admin />} />
+          <Route path="/admin" element={<Admin user={user} setUser={setUser}/>} />
+        
+
+          
         </Routes>
       </main>
 

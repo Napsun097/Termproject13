@@ -45,109 +45,110 @@ function Home() {
         <div className="head-promotion">
           <div className="head-welcome">
             <h1 className="text-welcome"> Welcome to <span>UniMaster</span> </h1>
-            <p className="text-welcome">Master Your Future with UniMaster</p><br />
+            <p className="text-welcome-sub">Master Your Future with UniMaster</p><br />
             <button className="about-welcome-btn">
               <Link to=""> เกี่ยวกับสถาบัน </Link>
             </button>
-            
+
           </div>
           <div className="img-promotion">
             <img src={picpromotion} alt="" />
           </div>
 
         </div>
-        <br />
+
         <div className="course-container">
 
-           {/* ส่วนของคอร์สยอดนิยม */}
-        {premiumCourses.length > 0 ? (
-          <div className="course-category">
-            <h2>| คอร์สเรียน Hot Selling</h2>
-            <div className="course-list">
-              {premiumCourses.map((course) => (
-                <CourseCard key={course.id} course={course} />
-              ))}
+          {/* ส่วนของคอร์สยอดนิยม */}
+          {premiumCourses.length > 0 ? (
+            <div className="course-category">
+              <h2 className="head-card-home">🔥 คอร์สเรียน Hot Selling</h2>
+              <div className="course-list-home">
+                {premiumCourses.map((course) => (
+                  <CourseCard key={course.id} course={course} />
+                ))}
+              </div>
             </div>
-          </div>
-        ) : (
-          <p>No premium courses available at the moment.</p>
-        )}
-        <br />
+          ) : (
+            <p>No premium courses available at the moment.</p>
+          )}
+          <br />
 
-        {/* ส่วนของคอร์สอื่นๆ */}
-        {standardCourses.length > 0 ? (
-          <div className="course-category">
-            <h2>| คอร์สอื่นๆ</h2>
-            <div className="course-list">
-              {standardCourses.map((course) => (
-                <CourseCard key={course.id} course={course} />
-              ))}
+          {/* ส่วนของคอร์สอื่นๆ */}
+          {standardCourses.length > 0 ? (
+            <div className="course-category">
+              <h2 className="head-card-home">📚 คอร์สอื่นๆ</h2>
+              <div className="course-list-home">
+                {standardCourses.map((course) => (
+                  <CourseCard key={course.id} course={course} />
+                ))}
+              </div>
             </div>
-          </div>
-        ) : (
-          <p>No standard courses available at the moment.</p>
-        )}
+          ) : (
+            <p>No standard courses available at the moment.</p>
+          )}
 
-        <br />
-        {standardCourses.length > 0 ? (
-          <div className="course-category">
-            <h2>| คอร์สอื่นๆ</h2>
-            <div className="course-list">
-              {standardCourses.map((course) => (
-                <CourseCard key={course.id} course={course} />
-              ))}
+          <br />
+          {standardCourses.length > 0 ? (
+            <div className="course-category">
+              <h2 className="head-card-home">📚 คอร์สอื่นๆ</h2>
+              <div className="course-list-home">
+                {standardCourses.map((course) => (
+                  <CourseCard key={course.id} course={course} />
+                ))}
+              </div>
             </div>
-          </div>
-        ) : (
-          <p>No standard courses available at the moment.</p>
-        )}
+          ) : (
+            <p>No standard courses available at the moment.</p>
+          )}
 
-        <br />
-        {standardCourses.length > 0 ? (
-          <div className="course-category">
-            <h2> | แพ็คคู่ มาราธอน </h2>
-            <div className="course-list">
-              {standardCourses.map((course) => (
-                <CourseCard key={course.id} course={course} />
-              ))}
+          <br />
+          {standardCourses.length > 0 ? (
+            <div className="course-category">
+              <h2 className="head-card-home">🏃‍♂️ แพ็คคู่ มาราธอน</h2>
+              <div className="course-list-home">
+                {standardCourses.map((course) => (
+                  <CourseCard key={course.id} course={course} />
+                ))}
+              </div>
             </div>
-          </div>
-        ) : (
-          <p>No standard courses available at the moment.</p>
-        )}
-        <br />
+          ) : (
+            <p>No standard courses available at the moment.</p>
+          )}
+          <br />
 
-        {standardCourses.length > 0 ? (
-          <div className="course-category">
-            <h2> | คอร์สเสริมตะลุยโจทย์</h2>
-            <div className="course-list">
-              {standardCourses.map((course) => (
-                <CourseCard key={course.id} course={course} />
-              ))}
+          {standardCourses.length > 0 ? (
+            <div className="course-category">
+              <h2 className="head-card-home">📝 คอร์สเสริมตะลุยโจทย์</h2>
+              <div className="course-list-home">
+                {standardCourses.map((course) => (
+                  <CourseCard key={course.id} course={course} />
+                ))}
+              </div>
             </div>
-          </div>
-        ) : (
-          <p>No standard courses available at the moment.</p>
-        )}
+          ) : (
+            <p>No standard courses available at the moment.</p>
+          )}
 
-        <br />
+          <br />
 
-        {standardCourses.length > 0 ? (
-          <div className="course-category">
-            <h2>| ทดลองเรียน พื้นฐาน</h2>
-            <div className="course-list">
-              {standardCourses.map((course) => (
-                <CourseCard key={course.id} course={course} />
-              ))}
+          {standardCourses.length > 0 ? (
+            <div className="course-category">
+              <h2 className="head-card-home">🎓 ทดลองเรียน พื้นฐาน</h2>
+              <div className="course-list-home">
+                {standardCourses.map((course) => (
+                  <CourseCard key={course.id} course={course} />
+                ))}
+              </div>
             </div>
-          </div>
-        ) : (
-          <p>No standard courses available at the moment.</p>
-        )}
-        
-      </div>
+          ) : (
+            <p>No standard courses available at the moment.</p>
+          )}
+
         </div>
-       
+
+      </div>
+
 
     </>
   );

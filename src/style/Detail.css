@@ -7,7 +7,7 @@
 }
 
 .video-section {
-    flex: 0.6; /* Video section takes up 70% of the width */
+    flex: 0.7; /* Video section takes up 70% of the width */
     height: auto;
     padding: 20px;
     box-sizing: border-box;
@@ -20,7 +20,42 @@
     height: 100vh;
     overflow-y: auto;
     box-sizing: border-box;
+    flex: 0.3;
 }
+
+
+
+.sidebar-detail h2 {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.sidebar-detail ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar-detail ul li {
+    background: #fff;
+    margin: 8px 0;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-size: 16px;
+    color: #555;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+    border: 1px solid #ddd;
+}
+
+.sidebar-detail ul li:hover {
+    background: #007bff;
+    color: white;
+    border-color: #007bff;
+}
+
 
 /* For smaller screens */
 @media (max-width: 768px) {

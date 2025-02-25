@@ -99,10 +99,28 @@
   }
 
   .course-list {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center; /* เพิ่มการจัดตำแหน่งการ์ดให้อยู่ตรงกลาง */
-    gap: 20px;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* ปรับขนาดการ์ด */
+    gap: 10px;
+    justify-items: center; /* จัดการ์ดให้ตรงกลาง */
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .course-list {
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* ปรับขนาดการ์ด */
+    gap: 15px;
+    justify-items: center; /* จัดการ์ดให้ตรงกลาง */
+  }
+}
+
+@media (max-width: 375px) {
+  .course-list-home {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* ลดขนาดการ์ดให้เล็กที่สุด */
+    gap: 8px;
+    justify-items: center; /* จัดการ์ดให้ตรงกลาง */
   }
 }

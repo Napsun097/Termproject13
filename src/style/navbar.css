@@ -11,6 +11,7 @@
   z-index: 1000;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   height: 100px;
+  width: 100%;
   white-space: nowrap; /* ป้องกันการตัดบรรทัดใหม่ */
 }
 
@@ -27,9 +28,10 @@
 
 /* โลโก้ */
 .navbar-brand img {
-  width: 200px;
+  width: 240px;
   height: auto;
   white-space: nowrap; /* ป้องกันการตัดบรรทัดใหม่ */
+  background-color: #ffffff;
 }
 
 /* ปุ่มเปิด/ปิด Navbar สำหรับโหมดมือถือ */
@@ -189,7 +191,7 @@
 }
 
 /* สไตล์ของเมนู */
-.profile-menu-item {
+.my-profile-link,.admin-page-link, .payment-menu {
   padding: 12px 16px;
   border: none;
   background: none;
@@ -199,18 +201,22 @@
   font-size: 15px;
   color: #000;
   text-decoration: none;
-  transition: background-color 0.3s ease;
   white-space: nowrap; /* ป้องกันการตัดบรรทัดใหม่ */
 }
 
-.profile-menu-item:hover {
-  background: #f8f9fa;
-}
 
 /* ปุ่มออกจากระบบ */
-.logout-btn {
-  color: red;
-  font-weight: bold;
+.logout-btn-navbar {
+  padding: 12px 16px;
+  border: none;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+  width: 100%;
+  font-size: 15px;
+  color: #ff0000;
+  text-decoration: none;
+  white-space: nowrap; /* ป้องกันการตัดบรรทัดใหม่ */
 }
 
 /* สไตล์สำหรับไอคอนตะกร้า */

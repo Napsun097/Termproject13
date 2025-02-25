@@ -1,0 +1,51 @@
+/* สไตล์ของหัวข้อผลลัพธ์ */
+.search-result-head {
+    font-size: 24px;
+    color: #333;
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  /* สไตล์ของกล่องรายการคอร์ส */
+  .course-list-search {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    justify-content: center;
+  }
+  
+  /* สไตล์ของข้อความเมื่อไม่พบคอร์ส */
+  .search-result-text {
+    text-align: center;
+    font-size: 18px;
+    color: #888;
+    margin-top: 20px;
+  }
+  
+  .loading-container {
+    text-align: center;
+    margin-top: 50px;
+  }
+  
+  .spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-top: 4px solid #007bff;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+    display: inline-block;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  .loading-container p {
+    font-size: 18px;
+    color: #007bff;
+    margin-top: 10px;
+  }
+  

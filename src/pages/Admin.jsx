@@ -1,14 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "../style/admin.css";
 import axios from "axios";
 import { Button, Modal, Input, Upload, Select, Checkbox } from "antd";
-import { EditOutlined, DeleteOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
 import UserCard from "../Components/UserCard";
 import { useNavigate } from "react-router-dom";
+import logo from "../assets/images/logo.png";
+import { Link } from "react-router-dom";
+import AdminDashboard from "../Components/AdminDashboard"; // หรือที่คุณเก็บไฟล์ Dashboard
+
 
 const { confirm } = Modal;
 
-const Admin = () => {
+const Admin = ({ user, setUser }) => {
   const [activeTab, setActiveTab] = useState("course");
   const [courses, setCourses] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
@@ -17,7 +20,26 @@ const Admin = () => {
   const [courseToDelete, setCourseToDelete] = useState(null);
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
-  const navigate = useNavigate(); // ใช้ Hook สำหรับเปลี่ยนหน้า
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isNavbarOpen, setIsNavbarOpen] = useState(false);
+  const navigate = useNavigate();
+
+  // Reference to the dropdown for detecting outside clicks
+  const dropdownRef = useRef(null);
+
+
+  useEffect(() => {
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+  
+    // ✅ ตรวจสอบว่า User มี role เป็น Admin หรือไม่
+    if (!storedUser || !storedUser.roles || !storedUser.roles.includes("Admin")) {
+      navigate("/"); // 🔥 ถ้าไม่ใช่ Admin ให้กลับไปหน้า Home
+    } else {
+      // Set active tab to "dashboard" after loading the user
+      setActiveTab("dashboard");
+    }
+  }, [navigate]);
+  
 
   const [formData, setFormData] = useState({
     title: "",
@@ -71,6 +93,36 @@ const Admin = () => {
     }
   };
 
+  // Close dropdown if clicked outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    setUser(null);
+    setIsDropdownOpen(false);
+    setIsNavbarOpen(false); // Close navbar on logout
+    navigate("/");
+  };
+
+  const toggleNavbar = () => {
+    setIsNavbarOpen(!isNavbarOpen);
+  };
+
+  const closeNavbar = () => {
+    setIsNavbarOpen(false);
+  };
 
   const handleEditClick = (course) => {
     setEditingCourse(course);
@@ -243,38 +295,96 @@ const Admin = () => {
 
       {/* Sidebar */}
       <div className="sidebar">
-      <h2 className="sidebar-title">Admin Panel</h2>
-      <ul className="sidebar-menu">
-        <li
-          className={activeTab === "course" ? "active" : ""}
-          onClick={() => setActiveTab("course")}
-        >
-          📚 Course
-        </li>
-        <li
-          className={activeTab === "user" ? "active" : ""}
-          onClick={() => setActiveTab("user")}
-        >
-          👤 User
-        </li>
-      </ul>
-      {/* ปุ่มกลับหน้า Home */}
-      <button className="back-home-btn" onClick={() => navigate("/")}>
-        ⬅️ Home
-      </button>
-    </div>
+        <div className="header-navbar">
+            <h1>Admin</h1>
+        </div>
+        <ul className="sidebar-menu">
+          <li className="dashboard-admin-link" onClick={() => setActiveTab("dashboard")}>
+            Dashboard
+          </li>
+
+          <li
+            className={activeTab === "course" ? "active" : ""}
+            onClick={() => setActiveTab("course")}
+          >
+            Course Mangement
+          </li>
+          <li
+            className={activeTab === "user" ? "active" : ""}
+            onClick={() => setActiveTab("user")}
+          >
+            User
+          </li>
+          <li className="back-home-btn" onClick={() => navigate("/")}>
+            กลับหน้าเว็บไซต์
+          </li>
+        </ul>
+
+      </div>
 
       {/* Main Content */}
       <div className="content">
+        <nav className="navbar-admin">
+          <div className="navbar-container">
+            <div className="navbar-brand">
+              <img src={logo} alt="Website Logo" className="logo-img" />
+            </div>
+            <div className="navbar-icons">
+              {user ? (
+                <div className={`profile-dropdown ${isDropdownOpen ? "open" : ""}`} ref={dropdownRef}>
+                  <button
+                    className="profile-icon-btn"
+                    onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                  >
+                    <img
+                      src={user.profileImage ? user.profileImage : "/3135715.png"}
+                      alt="Profile"
+                      className="profile-image"
+                    />
+                    {user.username} <i className="fas fa-caret-down"></i>
+                  </button>
+
+                  <div className="profile-menu">
+                    {user.roles && user.roles.includes("Admin") && (
+                      <Link to="/" onClick={closeNavbar}>
+                        <button className="admin-page-link">Home</button>
+                      </Link>
+                    )}
+                    {user.roles && user.roles.includes("User") && (
+                      <Link to="/payment" onClick={closeNavbar}>
+                        <button className="payment-menu">ชำระเงิน</button>
+                      </Link>
+                    )}
+                    <button className="logout-btn-navbar" onClick={handleLogout}>
+                      ออกจากระบบ
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <Link to="/login" className="nav-button login-btn" onClick={closeNavbar}>
+                  เข้าสู่ระบบ
+                </Link>
+              )}
+            </div>
+          </div>
+
+        </nav>
+        {/* เพิ่มเงื่อนไขแสดงหน้า Dashboard */}
+        {activeTab === "dashboard" && (
+          <div>
+            <AdminDashboard /> {/* นำเข้าและแสดงผลหน้า Dashboard */}
+          </div>
+        )}
         {activeTab === "course" && (
           <div>
-            <h1>Course Management</h1>
+            <h1 className="course-management-text">Course Management</h1>
             <div className="course-list-admin">
               {courses.length > 0 ? (
                 courses.map((course) => {
                   // Extract attributes
                   const title = course.title;
                   const image = course.image[0];
+                  const Hours = course.courseHours;
 
                   // ✅ Extract large image URL
                   const imageUrl =
@@ -296,7 +406,7 @@ const Admin = () => {
                         <div className="describe-card">
                           <h3 className="head-text-card-admin">{title}</h3>
                           <p className="short-describe">sdslkdj</p>
-                          <p className="hour-card-admin">12:00 h</p>
+                          <p className="course-hours-admin"> {Hours} ชั่วโมง</p>
                           <div className="type-course-admin">
                             <p>premium</p>
                           </div>
@@ -305,12 +415,12 @@ const Admin = () => {
 
                       {/* แถวล่าง: ปุ่ม Edit & Delete */}
                       <div className="edit-delete-btn">
-                        <Button type="primary" icon={<EditOutlined />} className="edit-button" onClick={() => handleEditClick(course)}>
+                        <button className="edit-button" onClick={() => handleEditClick(course)}>
                           Edit
-                        </Button>
-                        <Button danger icon={<DeleteOutlined />} className="delete-button" onClick={() => handleDeleteCourse(course)}>
+                        </button>
+                        <button className="delete-button" onClick={() => handleDeleteCourse(course)}>
                           Delete
-                        </Button>
+                        </button>
                       </div>
                     </div>
 
