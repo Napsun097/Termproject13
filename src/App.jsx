@@ -32,7 +32,8 @@ function App() {
   const hideNavbarFooter =
     location.pathname === "/login" ||
     location.pathname === "/admin-dashboard" ||
-    location.pathname === "/payment";
+    location.pathname === "/payment" ||
+    location.pathname === "/admin";
 
   return (
     <div>

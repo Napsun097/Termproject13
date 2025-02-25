@@ -238,6 +238,7 @@ const Admin = () => {
 
   return (
     <div className="admin-container">
+
       {/* Sidebar */}
       <div className="sidebar">
         <h2 className="sidebar-title">Admin Panel</h2>
@@ -262,7 +263,7 @@ const Admin = () => {
         {activeTab === "course" && (
           <div>
             <h1>Course Management</h1>
-            <div className="course-list">
+            <div className="course-list-admin">
               {courses.length > 0 ? (
                 courses.map((course) => {
                   // Extract attributes
@@ -276,20 +277,37 @@ const Admin = () => {
                       : null;
 
                   return (
-                    <div key={course.id} className="course-card">
-                      <h3>{title}</h3>
-                      {imageUrl ? (
-                        <img src={imageUrl} alt={title} className="course-image" />
-                      ) : (
-                        <p>No Image Available</p>
-                      )}
-                      <Button type="primary" icon={<EditOutlined />} className="edit-button" onClick={() => handleEditClick(course)}>
-                        Edit
-                      </Button>
-                      <Button danger icon={<DeleteOutlined />} className="delete-button" onClick={() => handleDeleteCourse(course)}>
-                        Delete
-                      </Button>
+                    <div key={course.id} className="course-card-admin">
+                      {/* แถวบน: รูปภาพ + คำอธิบาย */}
+                      <div className="content-card">
+                        <div className="image-card">
+                          {imageUrl ? (
+                            <img src={imageUrl} alt={title} className="course-image-admin" />
+                          ) : (
+                            <p>No Image Available</p>
+                          )}
+                        </div>
+                        <div className="describe-card">
+                          <h3 className="head-text-card-admin">{title}</h3>
+                          <p className="short-describe">sdslkdj</p>
+                          <p className="hour-card-admin">12:00 h</p>
+                          <div className="type-course-admin">
+                            <p>premium</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* แถวล่าง: ปุ่ม Edit & Delete */}
+                      <div className="edit-delete-btn">
+                        <Button type="primary" icon={<EditOutlined />} className="edit-button" onClick={() => handleEditClick(course)}>
+                          Edit
+                        </Button>
+                        <Button danger icon={<DeleteOutlined />} className="delete-button" onClick={() => handleDeleteCourse(course)}>
+                          Delete
+                        </Button>
+                      </div>
                     </div>
+
                   );
                 })
               ) : (
