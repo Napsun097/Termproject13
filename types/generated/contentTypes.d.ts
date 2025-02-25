@@ -539,6 +539,34 @@ export interface ApiFavoriteFavorite extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiPaymentQrPaymentQr extends Struct.CollectionTypeSchema {
+  collectionName: 'payment_qrs';
+  info: {
+    displayName: 'Payment';
+    pluralName: 'payment-qrs';
+    singularName: 'payment-qr';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::payment-qr.payment-qr'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    Qr: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface PluginContentReleasesRelease
   extends Struct.CollectionTypeSchema {
   collectionName: 'strapi_releases';
@@ -1052,6 +1080,7 @@ declare module '@strapi/strapi' {
       'api::cart.cart': ApiCartCart;
       'api::course.course': ApiCourseCourse;
       'api::favorite.favorite': ApiFavoriteFavorite;
+      'api::payment-qr.payment-qr': ApiPaymentQrPaymentQr;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;

@@ -1,0 +1,24 @@
+{
+  "kind": "collectionType",
+  "collectionName": "payment_qrs",
+  "info": {
+    "singularName": "payment-qr",
+    "pluralName": "payment-qrs",
+    "displayName": "Payment"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "Qr": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
+    }
+  }
+}
