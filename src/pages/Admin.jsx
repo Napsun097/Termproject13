@@ -3,6 +3,7 @@ import "../style/admin.css";
 import axios from "axios";
 import { Button, Modal, Input, Upload, Select, Checkbox } from "antd";
 import { EditOutlined, DeleteOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
+import UserCard from "../Components/UserCard";
 
 const { confirm } = Modal;
 
@@ -13,6 +14,8 @@ const Admin = () => {
   const [editingCourse, setEditingCourse] = useState(null);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [courseToDelete, setCourseToDelete] = useState(null);
+  const [users, setUsers] = useState([]);
+  const [selectedUser, setSelectedUser] = useState(null);
 
   const [formData, setFormData] = useState({
     title: "",
@@ -45,6 +48,27 @@ const Admin = () => {
   useEffect(() => {
     fetchCourses(); // Fetch courses when component mounts
   }, []);
+
+  useEffect(() => {
+    if (activeTab === "user") {
+      fetchUsers();
+    }
+  }, [activeTab]);
+
+  const fetchUsers = async () => {
+    try {
+      const response = await axios.get("http://localhost:1337/api/users", {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      });
+
+      const filteredUsers = response.data.filter((user) => user.roles === "User");
+
+      setUsers(filteredUsers); // Set all users for now (before filtering)
+    } catch (error) {
+      console.error("Error fetching users!", error);
+    }
+  };
+
 
   const handleEditClick = (course) => {
     setEditingCourse(course);
@@ -259,13 +283,13 @@ const Admin = () => {
                       ) : (
                         <p>No Image Available</p>
                       )}
-                        <Button type="primary" icon={<EditOutlined />} className="edit-button" onClick={() => handleEditClick(course)}>
-                          Edit
-                        </Button>
-                        <Button danger icon={<DeleteOutlined />} className="delete-button" onClick={() => handleDeleteCourse(course)}>
-                          Delete
-                        </Button>
-                      </div>
+                      <Button type="primary" icon={<EditOutlined />} className="edit-button" onClick={() => handleEditClick(course)}>
+                        Edit
+                      </Button>
+                      <Button danger icon={<DeleteOutlined />} className="delete-button" onClick={() => handleDeleteCourse(course)}>
+                        Delete
+                      </Button>
+                    </div>
                   );
                 })
               ) : (
@@ -275,7 +299,29 @@ const Admin = () => {
           </div>
         )}
 
-        {activeTab === "user" && <h1>User Management</h1>}
+        {activeTab === "user" && (
+          <div>
+            <h1>User Management</h1>
+            <div className="user-list">
+              {users.map((user) => (
+                <div key={user.documentId} className="user-item" onClick={() => setSelectedUser(user)}>
+                  {user.username}
+                </div>
+              ))}
+            </div>
+            {selectedUser && (
+              <UserCard
+                user={selectedUser}
+                onUserDeleted={(deletedUserId) => {
+                  setUsers((prevUsers) =>
+                    prevUsers.filter((user) => user.documentId !== deletedUserId)
+                  );
+                  setSelectedUser(null); // Reset selected user after deletion
+                }}
+              />
+            )}
+          </div>
+        )}
       </div>
 
       {/* Ant Design Modal for Editing */}

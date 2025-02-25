@@ -85,3 +85,29 @@
   gap: 10px; /* Adds space between buttons */
   margin-top: 15px;
 }
+
+.user-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.user-item {
+  padding: 10px;
+  background: #f4f4f4;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.user-item:hover {
+  background: #ddd;
+}
+
+.user-card {
+  margin-top: 20px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background: white;
+}
