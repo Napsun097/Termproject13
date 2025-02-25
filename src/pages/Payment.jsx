@@ -1,21 +1,11 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import qrCode from "../assets/images/65634599-3898-49a9-976b-ae9b7203be52.jpg";
 
 function Payment() {
-  const [qrUrl, setQrUrl] = useState(null);
+  const [qrUrl, setQrUrl] = useState(qrCode);
   const [selectedFile, setSelectedFile] = useState(null);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    fetch("https://your-strapi-url.com/api/upload/files?filters[name][$eq]=qr.png") // Adjust Strapi asset endpoint
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.length > 0) {
-          setQrUrl(data[0].url);
-        }
-      })
-      .catch((error) => console.error("Error fetching QR code:", error));
-  }, []);
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -29,6 +19,27 @@ function Payment() {
   const handleFileDelete = () => {
     setSelectedFile(null);
     document.querySelector("input[type=file]").value = "";
+  };
+
+  const handleFileUpload = () => {
+    if (!selectedFile) {
+      alert("Please select a file to upload.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("files", selectedFile);
+
+    fetch("https://your-strapi-url.com/api/upload", {
+      method: "POST",
+      body: formData,
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        alert("File uploaded successfully!");
+        setSelectedFile(null);
+      })
+      .catch((error) => console.error("Error uploading file:", error));
   };
 
   return (
@@ -57,6 +68,24 @@ function Payment() {
               onMouseOut={(e) => e.target.style.backgroundColor = "#f44336"}
             >
               Delete
+            </button>
+            <button 
+              onClick={handleFileUpload}
+              style={{ 
+                backgroundColor: "#008CBA", 
+                color: "white", 
+                padding: "8px 16px", 
+                border: "none", 
+                borderRadius: "5px", 
+                cursor: "pointer", 
+                marginLeft: "10px",
+                marginTop: "10px",
+                transition: "background-color 0.3s ease"
+              }}
+              onMouseOver={(e) => e.target.style.backgroundColor = "#007bb5"}
+              onMouseOut={(e) => e.target.style.backgroundColor = "#008CBA"}
+            >
+              Submit
             </button>
           </div>
         )}
