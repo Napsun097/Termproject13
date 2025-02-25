@@ -168,3 +168,18 @@
   border-radius: 10px;
   background: white;
 }
+
+.back-home-btn {
+  width: 100%;
+  padding: 10px;
+  margin-top: 20px;
+  background-color: #ffffff;
+  color: rgb(0, 0, 0);
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+

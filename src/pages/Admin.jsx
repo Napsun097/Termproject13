@@ -4,6 +4,7 @@ import axios from "axios";
 import { Button, Modal, Input, Upload, Select, Checkbox } from "antd";
 import { EditOutlined, DeleteOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
 import UserCard from "../Components/UserCard";
+import { useNavigate } from "react-router-dom";
 
 const { confirm } = Modal;
 
@@ -16,6 +17,7 @@ const Admin = () => {
   const [courseToDelete, setCourseToDelete] = useState(null);
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
+  const navigate = useNavigate(); // ใช้ Hook สำหรับเปลี่ยนหน้า
 
   const [formData, setFormData] = useState({
     title: "",
@@ -241,22 +243,26 @@ const Admin = () => {
 
       {/* Sidebar */}
       <div className="sidebar">
-        <h2 className="sidebar-title">Admin Panel</h2>
-        <ul className="sidebar-menu">
-          <li
-            className={activeTab === "course" ? "active" : ""}
-            onClick={() => setActiveTab("course")}
-          >
-            📚 Course
-          </li>
-          <li
-            className={activeTab === "user" ? "active" : ""}
-            onClick={() => setActiveTab("user")}
-          >
-            👤 User
-          </li>
-        </ul>
-      </div>
+      <h2 className="sidebar-title">Admin Panel</h2>
+      <ul className="sidebar-menu">
+        <li
+          className={activeTab === "course" ? "active" : ""}
+          onClick={() => setActiveTab("course")}
+        >
+          📚 Course
+        </li>
+        <li
+          className={activeTab === "user" ? "active" : ""}
+          onClick={() => setActiveTab("user")}
+        >
+          👤 User
+        </li>
+      </ul>
+      {/* ปุ่มกลับหน้า Home */}
+      <button className="back-home-btn" onClick={() => navigate("/")}>
+        ⬅️ Home
+      </button>
+    </div>
 
       {/* Main Content */}
       <div className="content">
