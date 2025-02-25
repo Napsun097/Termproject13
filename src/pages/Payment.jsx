@@ -1,24 +1,28 @@
-import { useEffect, useState } from "react";
+import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import qrCode from "../assets/images/65634599-3898-49a9-976b-ae9b7203be52.jpg";
+import "../style/payment.css"; // Import external CSS file
 
 function Payment() {
   const [qrUrl, setQrUrl] = useState(qrCode);
   const [selectedFile, setSelectedFile] = useState(null);
+  const fileInputRef = useRef(null);
   const navigate = useNavigate();
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
-    if (file && file.type === "image/png") {
+    if (file && (file.type === "image/png" || file.type === "image/jpeg")) {
       setSelectedFile(file);
     } else {
-      alert("Please upload a PNG file.");
+      alert("Please upload a PNG or JPEG file.");
     }
   };
 
   const handleFileDelete = () => {
     setSelectedFile(null);
-    document.querySelector("input[type=file]").value = "";
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
   };
 
   const handleFileUpload = () => {
@@ -35,78 +39,51 @@ function Payment() {
       body: formData,
     })
       .then((response) => response.json())
-      .then((data) => {
+      .then(() => {
         alert("File uploaded successfully!");
         setSelectedFile(null);
+        if (fileInputRef.current) {
+          fileInputRef.current.value = "";
+        }
       })
       .catch((error) => console.error("Error uploading file:", error));
   };
 
   return (
-    <div style={{ textAlign: "center", padding: "20px" }}>
+    <div className="payment-container">
       <h1>Payment</h1>
-      {qrUrl && <img src={qrUrl} alt="QR Code" style={{ width: 200, height: 200, marginBottom: "20px" }} />}
-      <div>
-        <h2>Upload PNG</h2>
-        <input type="file" accept="image/png" onChange={handleFileChange} style={{ marginBottom: "10px" }} />
+      
+      {/* QR Code Display */}
+      {qrUrl && <img src={qrUrl} alt="QR Code" className="qr-image" />}
+
+      {/* File Upload Section */}
+      <div className="upload-section">
+        <h2>Upload Payment Proof (PNG/JPEG)</h2>
+        <input 
+          type="file" 
+          accept="image/png, image/jpeg" 
+          onChange={handleFileChange} 
+          ref={fileInputRef}
+          className="file-input"
+        />
+        
         {selectedFile && (
-          <div>
+          <div className="file-actions">
             <p>Selected file: {selectedFile.name}</p>
-            <button 
-              onClick={handleFileDelete}
-              style={{ 
-                backgroundColor: "#f44336", 
-                color: "white", 
-                padding: "8px 16px", 
-                border: "none", 
-                borderRadius: "5px", 
-                cursor: "pointer", 
-                marginTop: "10px",
-                transition: "background-color 0.3s ease"
-              }}
-              onMouseOver={(e) => e.target.style.backgroundColor = "#d32f2f"}
-              onMouseOut={(e) => e.target.style.backgroundColor = "#f44336"}
-            >
+            
+            <button onClick={handleFileDelete} className="delete-button">
               Delete
             </button>
-            <button 
-              onClick={handleFileUpload}
-              style={{ 
-                backgroundColor: "#008CBA", 
-                color: "white", 
-                padding: "8px 16px", 
-                border: "none", 
-                borderRadius: "5px", 
-                cursor: "pointer", 
-                marginLeft: "10px",
-                marginTop: "10px",
-                transition: "background-color 0.3s ease"
-              }}
-              onMouseOver={(e) => e.target.style.backgroundColor = "#007bb5"}
-              onMouseOut={(e) => e.target.style.backgroundColor = "#008CBA"}
-            >
+            
+            <button onClick={handleFileUpload} className="upload-button">
               Submit
             </button>
           </div>
         )}
       </div>
-      <button 
-        onClick={() => navigate("/")}
-        style={{ 
-          backgroundColor: "#4CAF50", 
-          color: "white", 
-          padding: "12px 24px", 
-          fontSize: "16px",
-          border: "none", 
-          borderRadius: "8px", 
-          cursor: "pointer", 
-          marginTop: "20px",
-          transition: "background-color 0.3s ease",
-          boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)"
-        }}
-        onMouseOver={(e) => e.target.style.backgroundColor = "#45a049"}
-        onMouseOut={(e) => e.target.style.backgroundColor = "#4CAF50"}
-      >
+
+      {/* Home Button */}
+      <button onClick={() => navigate("/")} className="home-button">
         Go to Home
       </button>
     </div>

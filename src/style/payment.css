@@ -1,0 +1,106 @@
+.payment-title {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    z-index: 10;
+}
+
+.payment-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    padding: 20px;
+    margin-top: 60px; /* Prevent content from overlapping the fixed title */
+}
+
+.qr-section {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.qr-image {
+    width: 200px;
+    height: auto;
+}
+
+.upload-section {
+    flex: 1;
+    padding: 20px;
+    background-color: #f8f8f8;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+}
+
+.file-input {
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.file-actions {
+    margin-top: 10px;
+    text-align: center;
+}
+
+button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    margin: 5px;
+}
+
+button:hover {
+    transform: scale(1.05);
+}
+
+.delete-button {
+    background-color: #f44336;
+    color: white;
+}
+
+.delete-button:hover {
+    background-color: #d32f2f;
+}
+
+.upload-button {
+    background-color: #008CBA;
+    color: white;
+}
+
+.upload-button:hover {
+    background-color: #007bb5;
+}
+
+.home-button {
+    background-color: #4CAF50;
+    color: white;
+    font-size: 16px;
+    padding: 12px 24px;
+    margin-top: 20px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.home-button:hover {
+    background-color: #45a049;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .payment-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .qr-section, .upload-section {
+        width: 100%;
+        text-align: center;
+    }
+}
