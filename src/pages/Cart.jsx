@@ -31,60 +31,43 @@ const Cart = () => {
             });
     };
 
+    // Calculate total price
+    const totalPrice = carts.reduce((acc, cart) => {
+        return acc + (cart.attributes?.course?.data?.attributes?.price || 0);
+    }, 0);
+
     return (
-        <div className="Favorite-page">
+        <div className="cart-page">
             <h1>Cart Courses</h1>
 
-            <div className="course-list">
-                {carts.length > 0 ? (
-                    carts.map(cart => (
-                        <CartCard
-                            key={cart.id}
-                            cart={cart}
-                            onRemoveCart={() => handleRemoveCart(cart.id)}
-                        />
-                    ))
-                ) : (
-                    <p className="no-carts">No cart courses found.</p>
+            <div className="cart-container">
+                <div className="course-list">
+                    {carts.length > 0 ? (
+                        carts.map(cart => (
+                            <CartCard
+                                key={cart.id}
+                                cart={cart}
+                                onRemoveCart={() => handleRemoveCart(cart.id)}
+                            />
+                        ))
+                    ) : (
+                        <p className="no-carts">No cart courses found.</p>
+                    )}
+                </div>
+
+                {/* Total price and payment button section */}
+                {carts.length > 0 && (
+                    <div className="cart-summary">
+                        <h2>Total Price: {totalPrice.toFixed(2)} Baht</h2>
+                        <Link 
+                            to="/payment" 
+                            className="payment-button"
+                        >
+                            Proceed to Payment
+                        </Link>
+                    </div>
                 )}
             </div>
-
-            {carts.length > 0 && (
-                <div className="payment-section">
-                    <Link 
-                        to="/payment" 
-                        className="payment-button"
-                        style={{
-                            display: "block",
-                            backgroundColor: "#4CAF50",
-                            color: "white",
-                            padding: "12px 24px",
-                            fontSize: "16px",
-                            border: "none",
-                            borderRadius: "5px",
-                            textDecoration: "none",
-                            cursor: "pointer",
-                            transition: "background-color 0.3s ease, transform 0.3s ease",
-                            textAlign: "center",
-                            marginTop: "20px",
-                            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
-                            width: "200px",
-                            marginLeft: "auto",
-                            marginRight: "auto",
-                        }}
-                        onMouseOver={(e) => {
-                            e.target.style.backgroundColor = "#45a049";
-                            e.target.style.transform = "scale(1.05)";
-                        }}
-                        onMouseOut={(e) => {
-                            e.target.style.backgroundColor = "#4CAF50";
-                            e.target.style.transform = "scale(1)";
-                        }}
-                    >
-                        Proceed to Payment
-                    </Link>
-                </div>
-            )}
         </div>
     );
 };
