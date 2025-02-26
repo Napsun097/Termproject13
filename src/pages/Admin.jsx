@@ -30,7 +30,7 @@ const Admin = ({ user, setUser }) => {
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
-  
+
     // ✅ ตรวจสอบว่า User มี role เป็น Admin หรือไม่
     if (!storedUser || !storedUser.roles || !storedUser.roles.includes("Admin")) {
       navigate("/"); // 🔥 ถ้าไม่ใช่ Admin ให้กลับไปหน้า Home
@@ -39,7 +39,7 @@ const Admin = ({ user, setUser }) => {
       setActiveTab("dashboard");
     }
   }, [navigate]);
-  
+
 
   const [formData, setFormData] = useState({
     title: "",
@@ -296,7 +296,7 @@ const Admin = ({ user, setUser }) => {
       {/* Sidebar */}
       <div className="sidebar">
         <div className="header-navbar">
-            <h1>Admin</h1>
+          <h1>Admin</h1>
         </div>
         <ul className="sidebar-menu">
           <li className="dashboard-admin-link" onClick={() => setActiveTab("dashboard")}>
@@ -383,14 +383,14 @@ const Admin = ({ user, setUser }) => {
                 courses.map((course) => {
                   // Extract attributes
                   const title = course.title;
-                  const image = course.image[0];
+                  const image = course.image;
                   const Hours = course.courseHours;
+                  const shortDescription = course.shortDescription ;
 
                   // ✅ Extract large image URL
-                  const imageUrl =
-                    image && image.formats && image.formats.large
-                      ? `http://localhost:1337${image.formats.large.url}`
-                      : null;
+                  const imageUrl = course.image
+                    ? `http://localhost:1337${course.image.formats.large.url}`
+                    : null;
 
                   return (
                     <div key={course.id} className="course-card-admin">
@@ -405,7 +405,7 @@ const Admin = ({ user, setUser }) => {
                         </div>
                         <div className="describe-card">
                           <h3 className="head-text-card-admin">{title}</h3>
-                          <p className="short-describe">sdslkdj</p>
+                          <p className="short-describe">{shortDescription}</p>
                           <p className="course-hours-admin"> {Hours} ชั่วโมง</p>
                           <div className="type-course-admin">
                             <p>premium</p>

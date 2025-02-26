@@ -2,7 +2,7 @@
   
   /* A-Level Page Styles */
   .alevel-page {
-    padding: 20px;
+    padding: 40px;
   }
   
   
@@ -37,8 +37,13 @@
   
   /* Course List */
   .course-list {
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 12px;
+    margin-bottom: 12px;
+    padding: 0; /* ปรับ padding ด้านข้างให้ดูสมดุล */
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 20px;
   }
   

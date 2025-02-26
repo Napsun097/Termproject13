@@ -144,9 +144,9 @@ function CourseCard({ course }) {
 
     }
     // ตรวจสอบว่ามีค่า `image` หรือไม่ก่อนแสดงผล
-    const imageUrl = course.image && course.image.length > 0
-        ? `http://localhost:1337${course.image[0].formats.large.url}`
-        : null;
+    const imageUrl = course.image
+    ? `http://localhost:1337${course.image.formats.large.url}`
+    : null;
 
     return (
         <div className="course-card">
@@ -175,10 +175,10 @@ function CourseCard({ course }) {
                 <p className="course-description">{course.shortDescription}</p>
 
                 <div className="course-actions">
-                    <p className="course-hours"> ชั่วโมงเรียน: {course.courseHours} ชั่วโมง</p>
+                    <p className="course-hours"> {course.courseHours} ชั่วโมง</p>
 
                     <div className="price-and-cart">
-                        <p className="course-price"> ราคา: {course.price} บาท</p>
+                        <p className="course-price"> ฿ {course.price}.00</p>
                         <button
                             className={`cart-btn ${isInCart ? "in-cart" : ""}`}
                             onClick={onCartClick}
