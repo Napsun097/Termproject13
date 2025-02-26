@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import qrCode from "../assets/images/65634599-3898-49a9-976b-ae9b7203be52.jpg";
 import "../style/payment.css"; // Import external CSS file
+import axios from 'axios';
 
 function Payment() {
   const [qrUrl, setQrUrl] = useState(qrCode);
@@ -27,27 +28,22 @@ function Payment() {
 
   const handleFileUpload = () => {
     if (!selectedFile) {
-      alert("Please select a file to upload.");
-      return;
+        alert("Please select a file to upload.");
+        return;
     }
 
     const formData = new FormData();
     formData.append("files", selectedFile);
 
-    fetch("https://your-strapi-url.com/api/upload", {
-      method: "POST",
-      body: formData,
-    })
-      .then((response) => response.json())
-      .then(() => {
-        alert("File uploaded successfully!");
-        setSelectedFile(null);
-        if (fileInputRef.current) {
-          fileInputRef.current.value = "";
-        }
-      })
-      .catch((error) => console.error("Error uploading file:", error));
-  };
+    axios.post("http://localhost:1337/api/upload", formData)
+        .then(response => {
+            console.log("Image uploaded successfully:", response.data);
+            alert("File uploaded successfully!");
+        })
+        .catch(error => {
+            console.error("Error uploading file:", error);
+        });
+};
 
   return (
     <div className="payment-container">

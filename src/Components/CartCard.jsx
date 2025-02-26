@@ -11,7 +11,7 @@ function CartCard({ cart, onRemoveCart }) {
     useEffect(() => {
         if (!cart || !cart.documentId) return;
         const FetchCartStatus = axios.get(`http://localhost:1337/api/carts/${cart.documentId}`)
-        const FetchFavoriteStatus = axios.get(`http://localhost:1337/api/carts/${cart.documentId}?populate[course][populate]=favorite`)
+        const FetchFavoriteStatus = axios.get(`http://localhost:1337/api/carts/${cart.documentId}?populate[course][populate]=*`)
 
             Promise.all([FetchCartStatus, FetchFavoriteStatus])
             .then(([cartResponse, favoriteResponse]) => {
@@ -104,8 +104,8 @@ function CartCard({ cart, onRemoveCart }) {
         return <p>Error: Cart data is missing!</p>;
     }
 
-    const imageUrl = cart.course.image?.[0]?.formats?.large?.url
-        ? `http://localhost:1337${cart.course.image[0].formats.large.url}`
+    const imageUrl = cart.course.image.formats?.large?.url
+        ? `http://localhost:1337${cart.course.image.formats.large.url}`
         : null;
 
     return (

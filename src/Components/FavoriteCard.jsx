@@ -14,7 +14,7 @@ function FavoriteCard({ favorite, onRemoveFavorite }) {
 
 
         const fetchFavoriteStatus = axios.get(`http://localhost:1337/api/favorites/${favorite.documentId}`)
-        const fetchCartStatus = axios.get(`http://localhost:1337/api/favorites/${favorite.documentId}?populate[course][populate]=cart`)
+        const fetchCartStatus = axios.get(`http://localhost:1337/api/favorites/${favorite.documentId}?populate[course][populate]=*`)
 
         Promise.all([fetchFavoriteStatus, fetchCartStatus])
             .then(([favoriteResponse, cartResponse]) => { // Destructure responses
@@ -104,8 +104,8 @@ function FavoriteCard({ favorite, onRemoveFavorite }) {
         return <p>Error: Favorite data is missing!</p>;
     }
 
-    const imageUrl = favorite.course.image?.[0]?.formats?.large?.url
-        ? `http://localhost:1337${favorite.course.image[0].formats.large.url}`
+    const imageUrl = favorite.course.image.formats?.large?.url
+        ? `http://localhost:1337${favorite.course.image.formats.large.url}`
         : null;
 
     return (
