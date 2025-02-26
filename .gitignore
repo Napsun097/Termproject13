@@ -34,9 +34,9 @@ pids/
 *.pid
 
 # อนุญาตให้ Push รูปภาพใน Strapi
-public/uploads/
-!public/uploads/*
-!public/uploads/**/*
+!public/uploads/
+!public/uploads/**
+
 
 
 # Environment variables
