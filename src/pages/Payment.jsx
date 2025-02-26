@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import qrCode from "../assets/images/65634599-3898-49a9-976b-ae9b7203be52.jpg";
 import "../style/payment.css"; // Import external CSS file
@@ -9,6 +9,20 @@ function Payment() {
   const [selectedFile, setSelectedFile] = useState(null);
   const fileInputRef = useRef(null);
   const navigate = useNavigate();
+  const [isInCart, setIsInCart] = useState(false);
+  const [cartId, setCartId] = useState(null);
+
+  useEffect(() => {
+    // Fetch the cart ID first (you may need to replace the URL to match your API)
+    axios.get("http://localhost:1337/api/carts")
+      .then(response => {
+        if (response.data.data.length > 0) {
+          setCartId(response.data.data[0].documentId); // Assuming you're working with the first cart item
+        }
+      })
+      .catch(error => console.error("Error fetching cart ID:", error));
+  }, []);
+
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -44,10 +58,62 @@ function Payment() {
 
         // Now, associate the image with the payment entry
         updatePayment(imageId);
+        moveToSoldCollection();
       })
       .catch(error => {
         console.error("Error uploading file:", error);
       });
+  };
+
+  const moveToSoldCollection = async () => {
+    try {
+      // Fetch latest cart data with related course and user info
+      const cartResponse = await axios.get(`http://localhost:1337/api/carts?populate[course][populate]=*`);
+      console.log("Full API Response:", cartResponse);
+      const cartItems = Array.isArray(cartResponse.data.data) ? cartResponse.data.data : [];
+
+      for (const cartItem of cartItems) {
+        const course = cartItem.course;
+        console.log("Cart Items to Move:", cartItems);
+      await axios.post("http://localhost:1337/api/solds", {
+        data: {
+          title: course.title,
+          category: course.category,
+          price: course.price,
+          isPopular: course.isPopular,
+          type: course.type,
+          courseHours: course.courseHours,
+          fullDescription: course.fullDescription,
+          shortDescription: course.shortDescription,
+          subjectName: course.subjectName,
+          image: [course.image.id],
+        }
+      });
+
+      console.log(`Moved cart item ${cartItem.documentId} to Sold collection.`);
+    }
+      await deleteAllCartItems();
+    } catch (error) {
+      console.error("Error moving item to Sold collection:", error);
+    }
+  };
+
+  const deleteAllCartItems = async () => {
+    try {
+      // Fetch all cart items
+      const cartResponse = await axios.get("http://localhost:1337/api/carts");
+      const cartItems = cartResponse.data.data; // Extract cart items
+  
+      // Loop through each cart item and delete it
+      for (const cartItem of cartItems) {
+        await axios.delete(`http://localhost:1337/api/carts/${cartItem.documentId}`);
+        console.log(`Deleted cart item with ID: ${cartItem.documentId}`);
+      }
+  
+      console.log("All cart items deleted successfully.");
+    } catch (error) {
+      console.error("Error deleting all cart items:", error);
+    }
   };
 
   // Function to update the Payment entry with the uploaded image

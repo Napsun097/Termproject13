@@ -16,6 +16,7 @@ import Cart from "./pages/Cart"; // Import Cart component
 import CourseDetail from "./pages/CourseDetail";
 import Admin from "./pages/Admin";
 import EmptyCart from "./pages/EmptyCart";
+import axios from "axios";
 
 function App() {
   const [user, setUser] = useState(null);
