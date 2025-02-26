@@ -10,13 +10,20 @@ function CartCard({ cart, onRemoveCart }) {
 
     useEffect(() => {
         if (!cart || !cart.documentId) return;
-        axios.get(`http://localhost:1337/api/carts/${cart.documentId}`)
+        const FetchCartStatus = axios.get(`http://localhost:1337/api/carts/${cart.documentId}`)
+        const FetchFavoriteStatus = axios.get(`http://localhost:1337/api/carts/${cart.documentId}?populate[course][populate]=favorite`)
 
-            .then(response => {
-                console.log("API Response:", response.data);
-                if (response.data.isInCart) {
+            Promise.all([FetchCartStatus, FetchFavoriteStatus])
+            .then(([cartResponse, favoriteResponse]) => {
+                console.log("Cart Response:", cartResponse.data);
+                console.log("Favorite Response:", favoriteResponse.data);
+                if (cartResponse.data.isInCart) {
                     setIsInCart(true);
                     localStorage.setItem(`cart-${cart.documentId}`, true);
+                }
+                if (favoriteResponse.data.data.course.favorite) {
+                    setIsFavorite(true);
+                    localStorage.setItem(`favorite-${cart.documentId}`, true);
                 }
             })
             .catch(error => {
@@ -72,9 +79,9 @@ function CartCard({ cart, onRemoveCart }) {
     
         } else {
             // ✅ Fetch the favorite entry correctly
-            axios.get(`http://localhost:1337/api/courses/${cart.course.id}?populate=favorite`)
+            axios.get(`http://localhost:1337/api/courses/${cart.course.documentId}?populate=favorite`)
                 .then(response => {
-                    const favoriteId = response.data.data?.favorite?.id;
+                    const favoriteId = response.data.data?.favorite?.documentId;
                     if (favoriteId) {
                         axios.delete(`http://localhost:1337/api/favorites/${favoriteId}`)
                             .then(() => {
@@ -133,10 +140,10 @@ function CartCard({ cart, onRemoveCart }) {
                     <div className="price-and-cart">
                         <p className="course-price"> ราคา: {cart.price} บาท</p>
                         <button
-                            className={`cart-btn ${isInCart ? "in-cart" : ""}`}
+                            className={`cart-btn in-cart`}
                             onClick={onCartClick}
                         >
-                            {isInCart ? <FaShoppingCart className="cart-icon" /> : <FaCartPlus className="cart-icon" />}
+                            {<FaShoppingCart className="cart-icon" />}
                         </button>
                     </div>
                 </div>

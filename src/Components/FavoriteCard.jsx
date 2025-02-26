@@ -9,28 +9,24 @@ function FavoriteCard({ favorite, onRemoveFavorite }) {
     const [isInCart, setIsInCart] = useState(false);
 
     useEffect(() => {
-        /*const savedFavorite = localStorage.getItem(`favorite-${course.id}`);
-        const savedCart = localStorage.getItem(`cart-${course.id}`);
-
-        if (savedFavorite === "true") setIsFavorite(true);
-        if (savedCart === "true") setIsInCart(true);
-    }, [course.id]);
-
-    function onFavoriteClick() {
-        setIsFavorite(!isFavorite);
-        localStorage.setItem(`favorite-${course.id}`, !isFavorite);
-    }*/
         const savedCart = localStorage.getItem(`cart-${favorite.id}`);
         if (savedCart === "true") setIsInCart(true);
 
-        // Fetch favorite status from the database
-        axios.get(`http://localhost:1337/api/favorites/${favorite.documentId}`)
 
-            .then(response => {
-                console.log("API Response:", response.data);
-                if (response.data.isFavorite) {
+        const fetchFavoriteStatus = axios.get(`http://localhost:1337/api/favorites/${favorite.documentId}`)
+        const fetchCartStatus = axios.get(`http://localhost:1337/api/favorites/${favorite.documentId}?populate[course][populate]=cart`)
+
+        Promise.all([fetchFavoriteStatus, fetchCartStatus])
+            .then(([favoriteResponse, cartResponse]) => { // Destructure responses
+                console.log("Favorite Response:", favoriteResponse.data);
+                console.log("Cart Response:", cartResponse.data);
+                if (favoriteResponse.data.isFavorite) {
                     setIsFavorite(true);
                     localStorage.setItem(`favorite-${favorite.documentId}`, true);
+                }
+                if (cartResponse.data.data.course.cart) {
+                    setIsInCart(true);
+                    localStorage.setItem(`cart-${favorite.documentId}`, true);
                 }
             })
             .catch(error => {
@@ -39,21 +35,68 @@ function FavoriteCard({ favorite, onRemoveFavorite }) {
     }, [favorite.documentId]);
 
     function onFavoriteClick() {
-            // Remove from favorites
-            axios.delete(`http://localhost:1337/api/favorites/${favorite.documentId}`)
-                .then(() => {
-                    console.log("Removed from favorites:", favorite.documentId);
-                    setIsFavorite(false);
-                    onRemoveFavorite(favorite.documentId); // Remove from UI
-                })
-                .catch(error => {
-                    console.error("Error removing from favorites!", error);
-                });
+        // Remove from favorites
+        axios.delete(`http://localhost:1337/api/favorites/${favorite.documentId}`)
+            .then(() => {
+                console.log("Removed from favorites:", favorite.documentId);
+                setIsFavorite(false);
+                onRemoveFavorite(favorite.documentId); // Remove from UI
+            })
+            .catch(error => {
+                console.error("Error removing from favorites!", error);
+            });
     }
 
     function onCartClick() {
-        setIsInCart(!isInCart);
-        localStorage.setItem(`cart-${course.id}`, !isInCart);
+        const newCartStatus = !isInCart;
+        setIsInCart(newCartStatus);
+
+        if (newCartStatus) {
+            // Extract only the required fields
+            const cartData = {
+                data: {
+                    title: favorite.course.title,
+                    category: favorite.course.category,
+                    price: favorite.course.price,
+                    isPopular: favorite.course.isPopular,
+                    type: favorite.course.type,
+                    courseHours: favorite.course.courseHours,
+                    fullDescription: favorite.course.fullDescription,
+                    shortDescription: favorite.course.shortDescription,
+                    subjectName: favorite.course.subjectName,
+                    course: {
+                        connect: [favorite.course.documentId],
+                    }
+                }
+            };
+            console.log("Sending data:", JSON.stringify(cartData, null, 2));
+            if (newCartStatus) {
+                axios.post('http://localhost:1337/api/carts', cartData)
+                    .then(response => {
+                        console.log('Course added to carts:', response.data);
+                    })
+                    .catch(error => {
+                        console.error('There was an error adding the course to carts!', error);
+                    });
+            }
+        } else {
+            axios.get(`http://localhost:1337/api/courses/${favorite.course.documentId}?populate=cart`)
+                .then(response => {
+                    const cartId = response.data.data.cart.documentId;
+                    if (cartId) {
+                        axios.delete(`http://localhost:1337/api/carts/${cartId}`)
+                            .then(() => {
+                                console.log("Course removed from carts");
+                            })
+                            .catch(error => {
+                                console.error("Error removing course from carts", error);
+                            });
+                    }
+                })
+                .catch(error => {
+                    console.error("Error fetching cart entry", error);
+                });
+        }
     }
 
 
@@ -80,10 +123,10 @@ function FavoriteCard({ favorite, onRemoveFavorite }) {
             <div className="course-details">
                 <div className="type1">
                     <button
-                        className={`favorite-btn ${isFavorite ? "active" : ""}`}
+                        className={`favorite-btn active`}
                         onClick={onFavoriteClick}
                     >
-                        {isFavorite ? <FaHeart className="heart-icon" /> : <FaRegHeart className="heart-icon" />}
+                        {<FaHeart className="heart-icon" />}
                     </button>
                     <h4 className="course-type"> video course </h4>
                 </div>
