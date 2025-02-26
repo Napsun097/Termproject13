@@ -33,7 +33,7 @@ const Cart = () => {
 
     // Calculate total price
     const totalPrice = carts.reduce((acc, cart) => {
-        return acc + (cart.attributes?.course?.data?.attributes?.price || 0);
+        return acc + (cart.course.price || 0);
     }, 0);
 
     return (
