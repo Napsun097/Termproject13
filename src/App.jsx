@@ -15,6 +15,7 @@ import Favorite from "./pages/Favorite";
 import Cart from "./pages/Cart"; // Import Cart component
 import CourseDetail from "./pages/CourseDetail";
 import Admin from "./pages/Admin";
+import EmptyCart from "./pages/EmptyCart";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -50,6 +51,7 @@ function App() {
           <Route path="/payment" element={<Payment />} />
           <Route path="/favorite" element={<Favorite />} />
           <Route path="/cart" element={<Cart />} /> {/* Add Cart route */}
+          <Route path="/empty-cart" element={<EmptyCart />} />
           <Route path="/course/:id" element={<CourseDetail />} /> {/* กำหนด Route สำหรับ CourseDetail */}
           <Route path="/admin" element={<Admin user={user} setUser={setUser}/>} />
         

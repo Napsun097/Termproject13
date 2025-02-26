@@ -1,0 +1,19 @@
+.empty-cart-container {
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 80px; /* Increase spacing at the bottom */
+}
+  
+  .go-home-btn {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .go-home-btn:hover {
+    background-color: #0056b3;
+  }

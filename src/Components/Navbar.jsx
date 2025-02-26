@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/images/logo.png";
 import "../style/navbar.css";
 import { FaShoppingCart, FaHeart } from "react-icons/fa";
+import axios from 'axios';
 
 function Navbar({ user, setUser }) {
   const [searchTerm, setSearchTerm] = useState("");
@@ -15,10 +16,6 @@ function Navbar({ user, setUser }) {
   const dropdownRef = useRef(null);
 
   // Get cart items from localStorage (or from context/state management)
-  useEffect(() => {
-    const storedCartItems = JSON.parse(localStorage.getItem("cartItems") || "[]");
-    setCartItems(storedCartItems);
-  }, []);
 
   // Close dropdown if clicked outside
   useEffect(() => {
@@ -58,6 +55,22 @@ function Navbar({ user, setUser }) {
     setIsNavbarOpen(false);
   };
 
+  const handlePaymentClick = async (e) => {
+    try {
+      const response = await axios.get("http://localhost:1337/api/carts");
+      console.log("Cart Items:", response.data);
+  
+      if (response.data.data.length === 0) {
+        e.preventDefault(); // Prevent navigation
+        navigate("/empty-cart");
+      } else {
+        navigate("/payment");
+      }
+    } catch (error) {
+      console.error("Error fetching cart items:", error);
+    }
+  };
+
   return (
     <nav className="navbar">
       <div className="navbar-container">
@@ -75,7 +88,7 @@ function Navbar({ user, setUser }) {
             <Link to="/a-level" className="nav-link" onClick={closeNavbar}>A-level</Link>
           </div>
 
-          
+
 
           <div className="search-container">
             <form onSubmit={handleSearch} className="search-form">
@@ -122,8 +135,8 @@ function Navbar({ user, setUser }) {
                 </button>
 
                 <div className="profile-menu">
-                  <Link to="/profile"  onClick={closeNavbar}>
-                   <button className="my-profile-link">โปรไฟล์ของฉัน</button> 
+                  <Link to="/profile" onClick={closeNavbar}>
+                    <button className="my-profile-link">โปรไฟล์ของฉัน</button>
                   </Link>
                   {user.roles && user.roles.includes("Admin") && (
                     <Link to="/admin" onClick={closeNavbar}>
@@ -131,9 +144,9 @@ function Navbar({ user, setUser }) {
                     </Link>
                   )}
                   {user.roles && user.roles.includes("User") && (
-                    <Link to="/payment" onClick={closeNavbar}>
-                      <button className="payment-menu">ชำระเงิน</button>
-                    </Link>
+                    
+                      <button onClick={handlePaymentClick} className="payment-menu">ชำระเงิน</button>
+                    
                   )}
                   <button className="logout-btn-navbar" onClick={handleLogout}>
                     ออกจากระบบ
@@ -141,7 +154,7 @@ function Navbar({ user, setUser }) {
                 </div>
               </div>
             ) : (
-              <Link to="/login"  onClick={closeNavbar}>
+              <Link to="/login" onClick={closeNavbar}>
                 <button className="login-btn"> เข้าสู่ระบบ </button>
               </Link>
             )}
