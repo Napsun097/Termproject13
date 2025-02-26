@@ -1,10 +1,10 @@
 {
   "kind": "collectionType",
-  "collectionName": "courses",
+  "collectionName": "solds",
   "info": {
-    "singularName": "course",
-    "pluralName": "courses",
-    "displayName": "course",
+    "singularName": "sold",
+    "pluralName": "solds",
+    "displayName": "Sold",
     "description": ""
   },
   "options": {
@@ -73,13 +73,7 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::cart.cart",
-      "mappedBy": "course"
-    },
-    "favorite": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::favorite.favorite",
-      "inversedBy": "course"
+      "mappedBy": "sold"
     }
   }
 }

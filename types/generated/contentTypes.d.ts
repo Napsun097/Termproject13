@@ -397,6 +397,7 @@ export interface ApiCartCart extends Struct.CollectionTypeSchema {
     publishedAt: Schema.Attribute.DateTime;
     quantity: Schema.Attribute.Integer;
     shortDescription: Schema.Attribute.Text;
+    sold: Schema.Attribute.Relation<'oneToOne', 'api::sold.sold'>;
     subjectName: Schema.Attribute.Enumeration<
       [
         'TGAT1',
@@ -555,6 +556,57 @@ export interface ApiPaymentQrPaymentQr extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
     Qr: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiSoldSold extends Struct.CollectionTypeSchema {
+  collectionName: 'solds';
+  info: {
+    description: '';
+    displayName: 'Sold';
+    pluralName: 'solds';
+    singularName: 'sold';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    cart: Schema.Attribute.Relation<'oneToOne', 'api::cart.cart'>;
+    category: Schema.Attribute.Enumeration<['tgat', 'tpat', 'a-level']>;
+    courseHours: Schema.Attribute.Integer;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    fullDescription: Schema.Attribute.RichText;
+    image: Schema.Attribute.Media<'images'>;
+    isPopular: Schema.Attribute.Boolean;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::sold.sold'> &
+      Schema.Attribute.Private;
+    price: Schema.Attribute.Integer;
+    publishedAt: Schema.Attribute.DateTime;
+    shortDescription: Schema.Attribute.Text;
+    subjectName: Schema.Attribute.Enumeration<
+      [
+        'TGAT1',
+        'TGAT2',
+        'TGAT3',
+        'TPAT1',
+        'TPAT2',
+        'TPAT3',
+        'TPAT4',
+        'TPAT5',
+        'A-LEVEL PHYSICS',
+        'A-LEVEL MATH1',
+        'A-LEVEL MATH2',
+        'A-LEVEL CHEMISTRY',
+      ]
+    >;
+    title: Schema.Attribute.Text;
+    type: Schema.Attribute.Enumeration<['standard', 'premium']>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1075,6 +1127,7 @@ declare module '@strapi/strapi' {
       'api::course.course': ApiCourseCourse;
       'api::favorite.favorite': ApiFavoriteFavorite;
       'api::payment-qr.payment-qr': ApiPaymentQrPaymentQr;
+      'api::sold.sold': ApiSoldSold;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;
