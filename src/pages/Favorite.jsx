@@ -33,7 +33,7 @@ const Favorite = () => {
 
     return (
         <div className="Favorite-page">
-            <h1>Favorite Courses</h1>
+            <h1 className="favorite-head-text">Favorite Courses</h1>
 
             <div className="course-list">
                 {favorites.length > 0 ? (

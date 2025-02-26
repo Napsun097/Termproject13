@@ -28,7 +28,7 @@
 
 /* โลโก้ */
 .navbar-brand img {
-  width: 240px;
+  width: 200px;
   height: auto;
   white-space: nowrap; /* ป้องกันการตัดบรรทัดใหม่ */
   background-color: #ffffff;
@@ -222,6 +222,18 @@
 /* สไตล์สำหรับไอคอนตะกร้า */
 .navbar-icons .nav-icon {
   position: relative;
+}
+
+.login-btn{
+  padding: 8px 16px;
+  background-color: #008CBA;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  margin: 5px;
 }
 
 

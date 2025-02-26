@@ -105,7 +105,7 @@ function Home() {
           <br />
           {standardCourses.length > 0 ? (
             <div className="course-category">
-              <h2 className="head-card-home">🏃‍♂️ แพ็คคู่ มาราธอน</h2>
+              <h2 className="head-card-home">🏃‍♂️ แพ็คคู่สุดคุ้ม </h2>
               <div className="course-list-home">
                 {standardCourses.map((course) => (
                   <CourseCard key={course.id} course={course} />

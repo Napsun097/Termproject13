@@ -1,5 +1,6 @@
 /* กำหนดตำแหน่งให้ sidebar */
 .favorite-page {
+    width: 100%;
     display: flex;
     margin: 20px;
     gap: 20px; /* ใช้ gap แทน margin-right เพื่อให้มีระยะห่างที่เหมาะสม */
@@ -11,6 +12,7 @@
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* ให้แสดงคอร์สในรูปแบบ grid ที่ปรับขนาดอัตโนมัติ */
     gap: 20px;
     width: 100%;
+    margin: 20px;
 }
 
 .no-courses {
@@ -19,6 +21,12 @@
     color: #555; /* สีเทาเข้ม */
     font-weight: bold;
     margin-top: 50px; /* ให้มีระยะห่างจากด้านบน */
+}
+
+.favorite-head-text{
+    margin-top: 15px;
+    margin-left: 30px;
+    border-bottom: 1px solid hsla(0, 0%, 50%, 0.758);
 }
 
 

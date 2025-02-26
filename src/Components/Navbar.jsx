@@ -141,8 +141,8 @@ function Navbar({ user, setUser }) {
                 </div>
               </div>
             ) : (
-              <Link to="/login" className="nav-button login-btn" onClick={closeNavbar}>
-                เข้าสู่ระบบ
+              <Link to="/login"  onClick={closeNavbar}>
+                <button className="login-btn"> เข้าสู่ระบบ </button>
               </Link>
             )}
           </div>

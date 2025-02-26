@@ -112,6 +112,7 @@ body {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 20px;
+  
 }
 
 .loading-container {
@@ -281,3 +282,38 @@ body {
     padding-bottom: 5px;
   }
 }
+
+/* Animation ตอนเปิดหน้า */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+body {
+  animation: fadeIn 1s ease-in-out;
+}
+
+/* Animation สำหรับหัวข้อโปรโมชั่น */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.head-promotion {
+  animation: slideIn 1s ease-in-out;
+}
+
+
+
