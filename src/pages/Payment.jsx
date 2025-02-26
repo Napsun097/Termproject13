@@ -28,49 +28,75 @@ function Payment() {
 
   const handleFileUpload = () => {
     if (!selectedFile) {
-        alert("Please select a file to upload.");
-        return;
+      alert("Please select a file to upload.");
+      return;
     }
 
     const formData = new FormData();
     formData.append("files", selectedFile);
 
     axios.post("http://localhost:1337/api/upload", formData)
-        .then(response => {
-            console.log("Image uploaded successfully:", response.data);
-            alert("File uploaded successfully!");
-        })
-        .catch(error => {
-            console.error("Error uploading file:", error);
-        });
-};
+      .then(response => {
+        console.log("Image uploaded successfully:", response.data);
+
+        // Get the uploaded image ID
+        const imageId = response.data[0].id;
+
+        // Now, associate the image with the payment entry
+        updatePayment(imageId);
+      })
+      .catch(error => {
+        console.error("Error uploading file:", error);
+      });
+  };
+
+  // Function to update the Payment entry with the uploaded image
+  const updatePayment = (imageId) => {
+    axios.post("http://localhost:1337/api/payment-qrs", {
+      data: {
+        Qr: [imageId],
+      }
+    }
+    )
+      .then(response => {
+        console.log("Payment updated successfully:", response.data);
+        alert("Payment proof submitted! You'll be redirected to the home page shortly after pressing an OK Button.");
+
+        setTimeout(() => {
+          navigate("/");
+        }, 1000);
+      })
+      .catch(error => {
+        console.error("Error updating payment:", error);
+      });
+  };
 
   return (
     <div className="payment-container">
       <h1>Payment</h1>
-      
+
       {/* QR Code Display */}
       {qrUrl && <img src={qrUrl} alt="QR Code" className="qr-image" />}
 
       {/* File Upload Section */}
       <div className="upload-section">
         <h2>Upload Payment Proof (PNG/JPEG)</h2>
-        <input 
-          type="file" 
-          accept="image/png, image/jpeg" 
-          onChange={handleFileChange} 
+        <input
+          type="file"
+          accept="image/png, image/jpeg"
+          onChange={handleFileChange}
           ref={fileInputRef}
           className="file-input"
         />
-        
+
         {selectedFile && (
           <div className="file-actions">
             <p>Selected file: {selectedFile.name}</p>
-            
+
             <button onClick={handleFileDelete} className="delete-button">
               Delete
             </button>
-            
+
             <button onClick={handleFileUpload} className="upload-button">
               Submit
             </button>
