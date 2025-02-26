@@ -8,6 +8,7 @@ import "../style/coursecard.css";
 function CourseCard({ course }) {
     const [isFavorite, setIsFavorite] = useState(false);
     const [isInCart, setIsInCart] = useState(false);
+    const [cartItems, setCartItems] = useState([]);
 
     useEffect(() => {
         /*const savedFavorite = localStorage.getItem(`favorite-${course.id}`);
@@ -65,7 +66,7 @@ function CourseCard({ course }) {
                 axios.post('http://localhost:1337/api/favorites', favoriteData)
                     .then(response => {
                         console.log('Course added to favorites:', response.data);
-                    })
+                        window.location.reload();})
                     .catch(error => {
                         console.error('There was an error adding the course to favorites!', error);
                     });
@@ -78,7 +79,7 @@ function CourseCard({ course }) {
                         axios.delete(`http://localhost:1337/api/favorites/${favoriteId}`)
                             .then(() => {
                                 console.log("Course removed from favorites");
-                            })
+                                window.location.reload();})
                             .catch(error => {
                                 console.error("Error removing course from favorites", error);
                             });
@@ -89,6 +90,7 @@ function CourseCard({ course }) {
                 });
         }
     }
+
 
     function onCartClick() {
         const newCartStatus = !isInCart;
@@ -117,7 +119,7 @@ function CourseCard({ course }) {
                 axios.post('http://localhost:1337/api/carts', cartData)
                     .then(response => {
                         console.log('Course added to carts:', response.data);
-                    })
+                        window.location.reload();})
                     .catch(error => {
                         console.error('There was an error adding the course to carts!', error);
                     });
@@ -130,7 +132,7 @@ function CourseCard({ course }) {
                         axios.delete(`http://localhost:1337/api/carts/${cartId}`)
                             .then(() => {
                                 console.log("Course removed from carts");
-                            })
+                                window.location.reload();})
                             .catch(error => {
                                 console.error("Error removing course from carts", error);
                             });
@@ -145,8 +147,8 @@ function CourseCard({ course }) {
     }
     // ตรวจสอบว่ามีค่า `image` หรือไม่ก่อนแสดงผล
     const imageUrl = course.image
-    ? `http://localhost:1337${course.image.formats.large.url}`
-    : null;
+        ? `http://localhost:1337${course.image.formats.large.url}`
+        : null;
 
     return (
         <div className="course-card">

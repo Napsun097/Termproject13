@@ -18,6 +18,21 @@ function Navbar({ user, setUser }) {
   // Get cart items from localStorage (or from context/state management)
 
   // Close dropdown if clicked outside
+
+  useEffect(() => {
+    const fetchCartItems = async () => {
+      try {
+        const response = await axios.get("http://localhost:1337/api/carts");
+        console.log("Cart Items:", response.data);
+        setCartItems(response.data.data || []); // Ensure it's an array
+      } catch (error) {
+        console.error("Error fetching cart items:", error);
+      }
+    };
+
+    fetchCartItems();
+  }, []); // Runs once when the component mounts
+  
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {

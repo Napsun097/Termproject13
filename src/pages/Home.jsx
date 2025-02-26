@@ -11,7 +11,7 @@ function Home() {
   const [error, setError] = useState(null); {/* State สำหรับจัดการข้อผิดพลาด */ }
 
   {/* ดึงข้อมูลคอร์สเมื่อ Component ถูกโหลด */ }
-  useEffect(() => {
+  
     async function getCourses() {
       setLoading(true);
       const { courses, error } = await fetchCourses();
@@ -20,8 +20,9 @@ function Home() {
       setLoading(false);
     }
 
-    getCourses();
-  }, []);
+    useEffect(() => {
+      getCourses();
+    }, []);
 
   if (loading)
     return (

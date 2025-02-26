@@ -38,7 +38,7 @@ function CartCard({ cart, onRemoveCart }) {
                     console.log("Removed from carts:", cart.documentId);
                     setIsInCart(false);
                     onRemoveCart(cart.documentId); // Remove from UI
-                })
+                    window.location.reload();})
                 .catch(error => {
                     console.error("Error removing from carts!", error);
                 });

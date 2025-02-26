@@ -74,7 +74,7 @@ function FavoriteCard({ favorite, onRemoveFavorite }) {
                 axios.post('http://localhost:1337/api/carts', cartData)
                     .then(response => {
                         console.log('Course added to carts:', response.data);
-                    })
+                        window.location.reload();})
                     .catch(error => {
                         console.error('There was an error adding the course to carts!', error);
                     });
@@ -87,7 +87,7 @@ function FavoriteCard({ favorite, onRemoveFavorite }) {
                         axios.delete(`http://localhost:1337/api/carts/${cartId}`)
                             .then(() => {
                                 console.log("Course removed from carts");
-                            })
+                                window.location.reload();})
                             .catch(error => {
                                 console.error("Error removing course from carts", error);
                             });

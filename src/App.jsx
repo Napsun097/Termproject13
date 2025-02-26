@@ -19,6 +19,7 @@ import EmptyCart from "./pages/EmptyCart";
 
 function App() {
   const [user, setUser] = useState(null);
+  const [cartItems, setCartItems] = useState([]);
   const location = useLocation(); // Get current path
 
   useEffect(() => {
@@ -26,7 +27,17 @@ function App() {
     if (storedUser) {
       setUser(JSON.parse(storedUser));
     }
+    refreshCart();
   }, []);
+
+  const refreshCart = async () => {
+    try {
+      const response = await axios.get("http://localhost:1337/api/carts?populate=*");
+      setCartItems(response.data.data || []);
+    } catch (error) {
+      console.error("Error fetching cart items:", error);
+    }
+  };
 
   // Hide Navbar and Footer on certain pages
   const hideNavbarFooter =
@@ -37,7 +48,7 @@ function App() {
 
   return (
     <div>
-      {!hideNavbarFooter && <Navbar user={user} setUser={setUser} />}
+      {!hideNavbarFooter && <Navbar user={user} setUser={setUser} refreshCart={refreshCart} />}
 
       <main className="main-content">
         <Routes>
@@ -53,10 +64,10 @@ function App() {
           <Route path="/cart" element={<Cart />} /> {/* Add Cart route */}
           <Route path="/empty-cart" element={<EmptyCart />} />
           <Route path="/course/:id" element={<CourseDetail />} /> {/* กำหนด Route สำหรับ CourseDetail */}
-          <Route path="/admin" element={<Admin user={user} setUser={setUser}/>} />
-        
+          <Route path="/admin" element={<Admin user={user} setUser={setUser} />} />
 
-          
+
+
         </Routes>
       </main>
 
