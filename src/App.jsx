@@ -23,7 +23,7 @@ import Abouts from "./pages/About";
 function App() {
   const [user, setUser] = useState(null);
   const [cartItems, setCartItems] = useState([]);
-  const location = useLocation(); // Get current path
+  const location = useLocation();
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -42,7 +42,6 @@ function App() {
     }
   };
 
-  // Hide Navbar and Footer on certain pages
   const hideNavbarFooter =
     location.pathname === "/login" ||
     location.pathname === "/admin-dashboard" ||
@@ -50,7 +49,7 @@ function App() {
     location.pathname === "/admin";
 
   return (
-    <div>
+    <div className="app-container">
       {!hideNavbarFooter && <Navbar user={user} setUser={setUser} refreshCart={refreshCart} />}
 
       <main className="main-content">
@@ -64,15 +63,12 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/payment" element={<Payment />} />
           <Route path="/favorite" element={<Favorite />} />
-          <Route path="/cart" element={<Cart />} /> {/* Add Cart route */}
+          <Route path="/cart" element={<Cart />} />
           <Route path="/empty-cart" element={<EmptyCart />} />
-          <Route path="/course/:id" element={<CourseDetail />} /> {/* กำหนด Route สำหรับ CourseDetail */}
+          <Route path="/course/:id" element={<CourseDetail />} />
           <Route path="/admin" element={<Admin user={user} setUser={setUser} />} />
-          <Route path="/register" element={<Register />} /> {/* เส้นทางใหม่ */}
-          <Route path="/about" element={<Abouts />} /> {/* เส้นทางใหม่ */}
-
-
-
+          <Route path="/register" element={<Register />} />
+          <Route path="/about" element={<Abouts />} />
         </Routes>
       </main>
 

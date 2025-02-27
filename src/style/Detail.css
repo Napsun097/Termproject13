@@ -1,79 +1,141 @@
-/* General Layout */
+/* General container for the course detail page */
 .course-detail-container {
     display: flex;
-    flex-wrap: wrap;
-    gap: 20px; /* Adds spacing between video and sidebar */
+    justify-content: space-between;
+    margin: 20px;
+    gap: 20px; /* Add a gap between the sections for a cleaner layout */
+}
+
+/* Left Section - Course Information */
+.left-section-detail {
+    flex: 1;
     padding: 20px;
-}
-
-.video-section {
-    flex: 0.7; /* Video section takes up 70% of the width */
-    height: auto;
-    padding: 20px;
-    box-sizing: border-box;
-}
-
-.sidebar-detail {
-    flex: 0.3; /* Sidebar takes up 30% of the width */
-    padding: 20px;
-    background-color: #f4f4f4;
-    height: 100vh;
-    overflow-y: auto;
-    box-sizing: border-box;
-    flex: 0.3;
-}
-
-
-
-.sidebar-detail h2 {
-    font-size: 20px;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 15px;
-    text-align: center;
-}
-
-.sidebar-detail ul {
-    list-style: none;
-    padding: 0;
-}
-
-.sidebar-detail ul li {
-    background: #fff;
-    margin: 8px 0;
-    padding: 10px 15px;
+    background-color: #f9f9f9;
     border-radius: 8px;
-    font-size: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Title of the course */
+.left-section-detail h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333; /* Set a dark color for the title */
+}
+
+/* Paragraph style for the course description */
+.left-section-detail p {
+    font-size: 1rem;
     color: #555;
-    transition: all 0.3s ease-in-out;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+/* Icons and text for course hours and number of lessons */
+.course-hours-detail, .number-lesson-detail {
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    color: #333;
+}
+
+/* Icon styles for course hours and lessons */
+.course-hours-detail .clock-icon,
+.number-lesson-detail .lesson-icon {
+    margin-right: 10px;
+}
+
+/* Right Section - Video and Buttons */
+.right-section-detail {
+    flex: 1;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Video element style */
+.right-section-detail video {
+    width: 100%;
+    height: 400px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+/* Buttons styling */
+.buy-button,
+.watch-button {
+    width: 100%;
+    padding: 12px;
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 8px;
     cursor: pointer;
-    border: 1px solid #ddd;
+    transition: background-color 0.3s;
 }
 
-.sidebar-detail ul li:hover {
-    background: #007bff;
+/* Style for Buy button */
+.buy-button {
+    background-color: #007bff;
     color: white;
-    border-color: #007bff;
+}
+
+.buy-button:hover {
+    background-color: #0056b3;
+}
+
+/* Style for Watch button */
+.watch-button {
+    background-color: #28a745;
+    color: white;
+}
+
+.watch-button:hover {
+    background-color: #218838;
+}
+
+/* Style for No lessons message */
+.no-lesson-message {
+    font-size: 2rem; /* Increase font size for better visibility */
+    font-weight: bold; /* Make it bold to stand out */
+    color: #888;
+    text-align: center;
+    margin-bottom: 20px;
+    display: flex; /* Use flexbox to center the message */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    height: 400px; /* Set height to match video height */
+    width: 100%; /* Take up full width */
+    background-color: #f9f9f9; /* Background color to match video background */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional shadow for a more polished look */
 }
 
 
-/* For smaller screens */
-@media (max-width: 768px) {
+/* Media Queries for Responsiveness */
+@media screen and (max-width: 768px) {
+    /* Stack the sections vertically on smaller screens */
     .course-detail-container {
-        flex-direction: column; /* Stack vertically on smaller screens */
+        flex-direction: column;
     }
 
-    .video-section {
-        flex: 1 1 100%; /* Full width on smaller screens */
+    /* Adjust section margins on smaller screens */
+    .left-section-detail,
+    .right-section-detail {
+        margin-right: 0;
+        margin-bottom: 20px;
     }
 
-    .sidebar {
-        flex: 1 1 100%; /* Full width on smaller screens */
-        margin-top: 20px; /* Adds spacing between video and sidebar */
+    /* Adjust the video size for mobile screens */
+    .right-section-detail video {
+        height: 300px;
     }
 
-    iframe {
-        width: 100%; /* Make sure the video fits the container */
-        max-width: 100%; /* Ensures no overflow */
+    /* Adjust button padding for smaller screens */
+    .buy-button,
+    .watch-button {
+        padding: 14px;
+        font-size: 1rem;
     }
 }

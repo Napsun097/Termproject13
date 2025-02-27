@@ -57,7 +57,7 @@ function Alevel() {
         <h2 className="ALEVEL-head"> A-Level </h2>
         <select className="dropdown" onChange={handleDropdownChange}>
           <option value="all">ทุกวิชา</option>
-          {["Math1", "Math2", "Physics", "Chemistry", "Biology", "English"].map((subject) => (
+          {["Math1", "Math2", "Physics", "Chemistry", "Biology", "English", "Thai", "Social", "Japan", "Science", "Germany", "Korea", "Bahli", "France"].map((subject) => (
             <option key={subject} value={subject}>
               A-Level {subject}
             </option>

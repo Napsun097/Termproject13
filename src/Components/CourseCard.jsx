@@ -181,7 +181,7 @@ function CourseCard({ course }) {
                         <FaClock className="clock-icon" />  {course.courseHours} ชั่วโมง
                     </p>
                     <p className="number-lesson">
-                        <FaBook className="lesson-icon" /> 8 บทเรียน
+                        <FaBook className="lesson-icon" /> {course.lesson} บทเรียน
                     </p>
 
                     <div className="price-and-cart">

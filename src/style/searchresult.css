@@ -16,9 +16,9 @@
   }
   
   /* สไตล์ของข้อความเมื่อไม่พบคอร์ส */
-  .search-result-text {
+  .search-result-head {
     text-align: center;
-    font-size: 18px;
+    font-size: 24px;
     color: #888;
     margin-top: 20px;
   }

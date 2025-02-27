@@ -1,25 +1,26 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { FaClock, FaBook } from "react-icons/fa";
 import axios from 'axios';
 import "../style/Detail.css";
 
 function CourseDetail() {
     const { id } = useParams();  // Get the course ID from the URL
+    const navigate = useNavigate();
     const [course, setCourse] = useState(null);
-    const videos = [
-        "https://www.youtube.com/embed/g64BkZjSNBM?si=_JD5n2x3wesr-yi_", // Chapter 1
-        "https://www.youtube.com/embed/oBokMzyNz8o?si=oWuJfQ43wlHw2h9T", // Chapter 2
-        "https://www.youtube.com/embed/u5LJYVoWnIU?si=_wFPBVcOR_G6nITp", // Chapter 3
-        "https://www.youtube.com/embed/nA-7PjZrlpE?si=L4SGbro_liJ06PHt", // Chapter 4
-        "https://www.youtube.com/embed/465t5t8T4pU?si=NJReemoERN6k1LGb"  // Chapter 5
-    ];
-
-    const [currentVideo, setCurrentVideo] = useState(videos[0]);
+    const [ExampleVideo, setExampleVideo] = useState(null);
 
     useEffect(() => {
-        axios.get(`http://localhost:1337/api/courses/${id}?populate=*`)
+        axios.get(`http://localhost:1337/api/courses/${id}?populate=videoExample`) // Populate video1
             .then(response => {
-                setCourse(response.data.data);
+                const courseData = response.data.data;
+                setCourse(courseData);
+
+                // Check if video1 exists
+                if (courseData.videoExample) {
+                    const videoExampleUrl = `http://localhost:1337${courseData.videoExample.url}`; // Construct URL for the video
+                    setExampleVideo(videoExampleUrl);
+                }
             })
             .catch(error => {
                 console.error('Error fetching course detail!', error);
@@ -30,33 +31,32 @@ function CourseDetail() {
 
     return (
         <div className="course-detail-container">
-            {/* Video Section */}
-            <div className="video-section">
+            {/* Left Section */}
+            <div className="left-section-detail">
                 <h1>{course.title}</h1>
                 <p>{course.fullDescription}</p>
-
-                {/* วิดีโอหลักที่เปลี่ยนตาม Sidebar */}
-                <iframe
-                    width="100%"
-                    height="400"
-                    src={currentVideo}
-                    title="YouTube video player"
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    allowFullScreen
-                ></iframe>
+                <p className="course-hours-detail">
+                    <FaClock className="clock-icon" /> {course.courseHours} ชั่วโมง
+                </p>
+                <p className="number-lesson-detail">
+                    <FaBook className="lesson-icon" /> {course.lesson} บทเรียน
+                </p>
             </div>
 
-            {/* Sidebar Section */}
-            <div className="sidebar-detail">
-                <h2>Lessons</h2>
-                <ul>
-                    {videos.map((video, index) => (
-                        <li key={index} onClick={() => setCurrentVideo(video)} style={{ cursor: "pointer" }}>
-                            Chapter {index + 1}
-                        </li>
-                    ))}
-                </ul>
+            {/* Right Section */}
+            <div className="right-section-detail">
+                {/* If there's a video, show it. Otherwise, display the "ไม่มีบทเรียน" message */}
+                {ExampleVideo ? (
+                    <video className="course-video" controls>
+                        <source src={ExampleVideo} type="video/mp4" />
+                        Your browser does not support the video tag.
+                    </video>
+                ) : (
+                    <p className="no-lesson-message">ไม่มีบทเรียน</p>
+                )}
+                <button onClick={() => navigate(`/course/${id}/videos`)} className="watch-button">
+                    ซื้อคอร์สเพื่อดูบทเรียนเพิ่มเติม
+                </button>
             </div>
         </div>
     );
