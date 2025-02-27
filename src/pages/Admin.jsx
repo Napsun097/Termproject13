@@ -22,8 +22,8 @@ const Admin = ({ user, setUser }) => {
   const [selectedUser, setSelectedUser] = useState(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isNavbarOpen, setIsNavbarOpen] = useState(false);
+  const [addModalOpen, setAddModalOpen] = useState(false);
   const navigate = useNavigate();
-
   // Reference to the dropdown for detecting outside clicks
   const dropdownRef = useRef(null);
 
@@ -140,6 +140,48 @@ const Admin = ({ user, setUser }) => {
     });
 
     setModalOpen(true);
+  };
+
+  const handleAddClick = () => {
+    setEditingCourse(null);
+    setFormData({
+      title: "",
+      category: "",
+      price: 0,
+      isPopular: false,
+      type: "",
+      courseHours: 0,
+      fullDescription: "",
+      shortDescription: "",
+      subjectName: "",
+    });
+    setAddModalOpen(true);
+  }
+
+  const handleAdd = async () => {
+    console.log("Submitting formData:", { data: formData });
+    const sanitizedData = Object.fromEntries(
+      Object.entries(formData).map(([key, value]) => [key, value || null])
+    );
+
+    axios
+      .post(
+        "http://localhost:1337/api/courses",
+        { data: sanitizedData },
+        {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+      )
+      .then((response) => {
+        console.log("Course added successfully:", response.data);
+        fetchCourses();
+        setAddModalOpen(false);
+      })
+      .catch((error) => {
+        console.error("Error adding course:", error);
+      });
   };
 
   const handleChange = (field, value) => {
@@ -378,6 +420,9 @@ const Admin = ({ user, setUser }) => {
         {activeTab === "course" && (
           <div>
             <h1 className="course-management-text">Course Management</h1>
+            <Button type="primary" size="large" onClick={handleAddClick}>
+              Add Course
+            </Button>
             <div className="course-list-admin">
               {courses.length > 0 ? (
                 courses.map((course) => {
@@ -385,7 +430,7 @@ const Admin = ({ user, setUser }) => {
                   const title = course.title;
                   const image = course.image;
                   const Hours = course.courseHours;
-                  const shortDescription = course.shortDescription ;
+                  const shortDescription = course.shortDescription;
 
                   // ✅ Extract large image URL
                   const imageUrl = course.image
@@ -568,6 +613,108 @@ const Admin = ({ user, setUser }) => {
       >
         <p>Are you sure you want to delete this course?</p>
         <p>This will also delete related favorites and cart items.</p>
+      </Modal>
+      <Modal
+        title="Add Course"
+        open={addModalOpen}
+        onOk={handleAdd}
+        onCancel={() => setAddModalOpen(false)}
+      >
+        <label>Course Title</label>
+        <Input
+          placeholder="Course Title"
+          value={formData.title}
+          onChange={(e) => handleChange("title", e.target.value)}
+          style={{ marginBottom: "10px" }}
+        />
+
+        <label>Category</label>
+        <Select
+          placeholder="Select Category"
+          value={formData.category}
+          onChange={(value) => handleChange("category", value)}
+          style={{ width: "100%", marginBottom: "10px" }}
+        >
+          <Option value="tgat">tgat</Option>
+          <Option value="tpat">tpat</Option>
+          <Option value="a-level">a-level</Option>
+        </Select>
+
+        <label>Price</label>
+        <Input
+          type="number"
+          placeholder="Price"
+          value={formData.price}
+          onChange={(e) => handleChange("price", Number(e.target.value))}
+          style={{ marginBottom: "10px" }}
+        />
+
+        <label>IsPopular</label>
+        <Checkbox
+          checked={formData.isPopular}
+          onChange={(e) => handleChange("isPopular", e.target.checked)}
+          style={{ marginBottom: "10px" }}
+        >
+          Popular Course
+        </Checkbox>
+
+        <label>Type</label>
+        <Select
+          placeholder="Select Type"
+          value={formData.type}
+          onChange={(value) => handleChange("type", value)}
+          style={{ width: "100%", marginBottom: "10px" }}
+        >
+          <Option value="standard">standard</Option>
+          <Option value="premium">premium</Option>
+        </Select>
+
+        <label>CourseHours</label>
+        <Input
+          type="number"
+          placeholder="Course Hours"
+          value={formData.courseHours}
+          onChange={(e) => handleChange("courseHours", Number(e.target.value))}
+          style={{ marginBottom: "10px" }}
+        />
+
+        <label>FullDescription</label>
+        <Input.TextArea
+          placeholder="Full Description"
+          value={formData.fullDescription}
+          onChange={(e) => handleChange("fullDescription", e.target.value)}
+          rows={4}
+          style={{ marginBottom: "10px" }}
+        />
+
+        <label>ShortDescription</label>
+        <Input.TextArea
+          placeholder="Short Description"
+          value={formData.shortDescription}
+          onChange={(e) => handleChange("shortDescription", e.target.value)}
+          rows={2}
+          style={{ marginBottom: "10px" }}
+        />
+        <label>SubjectName</label>
+        <Select
+          placeholder="Select Subject"
+          value={formData.subjectName}
+          onChange={(value) => handleChange("subjectName", value)}
+          style={{ width: "100%" }}
+        >
+          <Option value="TGAT1">TGAT1</Option>
+          <Option value="TGAT2">TGAT2</Option>
+          <Option value="TGAT3">TGAT3</Option>
+          <Option value="TPAT1">TPAT1</Option>
+          <Option value="TPAT2">TPAT2</Option>
+          <Option value="TPAT3">TPAT3</Option>
+          <Option value="TPAT4">TPAT4</Option>
+          <Option value="TPAT5">TPAT5</Option>
+          <Option value="A-LEVEL PHYSICS">A-LEVEL PHYSICS</Option>
+          <Option value="A-LEVEL MATH1">A-LEVEL MATH1</Option>
+          <Option value="A-LEVEL MATH2">A-LEVEL MATH2</Option>
+          <Option value="A-LEVEL CHEMISTRY">A-LEVEL CHEMISTRY</Option>
+        </Select>
       </Modal>
     </div>
   );
