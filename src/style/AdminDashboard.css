@@ -1,0 +1,140 @@
+
+.admin-dashboard-container {
+    padding: 20px;
+    background-color: #f4f6f9;
+    min-height: 100vh;
+  }
+  
+  /* Layout for dashboard statistics */
+  .dashboard-stats {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 40px;
+    flex-wrap: wrap; /* เพื่อให้ responsive เมื่อหน้าจอเล็ก */
+  }
+  
+  .stat-card {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    flex: 1 1 23%; /* กำหนดความกว้างของการ์ด */
+    margin-bottom: 20px; /* เพิ่มระยะห่างระหว่างการ์ด */
+  }
+  
+  .stat-card h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+  }
+  
+  .stat-card p {
+    font-size: 24px;
+    color: #1890ff;
+    font-weight: 700;
+  }
+  
+  /* Input and Button styles for Teacher Count */
+  .teacher-input {
+    margin-top: 10px;
+    width: 60%;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 16px;
+  }
+  
+  .save-button {
+    margin-top: 10px;
+    background-color: #1890ff;
+    color: #fff;
+    border-radius: 8px;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .save-button:hover {
+    background-color: #1772e2;
+  }
+  
+  /* Sales data container (Chart area) */
+  .sales-data-container {
+    margin-top: 40px;
+  }
+  
+  .sales-data-card {
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .sales-data-card .ant-card-body {
+    padding: 0 !important;
+  }
+  
+  .ant-card {
+    background-color: #fff;
+    border-radius: 10px;
+  }
+  
+  .sales-data-container .ant-card-title {
+    font-size: 22px;
+    font-weight: bold;
+    color: #333;
+    padding: 20px;
+    background-color: #fafafa;
+    border-radius: 8px 8px 0 0;
+  }
+  
+  .sales-data-container .recharts-surface {
+    background-color: #fff;
+  }
+  
+  .recharts-cartesian-axis-tick-value {
+    font-size: 12px;
+    color: #666;
+  }
+  
+  .recharts-tooltip-wrapper {
+    background-color: rgba(0, 0, 0, 0.75);
+    padding: 8px;
+    border-radius: 4px;
+    color: #fff;
+  }
+  
+  .recharts-legend-item {
+    font-size: 14px;
+    font-weight: 500;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .stat-card {
+      flex: 1 1 48%; /* เปลี่ยนให้การ์ดขนาด 48% เมื่อหน้าจอเล็ก */
+    }
+  
+    .sales-data-card {
+      width: 100%; /* กราฟจะขยายเต็มความกว้าง */
+    }
+  
+    .teacher-input {
+      width: 80%;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .stat-card {
+      flex: 1 1 100%; /* เมื่อหน้าจอเล็กสุด การ์ดจะเต็มหน้าจอ */
+    }
+  
+    .save-button {
+      width: 100%;
+    }
+  
+    .teacher-input {
+      width: 100%;
+    }
+  }
+  

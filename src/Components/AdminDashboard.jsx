@@ -117,7 +117,7 @@ const AdminDashboard = () => {
   };
 
   return (
-    <div className="admin-container">
+    <div className="admin-dashboard-container">
 
       {/* แสดงข้อมูลสถิติ */}
       <div className="dashboard-stats">
