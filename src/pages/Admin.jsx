@@ -194,15 +194,15 @@ const Admin = ({ user, setUser }) => {
     try {
       const updatedData = {
         data: {
-          title: formData.title,
-          category: formData.category,
-          price: formData.price,
-          isPopular: formData.isPopular,
-          type: formData.type,
-          courseHours: formData.courseHours,
-          fullDescription: formData.fullDescription,
-          shortDescription: formData.shortDescription,
-          subjectName: formData.subjectName,
+          title: formData.title || null,
+          category: formData.category || null,
+          price: formData.price || null,
+          isPopular: formData.isPopular || null,
+          type: formData.type || null,
+          courseHours: formData.courseHours || null,
+          fullDescription: formData.fullDescription || null,
+          shortDescription: formData.shortDescription || null,
+          subjectName: formData.subjectName || null,
         },
       };
 
