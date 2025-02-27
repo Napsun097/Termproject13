@@ -150,7 +150,7 @@ const AdminDashboard = () => {
       <div className="sales-data-container">
         <Row style={{ paddingLeft: "20px" }}>
           <Col xs={24} sm={20} md={16} lg={12}>
-            <Card title="Sales Data" className="sales-data-card" style={{ width: "900px" }}>
+            <Card title="Sales Data" className="sales-data-card" style={{ width: "200.79%" }}>
               <ResponsiveContainer width="100%" height={300}>
                 <LineChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 10 }}>
                   <CartesianGrid strokeDasharray="3 3" />
