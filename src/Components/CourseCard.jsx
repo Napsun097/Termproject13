@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FaHeart, FaRegHeart, FaShoppingCart, FaCartPlus } from "react-icons/fa";
+import { FaHeart, FaRegHeart, FaShoppingCart, FaCartPlus, FaClock, FaBook } from "react-icons/fa";
 import { Link } from 'react-router-dom'; // นำเข้า Link จาก react-router-dom
 import axios from 'axios';
 import "../style/coursecard.css";
@@ -73,16 +73,16 @@ function CourseCard({ course }) {
             }
         } else {
             axios.get(`http://localhost:1337/api/courses/${course.documentId}?populate=favorite`)
-                .then(response => {
-                    const favoriteId = response.data.data.favorite.documentId;
-                    if (favoriteId) {
-                        axios.delete(`http://localhost:1337/api/favorites/${favoriteId}`)
-                            .then(() => {
-                                console.log("Course removed from favorites");
-                                window.location.reload();})
-                            .catch(error => {
-                                console.error("Error removing course from favorites", error);
-                            });
+            .then(response => {
+                const favoriteId = response.data.data.favorite.documentId;
+                if (favoriteId) {
+                    axios.delete(`http://localhost:1337/api/favorites/${favoriteId}`)
+                        .then(() => {
+                            console.log("Course removed from favorites");
+                            window.location.reload();})
+                        .catch(error => {
+                            console.error("Error removing course from favorites", error);
+                        });
                     }
                 })
                 .catch(error => {
@@ -126,16 +126,16 @@ function CourseCard({ course }) {
             }
         } else {
             axios.get(`http://localhost:1337/api/courses/${course.documentId}?populate=cart`)
-                .then(response => {
-                    const cartId = response.data.data.cart.documentId;
-                    if (cartId) {
-                        axios.delete(`http://localhost:1337/api/carts/${cartId}`)
-                            .then(() => {
-                                console.log("Course removed from carts");
-                                window.location.reload();})
-                            .catch(error => {
-                                console.error("Error removing course from carts", error);
-                            });
+            .then(response => {
+                const cartId = response.data.data.cart.documentId;
+                if (cartId) {
+                    axios.delete(`http://localhost:1337/api/carts/${cartId}`)
+                        .then(() => {
+                            console.log("Course removed from carts");
+                            window.location.reload();})
+                        .catch(error => {
+                            console.error("Error removing course from carts", error);
+                        });
                     }
                 })
                 .catch(error => {
@@ -173,14 +173,19 @@ function CourseCard({ course }) {
                     <h4 className="course-type"> video course </h4>
                 </div>
 
-                <h3 className="course-title">{course.title}</h3>
+                <p className="course-title">{course.title}</p>
                 <p className="course-description">{course.shortDescription}</p>
 
                 <div className="course-actions">
-                    <p className="course-hours"> {course.courseHours} ชั่วโมง</p>
+                    <p className="course-hours">
+                        <FaClock className="clock-icon" />  {course.courseHours} ชั่วโมง
+                    </p>
+                    <p className="number-lesson">
+                        <FaBook className="lesson-icon" /> 8 บทเรียน
+                    </p>
 
                     <div className="price-and-cart">
-                        <p className="course-price"> ฿ {course.price}.00</p>
+                        <p className="course-price"> ฿ {course.price}.00 </p>
                         <button
                             className={`cart-btn ${isInCart ? "in-cart" : ""}`}
                             onClick={onCartClick}

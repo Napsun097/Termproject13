@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
-import "./style/App.css";
+import "./style/index.css";
 import Navbar from "./Components/Navbar";
 import Home from "./pages/Home";
 import Tgat from "./pages/Tgat";
@@ -18,6 +18,7 @@ import Admin from "./pages/Admin";
 import EmptyCart from "./pages/EmptyCart";
 import axios from "axios";
 import Register from "./pages/Register"; // เพิ่มหน้า Register
+import Abouts from "./pages/About";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -68,6 +69,7 @@ function App() {
           <Route path="/course/:id" element={<CourseDetail />} /> {/* กำหนด Route สำหรับ CourseDetail */}
           <Route path="/admin" element={<Admin user={user} setUser={setUser} />} />
           <Route path="/register" element={<Register />} /> {/* เส้นทางใหม่ */}
+          <Route path="/about" element={<Abouts />} /> {/* เส้นทางใหม่ */}
 
 
 

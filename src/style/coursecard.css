@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     border-radius: 4px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
     overflow: hidden;
     transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
     background: hsla(0, 0%, 100%, 0.681);
@@ -16,7 +16,7 @@
 
 .course-card:hover {
     transform: scale(1.02);
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 4px 14px hsla(191, 30%, 62%, 0.484);
 }
 
 .course-image {
@@ -56,7 +56,7 @@
 
 .course-type{
     color: rgb(0, 0, 0);
-    background-color: hsl(191, 100%, 92%);
+    background-color: hsl(192, 30%, 92%);
     padding-left: 4px;
     padding-right: 4px;
 }
@@ -97,8 +97,10 @@
 
 .course-title {
     text-align: left;
-    margin-left: 8px;
+    margin-left: 5px;
     margin-top: 0;
+    font-weight: bold;
+    font-size: 16px;
     
 }
 .course-description {
@@ -108,21 +110,27 @@
     margin-bottom: 12px;
 }
 
-.course-hours {
-    padding-left: 4px;
-    text-align: left;
-    margin-left: 8px;
-    margin-top: 0;
-    margin-bottom: auto;
-    width: 80%;
-}
-
 .course-actions {
     margin-top: auto; /* ทำให้ติดล่างเสมอ */
     display: flex;
     flex-direction: column; /* จัดเรียงแนวตั้ง */
-    gap: 10px;
+    gap: 8px; /* ลดช่องว่างระหว่างแต่ละบรรทัดให้ดูแน่นขึ้น */
     padding-top: 12px;
+}
+
+.course-hours, .number-lesson {
+    display: flex;
+    align-items: center; /* จัดให้ไอคอนและข้อความอยู่ในแนวเดียวกัน */
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+    margin-left: 2px;
+}
+
+.clock-icon, .lesson-icon {
+    margin-right: 6px;
+    font-size: 18px;
+    color: hsl(192, 30%, 32%); /* เปลี่ยนเป็นสีน้ำเงินให้โดดเด่นขึ้น */
 }
 
 .price-and-cart {
@@ -132,24 +140,28 @@
     align-items: center;
     border-top: 1px solid hsla(0, 0%, 75%, 0.703); /* เพิ่มขอบบน */
     padding-top: 10px; /* เพิ่มระยะห่างให้ดูสวยขึ้น */
+    margin-top: 2px;
 }
 
+.course-price {
+    margin-left: 12px;
+    font-weight: bold;
+    font-size: 18px;
+    color: hsl(192, 30%, 12%); /* เปลี่ยนสีราคาให้ดูโดดเด่นขึ้น */
+}
 
+.cart-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
 
 .cart-btn .cart-icon {
     color: #bbb;
     transition: color 0.2s ease;
-    margin-right: 12px;
-    font-weight: bold;
-    font-size: 18px;
+    font-size: 20px;
 }
 
 .cart-btn.in-cart .cart-icon {
-    color: #2ecc71;
-}
-
-.course-price{
-    margin-left: 12px;
-    font-weight: bold;
-    font-size: 20px;
+    color: #2ecc71; /* เปลี่ยนเป็นสีเขียวเมื่ออยู่ในตะกร้า */
 }

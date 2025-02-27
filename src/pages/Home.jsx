@@ -3,7 +3,7 @@ import CourseCard from "../Components/CourseCard";
 import { fetchCourses } from "../api/api";
 import "../style/home.css";
 import picpromotion from "../assets/images/promotion.webp";
-import Link from "antd/es/typography/Link";
+import { Link } from "react-router-dom";
 
 function Home() {
   const [courses, setCourses] = useState([]); {/* State สำหรับเก็บข้อมูลคอร์ส */ }
@@ -11,18 +11,18 @@ function Home() {
   const [error, setError] = useState(null); {/* State สำหรับจัดการข้อผิดพลาด */ }
 
   {/* ดึงข้อมูลคอร์สเมื่อ Component ถูกโหลด */ }
-  
-    async function getCourses() {
-      setLoading(true);
-      const { courses, error } = await fetchCourses();
-      setCourses(courses);
-      setError(error);
-      setLoading(false);
-    }
 
-    useEffect(() => {
-      getCourses();
-    }, []);
+  async function getCourses() {
+    setLoading(true);
+    const { courses, error } = await fetchCourses();
+    setCourses(courses);
+    setError(error);
+    setLoading(false);
+  }
+
+  useEffect(() => {
+    getCourses();
+  }, []);
 
   if (loading)
     return (
@@ -47,9 +47,11 @@ function Home() {
           <div className="head-welcome">
             <h1 className="text-welcome"> Welcome to <span>UniMaster</span> </h1>
             <p className="text-welcome-sub">Master Your Future with UniMaster</p><br />
-            <button className="about-welcome-btn">
-              <Link to=""> เกี่ยวกับสถาบัน </Link>
-            </button>
+
+            <Link to="/about" className="about-page-go">
+              <button>Learn More About Us</button>
+            </Link>
+
 
           </div>
           <div className="img-promotion">

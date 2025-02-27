@@ -32,7 +32,7 @@ function Navbar({ user, setUser }) {
 
     fetchCartItems();
   }, []); // Runs once when the component mounts
-  
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -74,7 +74,7 @@ function Navbar({ user, setUser }) {
     try {
       const response = await axios.get("http://localhost:1337/api/carts");
       console.log("Cart Items:", response.data);
-  
+
       if (response.data.data.length === 0) {
         e.preventDefault(); // Prevent navigation
         navigate("/empty-cart");
@@ -107,18 +107,22 @@ function Navbar({ user, setUser }) {
 
           <div className="search-container">
             <form onSubmit={handleSearch} className="search-form">
-              <input
-                type="text"
-                placeholder="ค้นหาคอร์สเรียน..."
-                className="search-bar"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-              <button type="submit" className="search-btn" disabled={searchTerm.trim() === ""}>
-                <i className="fas fa-search"></i>
-              </button>
+              <div className="search-box">
+                <input
+                  type="text"
+                  placeholder="ค้นหาคอร์สเรียน..."
+                  className="search-bar"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+                <button type="submit" className="search-btn" disabled={searchTerm.trim() === ""}>
+                  <i className="fas fa-search"></i>
+                </button>
+              </div>
             </form>
           </div>
+
+
 
           <div className="navbar-icons">
             {/* Debug user and roles */}
@@ -128,12 +132,14 @@ function Navbar({ user, setUser }) {
                 <FaHeart size={24} />
               </Link>
             )}
+
             {user && user.roles && user.roles.includes("User") && (
               <Link to="/cart" className="nav-icon" onClick={() => setIsNavbarOpen(false)}>
                 <i className="fas fa-shopping-cart"></i>
                 <span className="cart-item-count">{cartItems.length}</span>
               </Link>
             )}
+
 
             {user ? (
               <div className={`profile-dropdown ${isDropdownOpen ? "open" : ""}`} ref={dropdownRef}>
@@ -159,9 +165,9 @@ function Navbar({ user, setUser }) {
                     </Link>
                   )}
                   {user.roles && user.roles.includes("User") && (
-                    
-                      <button onClick={handlePaymentClick} className="payment-menu">ชำระเงิน</button>
-                    
+
+                    <button onClick={handlePaymentClick} className="payment-menu">ชำระเงิน</button>
+
                   )}
                   <button className="logout-btn-navbar" onClick={handleLogout}>
                     ออกจากระบบ
