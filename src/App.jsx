@@ -17,6 +17,7 @@ import CourseDetail from "./pages/CourseDetail";
 import Admin from "./pages/Admin";
 import EmptyCart from "./pages/EmptyCart";
 import axios from "axios";
+import Register from "./pages/Register"; // เพิ่มหน้า Register
 
 function App() {
   const [user, setUser] = useState(null);
@@ -66,6 +67,7 @@ function App() {
           <Route path="/empty-cart" element={<EmptyCart />} />
           <Route path="/course/:id" element={<CourseDetail />} /> {/* กำหนด Route สำหรับ CourseDetail */}
           <Route path="/admin" element={<Admin user={user} setUser={setUser} />} />
+          <Route path="/register" element={<Register />} /> {/* เส้นทางใหม่ */}
 
 
 

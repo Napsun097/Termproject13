@@ -26,9 +26,10 @@ function SearchResults() {
 
   useEffect(() => {
     const filtered = courses.filter(course =>
-      course.category.toLowerCase().includes(query.toLowerCase()) ||
-      course.subjectName.toLowerCase().includes(query.toLowerCase())
+      (course.category?.toLowerCase() || "").includes(query.toLowerCase()) ||
+      (course.subjectName?.toLowerCase() || "").includes(query.toLowerCase())
     );
+    
     setFilteredCourses(filtered);
   }, [query, courses]);
 

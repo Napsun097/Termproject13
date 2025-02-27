@@ -96,7 +96,7 @@
 }
 
 .search-btn {
-  background-color: #444;
+  background-color: hsl(192, 30%, 62%);
   border: none;
   padding: 10px 15px;
   color: white;
@@ -107,7 +107,7 @@
 }
 
 .search-btn:hover {
-  background-color: #555;
+  background-color: hsl(192, 30%, 52%);
 }
 
 .search-btn i {
