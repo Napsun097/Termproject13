@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../style/AdminDashboard.css"; // ✅ Import ไฟล์ CSS
 import axios from "axios";
-import { Button } from "antd";
+import { Button, Card, Row, Col } from "antd";
 import { Input } from "antd";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
@@ -13,6 +14,8 @@ const AdminDashboard = () => {
   const [teacherCount, setTeacherCount] = useState(0);
   const [newTeacherCount, setNewTeacherCount] = useState(teacherCount); // จำนวนครูผู้สอน
   const [teacherId, setTeacherId] = useState(null);
+  const [time, setTime] = useState(null);
+  const [data, setData] = useState([]);
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -44,7 +47,23 @@ const AdminDashboard = () => {
         // Fetch sold courses (orders)
         const soldsResponse = await axios.get("http://localhost:1337/api/solds");
         const soldItems = soldsResponse.data.data;
+        const groupedData = soldItems.reduce((acc, item) => {
+          const time = new Date(item.createdAt).toLocaleDateString(); // Format time as date
+          if (!acc[time]) {
+            acc[time] = 0;
+          }
+          acc[time] += item.price;
+          return acc;
+        }, {});
+
+        const formattedData = Object.keys(groupedData).map(time => ({
+          name: time,
+          value: groupedData[time]
+        }));
+  
         setTotalRevenue(soldItems.reduce((total, item) => total + item.price, 0));
+        setTime(soldItems[0]?.createdAt); // Store first item's time if available
+        setData(formattedData);
 
         // Fetch total users (students)
         const usersResponse = await axios.get("http://localhost:1337/api/users?populate=*", { headers });
@@ -59,6 +78,8 @@ const AdminDashboard = () => {
           setTeacherCount(teacherData.count);
           setNewTeacherCount(teacherData.count);
         }
+        console.log("sold items: ", soldItems);
+        console.log("time: ", time);
 
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -67,6 +88,8 @@ const AdminDashboard = () => {
 
     fetchData();
   }, []);
+
+  // Convert object to array format for chart
 
   const updateTeacherCount = async () => {
     try {
@@ -123,6 +146,24 @@ const AdminDashboard = () => {
             Save
           </Button>
         </div>
+      </div>
+      <div className="sales-data-container">
+        <Row style={{ paddingLeft: "20px" }}>
+          <Col xs={24} sm={20} md={16} lg={12}>
+            <Card title="Sales Data" className="sales-data-card" style={{ width: "900px" }}>
+              <ResponsiveContainer width="100%" height={300}>
+                <LineChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 10 }}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="name" label={{ value: "Date", position: "insideBottom", offset: -5 }}/>
+                  <YAxis label={{ value: "Value (Baht)", angle: -90, position: "insideLeft" }}/>
+                  <Tooltip />
+                  <Legend />
+                  <Line type="monotone" dataKey="value" stroke="#1890ff" strokeWidth={2} />
+                </LineChart>
+              </ResponsiveContainer>
+            </Card>
+          </Col>
+        </Row>
       </div>
     </div>
   );
