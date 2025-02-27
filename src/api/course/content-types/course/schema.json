@@ -66,7 +66,17 @@
         "A-LEVEL PHYSICS",
         "A-LEVEL MATH1",
         "A-LEVEL MATH2",
-        "A-LEVEL CHEMISTRY"
+        "A-LEVEL CHEMISTRY",
+        "A-LEVEL BIOLOGY",
+        "A-LEVEL SOCIAL",
+        "A-LEVEL SCIENCE",
+        "A-LEVEL JAPAN",
+        "A-LEVEL THAI",
+        "A-LEVEL FRANCE",
+        "A-LEVEL GERMANY",
+        "A-LEVEL CHINESE",
+        "A-LEVEL KOREA",
+        "A-LEVEL BAHLI"
       ]
     },
     "cart": {
@@ -80,6 +90,90 @@
       "relation": "oneToOne",
       "target": "api::favorite.favorite",
       "inversedBy": "course"
+    },
+    "video1": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "files",
+        "videos"
+      ]
+    },
+    "video2": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "files",
+        "videos"
+      ]
+    },
+    "video3": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "files",
+        "videos"
+      ]
+    },
+    "video4": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "files",
+        "videos"
+      ]
+    },
+    "video5": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "files",
+        "videos"
+      ]
+    },
+    "video6": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "files",
+        "videos"
+      ]
+    },
+    "video7": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "files",
+        "videos"
+      ]
+    },
+    "video8": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "files",
+        "videos"
+      ]
+    },
+    "video9": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "files",
+        "videos"
+      ]
+    },
+    "lesson": {
+      "type": "string"
     }
   }
 }
