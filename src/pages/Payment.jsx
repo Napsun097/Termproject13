@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import qrCode from "../assets/images/65634599-3898-49a9-976b-ae9b7203be52.jpg";
+import qrCode from "../assets/images/qr.png";
 import "../style/payment.css"; // Import external CSS file
 import axios from 'axios';
 
@@ -139,7 +139,7 @@ function Payment() {
 
   return (
     <div className="payment-container">
-      <h1>Payment</h1>
+      <h1 className="payment-title">Payment</h1>
 
       {/* QR Code Display */}
       {qrUrl && <img src={qrUrl} alt="QR Code" className="qr-image" />}

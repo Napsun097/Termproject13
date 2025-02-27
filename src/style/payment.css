@@ -1,40 +1,41 @@
 .payment-title {
     position: fixed;
     top: 20px;
-    left: 20px;
-    font-size: 24px;
+    left: 30px;
+    font-size: 32px;
     font-weight: bold;
+    color: #333;
     z-index: 10;
 }
 
 .payment-container {
     display: flex;
-    justify-content: center;
+    flex-direction: column; /* Stack items vertically */
     align-items: center;
-    gap: 40px;
-    padding: 20px;
+    gap: 20px;
+    padding: 50px;
     margin-top: 60px; /* Prevent content from overlapping the fixed title */
 }
 
 .qr-section {
-    flex: 1;
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 
 .qr-image {
-    width: 200px;
+    width: 250px; /* Make the QR bigger */
     height: auto;
 }
 
 .upload-section {
-    flex: 1;
+    width: 100%;
+    max-width: 500px; /* Slightly wider */
     padding: 20px;
     background-color: #f8f8f8;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-width: 400px;
-    width: 100%;
+    text-align: center; /* Center content */
 }
 
 .file-input {
@@ -86,7 +87,7 @@
     color: white;
     font-size: 16px;
     padding: 12px 24px;
-    margin-top: 20px;
+    margin-top: 5px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     border: 0cm;
     border-radius: 5px;
