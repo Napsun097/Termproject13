@@ -434,6 +434,7 @@ export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    allVideo: Schema.Attribute.Media<'files' | 'videos', true>;
     cart: Schema.Attribute.Relation<'oneToOne', 'api::cart.cart'>;
     category: Schema.Attribute.Enumeration<['tgat', 'tpat', 'a-level']>;
     courseHours: Schema.Attribute.Integer;
@@ -485,15 +486,7 @@ export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    video1: Schema.Attribute.Media<'files' | 'videos'>;
-    video2: Schema.Attribute.Media<'files' | 'videos'>;
-    video3: Schema.Attribute.Media<'files' | 'videos'>;
-    video4: Schema.Attribute.Media<'files' | 'videos'>;
-    video5: Schema.Attribute.Media<'files' | 'videos'>;
-    video6: Schema.Attribute.Media<'files' | 'videos'>;
-    video7: Schema.Attribute.Media<'files' | 'videos'>;
-    video8: Schema.Attribute.Media<'files' | 'videos'>;
-    video9: Schema.Attribute.Media<'files' | 'videos'>;
+    videoExample: Schema.Attribute.Media<'files' | 'videos'>;
   };
 }
 

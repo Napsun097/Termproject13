@@ -91,79 +91,7 @@
       "target": "api::favorite.favorite",
       "inversedBy": "course"
     },
-    "video1": {
-      "type": "media",
-      "multiple": false,
-      "required": false,
-      "allowedTypes": [
-        "files",
-        "videos"
-      ]
-    },
-    "video2": {
-      "type": "media",
-      "multiple": false,
-      "required": false,
-      "allowedTypes": [
-        "files",
-        "videos"
-      ]
-    },
-    "video3": {
-      "type": "media",
-      "multiple": false,
-      "required": false,
-      "allowedTypes": [
-        "files",
-        "videos"
-      ]
-    },
-    "video4": {
-      "type": "media",
-      "multiple": false,
-      "required": false,
-      "allowedTypes": [
-        "files",
-        "videos"
-      ]
-    },
-    "video5": {
-      "type": "media",
-      "multiple": false,
-      "required": false,
-      "allowedTypes": [
-        "files",
-        "videos"
-      ]
-    },
-    "video6": {
-      "type": "media",
-      "multiple": false,
-      "required": false,
-      "allowedTypes": [
-        "files",
-        "videos"
-      ]
-    },
-    "video7": {
-      "type": "media",
-      "multiple": false,
-      "required": false,
-      "allowedTypes": [
-        "files",
-        "videos"
-      ]
-    },
-    "video8": {
-      "type": "media",
-      "multiple": false,
-      "required": false,
-      "allowedTypes": [
-        "files",
-        "videos"
-      ]
-    },
-    "video9": {
+    "videoExample": {
       "type": "media",
       "multiple": false,
       "required": false,
@@ -174,6 +102,14 @@
     },
     "lesson": {
       "type": "string"
+    },
+    "allVideo": {
+      "allowedTypes": [
+        "files",
+        "videos"
+      ],
+      "type": "media",
+      "multiple": true
     }
   }
 }
