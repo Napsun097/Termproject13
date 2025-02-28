@@ -1,16 +1,52 @@
 import React, { useState, useEffect } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import { Navigation, Pagination } from "swiper/modules";
 import CourseCard from "../Components/CourseCard";
 import { fetchCourses } from "../api/api";
 import "../style/home.css";
 import picpromotion from "../assets/images/promotion.webp";
 import { Link } from "react-router-dom";
+import { ArrowRight } from "lucide-react";
+
+const CourseCarousel = ({ title, courses }) => {
+  return (
+    <div className="course-category">
+      <div className="head-card-home"><h2 >{title}</h2>
+        <Link to="/" className="see-more">
+          เพิ่มเติม&nbsp;&nbsp;<ArrowRight />
+        </Link>
+
+      </div>
+
+      <Swiper
+        modules={[Navigation, Pagination]}
+        spaceBetween={20}
+        slidesPerView={3}
+        navigation
+        pagination={{ clickable: true }}
+        breakpoints={{
+          640: { slidesPerView: 1 },
+          1024: { slidesPerView: 2 },
+          1280: { slidesPerView: 3 },
+        }}
+      >
+        {courses.map((course) => (
+          <SwiperSlide key={course.id}>
+            <CourseCard course={course} />
+          </SwiperSlide>
+        ))}
+      </Swiper>
+    </div>
+  );
+};
 
 function Home() {
-  const [courses, setCourses] = useState([]); {/* State สำหรับเก็บข้อมูลคอร์ส */ }
-  const [loading, setLoading] = useState(true); {/* State สำหรับโหลดข้อมูล */ }
-  const [error, setError] = useState(null); {/* State สำหรับจัดการข้อผิดพลาด */ }
-
-  {/* ดึงข้อมูลคอร์สเมื่อ Component ถูกโหลด */ }
+  const [courses, setCourses] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   async function getCourses() {
     setLoading(true);
@@ -33,127 +69,43 @@ function Home() {
     );
   if (error) return <p>{error}</p>;
 
-  // แยกคอร์สเป็น 2 ประเภท: ยอดนิยม และ อื่นๆ
-  const premiumCourses = courses.filter(course => course.type === 'premium');
-  const standardCourses = courses.filter(course => course.type === 'standard');
+  // แยกประเภทคอร์ส
+  const premiumCourses = courses.filter((course) => course.type === "premium");
+  const standardCourses = courses.filter((course) => course.type === "standard");
 
   return (
-    <>
-      <div className="home-page">
-
-
-        {/* ส่วนของโปรโมชั่น */}
-        <div className="head-promotion">
-          <div className="head-welcome">
-            <h1 className="text-welcome"> Welcome to <span>UniMaster</span> </h1>
-            <p className="text-welcome-sub">Master Your Future with UniMaster</p><br />
-
-            <Link to="/about" className="about-page-go">
-              <button>Learn More About Us</button>
-            </Link>
-
-
-          </div>
-          <div className="img-promotion">
-            <img src={picpromotion} alt="" />
-          </div>
-
+    <div className="home-page">
+      {/* ส่วนของโปรโมชั่น */}
+      <div className="head-promotion">
+        <div className="head-welcome">
+          <h1 className="text-welcome">
+            Welcome to <span>UniMaster</span>
+          </h1>
+          <p className="text-welcome-sub">Master Your Future with UniMaster</p>
+          <br />
+          <Link to="/about" className="about-page-go">
+            <button>
+              More About Us <ArrowRight />
+            </button>
+          </Link>
         </div>
-
-        <div className="course-container">
-
-          {/* ส่วนของคอร์สยอดนิยม */}
-          {premiumCourses.length > 0 ? (
-            <div className="course-category">
-              <h2 className="head-card-home">🔥 คอร์สเรียน Hot Selling</h2>
-              <div className="course-list-home">
-                {premiumCourses.map((course) => (
-                  <CourseCard key={course.id} course={course} />
-                ))}
-              </div>
-            </div>
-          ) : (
-            <p>No premium courses available at the moment.</p>
-          )}
-          <br />
-
-          {/* ส่วนของคอร์สอื่นๆ */}
-          {standardCourses.length > 0 ? (
-            <div className="course-category">
-              <h2 className="head-card-home">📚 คอร์สอื่นๆ</h2>
-              <div className="course-list-home">
-                {standardCourses.map((course) => (
-                  <CourseCard key={course.id} course={course} />
-                ))}
-              </div>
-            </div>
-          ) : (
-            <p>No standard courses available at the moment.</p>
-          )}
-
-          <br />
-          {standardCourses.length > 0 ? (
-            <div className="course-category">
-              <h2 className="head-card-home">📚 คอร์สอื่นๆ</h2>
-              <div className="course-list-home">
-                {standardCourses.map((course) => (
-                  <CourseCard key={course.id} course={course} />
-                ))}
-              </div>
-            </div>
-          ) : (
-            <p>No standard courses available at the moment.</p>
-          )}
-
-          <br />
-          {standardCourses.length > 0 ? (
-            <div className="course-category">
-              <h2 className="head-card-home">🏃‍♂️ แพ็คคู่สุดคุ้ม </h2>
-              <div className="course-list-home">
-                {standardCourses.map((course) => (
-                  <CourseCard key={course.id} course={course} />
-                ))}
-              </div>
-            </div>
-          ) : (
-            <p>No standard courses available at the moment.</p>
-          )}
-          <br />
-
-          {standardCourses.length > 0 ? (
-            <div className="course-category">
-              <h2 className="head-card-home">📝 คอร์สเสริมตะลุยโจทย์</h2>
-              <div className="course-list-home">
-                {standardCourses.map((course) => (
-                  <CourseCard key={course.id} course={course} />
-                ))}
-              </div>
-            </div>
-          ) : (
-            <p>No standard courses available at the moment.</p>
-          )}
-
-          <br />
-
-          {standardCourses.length > 0 ? (
-            <div className="course-category">
-              <h2 className="head-card-home">🎓 ทดลองเรียน พื้นฐาน</h2>
-              <div className="course-list-home">
-                {standardCourses.map((course) => (
-                  <CourseCard key={course.id} course={course} />
-                ))}
-              </div>
-            </div>
-          ) : (
-            <p>No standard courses available at the moment.</p>
-          )}
-
+        <div className="img-promotion">
+          <img src={picpromotion} alt="Promotion" />
         </div>
-
       </div>
 
-
-    </>
+      <div className="course-container-home">
+        {premiumCourses.length > 0 && <CourseCarousel title="🔥 คอร์สเรียน Hot Selling" courses={premiumCourses} />}
+        {standardCourses.length > 0 && (
+          <>
+            <CourseCarousel title="📚 คอร์สอื่นๆ" courses={standardCourses} />
+            <CourseCarousel title="🏃‍♂️ แพ็คคู่สุดคุ้ม" courses={standardCourses} />
+            <CourseCarousel title="📝 คอร์สเสริมตะลุยโจทย์" courses={standardCourses} />
+            <CourseCarousel title="🎓 ทดลองเรียน พื้นฐาน" courses={standardCourses} />
+          </>
+        )}
+      </div>
+    </div>
   );
 }
 

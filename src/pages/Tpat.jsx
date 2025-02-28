@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
 import CourseCard from "../Components/CourseCard";
 import { fetchCoursesByCategory } from "../api/api";
-import "../style/tpat.css";
+import "../style/tgat.css";
 
 function Tpat() {
   const [courses, setCourses] = useState([]); // State for all courses
   const [filteredCourses, setFilteredCourses] = useState([]); // State for filtered courses
   const [loading, setLoading] = useState(true); // State for loading status
   const [error, setError] = useState(null); // State for error handling
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768); // State to handle screen size for mobile responsiveness
 
   useEffect(() => {
     async function getCourses() {
@@ -20,14 +19,6 @@ function Tpat() {
       setLoading(false);
     }
     getCourses();
-  }, []);
-
-  useEffect(() => {
-    function handleResize() {
-      setIsMobile(window.innerWidth <= 768);
-    }
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   // Handle dropdown selection
@@ -53,9 +44,9 @@ function Tpat() {
   if (error) return <p>{error}</p>;
 
   return (
-    <div className="tpat-page">
-      <div className="subject-selector">
-        <h2 className="TPAT-head"> TPAT </h2>
+    <div className="tgat-page">
+      <div className="sidebar-tgat-select">
+        <h2>TPAT</h2>
         <select className="dropdown" onChange={handleDropdownChange}>
           <option value="all">ทุกวิชา</option>
           {["TPAT1", "TPAT2", "TPAT3", "TPAT4", "TPAT5"].map((subject) => (
@@ -65,7 +56,7 @@ function Tpat() {
           ))}
         </select>
       </div>
-      <div className="course-list">
+      <div className="course-list-tgat">
         {filteredCourses.length > 0 ? (
           filteredCourses.map((course) => <CourseCard key={course.id} course={course} />)
         ) : (

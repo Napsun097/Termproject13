@@ -1,129 +1,145 @@
+/* General Styles */
 body {
   margin: 0;
   padding: 0;
   background-color: #f5f5f5;
+  font-family: Arial, sans-serif;
 }
 
+h1, h2 {
+  margin: 0;
+}
 
-.head-promotion {
+a {
+  text-decoration: none;
+}
+
+.container {
   width: 100%;
+  margin: 0 auto;
+}
+
+/* Promotion Section */
+.head-promotion {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 50px 10%;
   background-color: #f8f9fa;
+  flex-wrap: wrap;
 }
 
-/* ปรับขนาดของข้อความให้เป็น 30% */
-.head-welcome {
-  width: 30%;
+.head-promotion .head-welcome {
+  width: 40%;
 }
 
-/* ปรับขนาดของรูปให้เป็น 70% */
-.img-promotion {
-  width: 70%;
+.head-promotion .img-promotion {
+  width: 55%;
   display: flex;
   justify-content: center;
 }
 
-.img-promotion img {
+.head-promotion .img-promotion img {
   max-width: 100%;
   height: auto;
   border-radius: 10px;
 }
 
-/* Style ของข้อความ */
-.text-welcome {
-  font-size: 28px;
+.head-promotion .text-welcome {
+  font-size: 2.2rem;
   color: #333;
-  margin-bottom: 10px;
   font-weight: bold;
 }
 
-.text-welcome span {
-  color: hsl(192, 30%, 50%);
-  font-weight: bold;
-  font-size: larger;
+.head-promotion .text-welcome span {
+  color: hsl(192, 30%, 40%);
+  font-weight: bolder;
+  font-size: 2.2rem;
 }
 
-.text-welcome-sub{
-  color: hsla(0, 0%, 28%, 0.816);
+.head-promotion .text-welcome-sub {
+  color: #727272;
+  font-size: 1.1rem;
 }
 
-.about-welcome-btn {
-  background-color: #007bff;
+.head-promotion .about-page-go button {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* ระยะห่างระหว่างข้อความกับไอคอน */
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: bold; /* ทำให้ตัวอักษรดูโดดเด่นขึ้น */
+  background-color: hsl(192, 30%, 50%);
   color: white;
   border: none;
-  padding: 10px 20px;
-  font-size: 16px;
-  border-radius: 5px;
+  border-radius: 8px; /* ทำให้ขอบมน */
   cursor: pointer;
-  transition: 0.3s;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* เพิ่มเงาให้นุ่มขึ้น */
+}
+
+.head-promotion .about-page-go button:hover {
+  transform: translateY(-2px); /* ทำให้ปุ่มเด้งขึ้นเล็กน้อยเมื่อ hover */
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3); /* เพิ่มเงาเมื่อ hover */
+}
+
+.head-promotion .about-page-go button svg {
+  width: 20px;
+  height: 20px;
+  transition: transform 0.2s ease;
+}
+
+.head-promotion .about-page-go button:hover svg {
+  transform: translateX(5px); /* ทำให้ลูกศรขยับไปข้างหน้าเล็กน้อย */
 }
 
 
-.about-page-go button {
-  padding: 10px 20px;
-  font-size: 16px;
-  color: rgb(0, 0, 0);
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
 
-.about-page-go button:hover {
-  background-color: #45a049; /* เปลี่ยนสีเมื่อเลื่อนเมาส์ไป */
-}
-
-/* Responsive: จอเล็กลงให้เรียงแนวตั้ง */
-@media (max-width: 768px) {
-  .head-promotion {
-      flex-direction: column;
-      text-align: center;
-      padding: 30px 5%;
-  }
-
-  .head-welcome {
-      width: 100%;
-  }
-
-  .img-promotion {
-      width: 100%;
-      margin-top: 20px;
-  }
-
-  .img-promotion img {
-      width: 100%;
-  }
-}
-
-
+/* Course Carousel Section */
 .course-category {
-  width: 100%;
-  background: #fff;
-  padding: 30px 20px; /* เพิ่ม padding เพื่อให้มีพื้นที่ภายใน */
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  margin: 0; /* เว้นระยะห่างระหว่างส่วน */
-}
-
-.course-category h2 {
-  font-size: 1.8rem;
-  color: #333;
+  padding: 20px;
   margin-bottom: 20px;
-  text-align: left; /* จัดหัวข้อให้อยู่ตรงกลาง */
-  margin-left: 40px;
+  border-bottom: 2px solid #ddd;
 }
 
-.course-list-home {
-  margin-left: 30px;
-  margin-top: 12px;
-  margin-bottom: 12px;
-  padding: 0; /* ปรับ padding ด้านข้างให้ดูสมดุล */
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 20px;
-  
+.head-card-home {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 10%;
+}
+
+.head-card-home h2 {
+  margin-right: 20px;
+}
+
+.see-more {
+  display: flex;
+  align-items: center;
+  background-color: hsl(192, 30%, 92%);
+  color: hsl(192, 30%, 12%);
+  font-size: 16px;
+  font-weight: 600;
+  padding: 10px 20px;
+  border-radius: 50px;
+  text-decoration: none;
+  transition: background-color 0.3s;
+  white-space: nowrap;
+}
+
+.swiper {
+  max-width: 90%;
+  margin: 0 auto;
+  padding: 20px 0;
+}
+
+.swiper-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 180px;
+  height: auto;
+  min-height: 250px;
 }
 
 .loading-container {
@@ -143,188 +159,124 @@ body {
   animation: spin 1s linear infinite;
 }
 
-.about-welcome-btn {
-  background-color: hsl(192, 18%, 50%);
-  color: white;
-  font-size: 16px;
-  padding: 12px 24px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  text-align: center;
-  display: inline-block;
-  margin-top: 10px; /* เพิ่มระยะห่างจากด้านบน */
-}
-
-.about-welcome-btn a {
-  text-decoration: none;
-  color: white;
-  font-weight: bold;
-}
-
-.about-welcome-btn:hover {
-  background-color: hsl(192, 18%, 50%);
-}
-
-
-
-
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
 
-/* สำหรับอุปกรณ์ที่มีขนาดหน้าจอเล็ก เช่น iPhone SE หรือ iPad */
-@media (max-width: 768px) {
-  .img-promotion {
-    display: none; /* ซ่อนรูปภาพโปรโมชั่น */
-  }
+/* Media Queries for Responsiveness */
 
+/* Tablet and smaller screens */
+@media (max-width: 1024px) {
   .head-promotion {
     flex-direction: column;
-    align-items: center; /* จัดตำแหน่งในแนวตั้งกลาง */
-    justify-content: center; /* จัดตำแหน่งในแนวนอนกลาง */
-    padding: 20px;
-    text-align: center; /* จัดข้อความตรงกลาง */
-  }
-
-  .head-welcome {
-    flex: 0 0 100%;
     text-align: center;
-    padding-left: 0;
-  }
-
-  .head-welcome h1 {
-    font-size: 2rem; /* ปรับขนาดหัวเรื่อง */
-  }
-
-  .head-welcome p {
-    font-size: 1rem; /* ปรับขนาดข้อความ */
-  }
-
-  .course-category {
-    padding: 20px;
-    text-align: center; /* จัดข้อความในหมวดหมู่ให้ตรงกลาง */
-  }
-
-  .course-list-home {
-    padding: 0;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* ปรับขนาดการ์ด */
-    gap: 10px;
-    justify-items: center; /* จัดการ์ดให้ตรงกลาง */
-  }
-}
-
-/* สำหรับอุปกรณ์ที่มีหน้าจอใหญ่ขึ้น เช่น iPad */
-@media (min-width: 768px) and (max-width: 1024px) {
-  .head-promotion {
-    flex-direction: row;
-    justify-content: center; /* จัดการ์ดและเนื้อหาตรงกลาง */
-    align-items: center;
     padding: 40px;
-    text-align: center; /* จัดข้อความให้ตรงกลาง */
   }
 
-  .head-welcome {
-    text-align: left;
-    padding-left: 20px;
+  .head-promotion .head-welcome {
+    width: 100%;
+    text-align: center;
   }
 
-  .head-welcome h1 {
-    font-size: 2.5rem; /* เพิ่มขนาดหัวเรื่องสำหรับ iPad */
+  .head-promotion .img-promotion {
+    width: 100%;
+    margin-top: 20px;
   }
 
-  .head-welcome p {
-    font-size: 1.2rem; /* ขนาดข้อความให้เหมาะสม */
+  .head-card-home {
+    font-size: 1.2rem;
+    flex-direction: column;
+    text-align: center;
   }
 
-  .course-category {
-    padding: 30px;
-    text-align: center; /* จัดข้อความให้ตรงกลาง */
+  .swiper-slide {
+    width: 100%;
   }
 
-  .course-list-home {
-    padding: 0 20px;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* ปรับขนาดการ์ด */
-    gap: 15px;
-    justify-items: center; /* จัดการ์ดให้ตรงกลาง */
+  .swiper {
+    max-width: 100%;
   }
 }
 
-/* สำหรับ iPhone SE หรืออุปกรณ์ที่มีหน้าจอเล็กมาก (สูงสุด 375px) */
+/* Mobile first (up to 768px) */
+@media (max-width: 768px) {
+  .head-promotion {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+  }
+
+  .head-promotion .head-welcome {
+    width: 100%;
+    text-align: center;
+  }
+
+  .head-promotion .text-welcome {
+    font-size: 1.5rem;
+  }
+
+  .head-promotion .text-welcome span {
+    font-size: 1.8rem;
+  }
+
+  .head-promotion .text-welcome-sub {
+    font-size: 1rem;
+  }
+
+  .head-promotion .img-promotion {
+    width: 100%;
+  }
+
+  .head-card-home {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .swiper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center !important;
+  }
+
+  .swiper-slide {
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+    min-height: 220px;
+  }
+}
+
+/* Extra small screens (iPhone SE and below) */
 @media (max-width: 375px) {
   .head-promotion {
     flex-direction: column;
     align-items: center;
     padding: 10px;
-    text-align: center; /* จัดข้อความตรงกลาง */
   }
 
-  .head-welcome {
-    text-align: center;
-    padding-left: 0;
+  .head-promotion .text-welcome {
+    font-size: 1.3rem;
   }
 
-  .head-welcome h1 {
-    font-size: 20px; /* ลดขนาดหัวเรื่อง */
+  .head-promotion .text-welcome span {
+    font-size: 1.6rem;
   }
 
-  .head-welcome p {
-    font-size: 0.9rem; /* ลดขนาดข้อความ */
-  }
-
-  .course-category {
-    padding: 10px;
-    text-align: center; /* จัดข้อความในหมวดหมู่ให้ตรงกลาง */
-  }
-
-  .course-list-home {
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* ลดขนาดการ์ดให้เล็กที่สุด */
-    gap: 8px;
-    justify-items: center; /* จัดการ์ดให้ตรงกลาง */
+  .head-promotion .text-welcome-sub {
+    font-size: 0.9rem;
   }
 
   .head-card-home {
-    font-size: 1.4rem; /* ปรับขนาดฟอนต์ให้เล็กที่สุด */
-    text-align: center; /* จัดข้อความให้อยู่ตรงกลาง */
-    margin-left: 0;
-    padding-bottom: 5px;
+    font-size: 1rem;
+  }
+
+  .swiper-slide {
+    flex: 0 0 100% !important;
+  }
+
+  .swiper {
+    padding: 10px;
   }
 }
-
-/* Animation ตอนเปิดหน้า */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-body {
-  animation: fadeIn 1s ease-in-out;
-}
-
-/* Animation สำหรับหัวข้อโปรโมชั่น */
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateX(-50px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-.head-promotion {
-  animation: slideIn 1s ease-in-out;
-}
-
-
-

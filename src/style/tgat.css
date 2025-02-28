@@ -1,4 +1,94 @@
-
 .tgat-page {
-    padding: 40px;
+  display: flex;
+  width: 100%;
+}
+
+.sidebar-tgat-select {
+  width: 20%;
+  background-color: #f4f4f4;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.course-list-tgat {
+  width: 80%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 25px;
+  justify-items: center;
+  padding: 20px;
+  box-sizing: border-box;
+  margin: 10px;
+}
+
+.no-courses {
+  font-size: 1.2rem;
+  color: #555;
+  text-align: center;
+  width: 100%;
+}
+
+.sidebar-tgat-select h2 {
+  font-size: 1.5rem;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.sidebar-tgat-select select {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+  .tgat-page {
+    flex-direction: column;
   }
+
+  .sidebar-tgat-select,
+  .course-list-tgat {
+    width: 100%;
+  }
+
+  .course-list-tgat {
+    grid-template-columns: 1fr;
+  }
+  
+  .sidebar-tgat-select select {
+    width: 100%;
+  }
+}
+
+/* สำหรับ iPhone SE (หน้าจอเล็กกว่า 375px) */
+@media (max-width: 375px) {
+  .tgat-page {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .sidebar-tgat-select,
+  .course-list-tgat {
+    width: 100%;
+  }
+
+  .course-list-tgat {
+    grid-template-columns: 1fr;
+    justify-content: center;
+  }
+}
+
+/* สำหรับ iPad (ทั้งแนวตั้งและแนวนอน) */
+@media (min-width: 376px) and (max-width: 1024px) {
+  .tgat-page {
+    flex-direction: column;
+  }
+
+  .sidebar-tgat-select,
+  .course-list-tgat {
+    width: 100%;
+  }
+
+  .course-list-tgat {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+}

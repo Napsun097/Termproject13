@@ -1,35 +1,59 @@
 .about-page {
-    font-family: 'Arial', sans-serif;
-    margin: 20px;
-  }
-  
-  h2 {
-    color: #333;
-  }
-  
-  .institution-history, .teachers, .student-achievements, .contact-info {
-    margin-bottom: 30px;
-  }
-  
-  .teachers-list {
-    display: flex;
-    gap: 20px;
-  }
-  
-  .teacher img {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    object-fit: cover;
-  }
-  
-  .student-achievements ul {
-    list-style-type: disc;
-    padding-left: 20px;
-  }
-  
-  .contact-info a {
-    color: #007bff;
-    text-decoration: none;
-  }
-  
+  font-family: 'Arial', sans-serif;
+  margin: 20px;
+  text-align: center; /* จัดให้อยู่ตรงกลาง */
+}
+
+h2 {
+  color: #333;
+  font-family: 'Prompt', sans-serif;
+}
+
+.institution-history, 
+.teachers, 
+.student-achievements, 
+.contact-info {
+  margin-bottom: 30px;
+}
+
+/* จัดให้ครูอยู่ตรงกลาง */
+.teachers-list {
+  display: flex;
+  justify-content: center; /* จัดให้อยู่ตรงกลาง */
+  gap: 20px;
+}
+
+/* จัดให้นักเรียนอยู่ตรงกลาง */
+.student-achievements ul {
+  list-style-type: disc;
+  padding-left: 20px;
+  font-family: 'Prompt', sans-serif;
+  display: inline-block; /* ทำให้ ul อยู่ตรงกลาง */
+  text-align: left; /* ข้อความชิดซ้ายแต่ ul อยู่กลาง */
+}
+
+/* รูปครูจัดให้อยู่ตรงกลาง */
+.teacher {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.teacher img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* ลิงก์จัดให้อยู่ตรงกลาง */
+.contact-info {
+  text-align: center;
+}
+
+.contact-info a {
+  color: #000000;
+  text-decoration: none;
+  font-family: 'Prompt', sans-serif;
+}

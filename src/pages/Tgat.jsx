@@ -8,7 +8,6 @@ function Tgat() {
   const [filteredCourses, setFilteredCourses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
   useEffect(() => {
     async function getCourses() {
@@ -20,14 +19,6 @@ function Tgat() {
       setLoading(false);
     }
     getCourses();
-  }, []);
-
-  useEffect(() => {
-    function handleResize() {
-      setIsMobile(window.innerWidth <= 768);
-    }
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   function handleDropdownChange(event) {
@@ -53,8 +44,8 @@ function Tgat() {
 
   return (
     <div className="tgat-page">
-      <div className="subject-selector">
-        <h2 className="TGAT-head"> TGAT </h2>
+      <div className="sidebar-tgat-select">
+        <h2>TGAT</h2>
         <select className="dropdown" onChange={handleDropdownChange}>
           <option value="all">ทุกวิชา</option>
           {["TGAT1", "TGAT2", "TGAT3"].map((subject) => (
@@ -64,7 +55,7 @@ function Tgat() {
           ))}
         </select>
       </div>
-      <div className="course-list">
+      <div className="course-list-tgat">
         {filteredCourses.length > 0 ? (
           filteredCourses.map((course) => <CourseCard key={course.id} course={course} />)
         ) : (

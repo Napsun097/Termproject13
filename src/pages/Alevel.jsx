@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import CourseCard from "../Components/CourseCard";
 import { fetchCoursesByCategory } from "../api/api";
-import "../style/alevel.css";
+import "../style/tgat.css";
 
 function Alevel() {
   const [courses, setCourses] = useState([]);
@@ -52,9 +52,9 @@ function Alevel() {
   if (error) return <p>{error}</p>;
 
   return (
-    <div className="alevel-page">
-      <div className="subject-selector">
-        <h2 className="ALEVEL-head"> A-Level </h2>
+    <div className="tgat-page">
+      <div className="sidebar-tgat-select">
+        <h2> A-Level </h2>
         <select className="dropdown" onChange={handleDropdownChange}>
           <option value="all">ทุกวิชา</option>
           {["Math1", "Math2", "Physics", "Chemistry", "Biology", "English", "Thai", "Social", "Japan", "Science", "Germany", "Korea", "Bahli", "France"].map((subject) => (
@@ -64,7 +64,7 @@ function Alevel() {
           ))}
         </select>
       </div>
-      <div className="course-list">
+      <div className="course-list-tgat">
         {filteredCourses.length > 0 ? (
           filteredCourses.map((course) => <CourseCard key={course.id} course={course} />)
         ) : (
