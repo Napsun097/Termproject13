@@ -26,7 +26,7 @@ function Payment() {
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
-    if (file && (file.type === "image/png" || file.type === "image/jpeg")) {
+    if (file && (file.type === "image/png" || file.type === "image/jpeg" || file.type === "image/jpg")) {
       setSelectedFile(file);
     } else {
       alert("Please upload a PNG or JPEG file.");
@@ -149,7 +149,7 @@ function Payment() {
         <h2>Upload Payment Proof (PNG/JPEG)</h2>
         <input
           type="file"
-          accept="image/png, image/jpeg"
+          accept="image/png, image/jpeg, image/jpg"
           onChange={handleFileChange}
           ref={fileInputRef}
           className="file-input"

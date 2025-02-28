@@ -24,7 +24,9 @@ const Admin = ({ user, setUser }) => {
   const [isNavbarOpen, setIsNavbarOpen] = useState(false);
   const [addModalOpen, setAddModalOpen] = useState(false);
   const navigate = useNavigate();
+  const fileInputRef = useRef(null);
   // Reference to the dropdown for detecting outside clicks
+  const [selectedFile, setSelectedFile] = useState(null);
   const dropdownRef = useRef(null);
 
 
@@ -43,6 +45,7 @@ const Admin = ({ user, setUser }) => {
 
   const [formData, setFormData] = useState({
     title: "",
+    image: null,
     category: "",
     price: 0,
     isPopular: false,
@@ -129,6 +132,7 @@ const Admin = ({ user, setUser }) => {
 
     setFormData({
       title: course.title || "",
+      image: course.image ? course.image.id : null,
       category: course.category || "",
       price: course.price || 0,
       isPopular: course.isPopular || false,
@@ -332,6 +336,61 @@ const Admin = ({ user, setUser }) => {
     }
   };
 
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file && (file.type === "image/png" || file.type === "image/jpeg" || file.type === "image/jpg")) {
+      setSelectedFile(file);
+    } else {
+      alert("Please upload a PNG or JPEG file.");
+    }
+  };
+
+  const handleFileUpload = () => {
+    if (!selectedFile) {
+      alert("Please select a file to upload.");
+      return;
+    }
+    const formData = new FormData();
+    formData.append("files", selectedFile);
+
+    axios.post("http://localhost:1337/api/upload", formData)
+      .then(response => {
+        console.log("Image uploaded successfully:", response.data);
+
+        // Get the uploaded image ID
+        const imageId = response.data[0].id;
+
+        // Now, associate the image with the payment entry
+        updateFile(imageId);
+      })
+      .catch(error => {
+        console.error("Error uploading file:", error);
+      });
+  };
+
+  const updateFile = (imageId) => {
+    axios.put(`http://localhost:1337/api/courses/${editingCourse.documentId}`, {
+      data: {
+        image: [imageId],
+      }
+    },
+      {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+          "Content-Type": "application/json",
+        },
+      }
+    )
+      .then(response => {
+        console.log("image updated successfully:", response.data);
+        fetchCourses();
+        setModalOpen(false);
+      })
+      .catch(error => {
+        console.error("Error updating course:", error);
+      });
+  };
+
   return (
     <div className="admin-container">
 
@@ -433,9 +492,13 @@ const Admin = ({ user, setUser }) => {
                   const shortDescription = course.shortDescription;
 
                   // ✅ Extract large image URL
-                  const imageUrl = course.image
-                    ? `http://localhost:1337${course.image.formats.large.url}`
+                  const imageUrl = course.image?.formats?.large?.url
+                    || course.image?.formats?.medium?.url
+                    || course.image?.formats?.small?.url
+                    || course.image?.url
+                    ? `http://localhost:1337${course.image.url}`
                     : null;
+
 
                   return (
                     <div key={course.id} className="course-card-admin">
@@ -504,13 +567,25 @@ const Admin = ({ user, setUser }) => {
       </div>
 
       {/* Ant Design Modal for Editing */}
-      <Modal title="Edit Course" open={modalOpen} onOk={handleSave} onCancel={() => setModalOpen(false)}>
+      <Modal title="Edit Course" open={modalOpen} onOk={() => {
+        handleSave();
+        handleFileUpload();
+      }} onCancel={() => setModalOpen(false)}>
         <label>Course Title</label>
         <Input
           placeholder="Course Title"
           value={formData.title}
           onChange={(e) => handleChange("title", e.target.value)}
           style={{ marginBottom: "10px" }}
+        />
+
+        <label>Image</label>
+        <input
+          type="file"
+          accept="image/png, image/jpeg, image/jpg"
+          onChange={handleFileChange}
+          ref={fileInputRef}
+          className="file-input"
         />
 
         <label>Category</label>
