@@ -19,6 +19,7 @@ const Login = ({ setUser }) => {
 
       localStorage.setItem("token", data.jwt);
       localStorage.setItem("user", JSON.stringify(data.user));
+      localStorage.setItem("username", data.user.username);
       setUser(data.user);
 
       if (data.user.roles && data.user.roles.includes("Admin")) {

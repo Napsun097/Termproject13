@@ -11,7 +11,7 @@ import picpromotion from "../assets/images/promotion.webp";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 
-const CourseCarousel = ({ title, courses }) => {
+const CourseCarousel = ({ title, courses, userId }) => {
   return (
     <div className="course-category">
       <div className="head-card-home"><h2 >{title}</h2>
@@ -35,7 +35,7 @@ const CourseCarousel = ({ title, courses }) => {
       >
         {courses.map((course) => (
           <SwiperSlide key={course.id}>
-            <CourseCard course={course} />
+            <CourseCard course={course} userId={userId}/>
           </SwiperSlide>
         ))}
       </Swiper>
@@ -43,10 +43,11 @@ const CourseCarousel = ({ title, courses }) => {
   );
 };
 
-function Home() {
+function Home({ user }) {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const userId = user ? user.id : null;
 
   async function getCourses() {
     setLoading(true);
@@ -95,13 +96,13 @@ function Home() {
       </div>
 
       <div className="course-container-home">
-        {premiumCourses.length > 0 && <CourseCarousel title="🔥 คอร์สเรียน Hot Selling" courses={premiumCourses} />}
+        {premiumCourses.length > 0 && <CourseCarousel title="🔥 คอร์สเรียน Hot Selling" courses={premiumCourses} userId={userId}/>}
         {standardCourses.length > 0 && (
           <>
-            <CourseCarousel title="📚 คอร์สอื่นๆ" courses={standardCourses} />
-            <CourseCarousel title="🏃‍♂️ แพ็คคู่สุดคุ้ม" courses={standardCourses} />
-            <CourseCarousel title="📝 คอร์สเสริมตะลุยโจทย์" courses={standardCourses} />
-            <CourseCarousel title="🎓 ทดลองเรียน พื้นฐาน" courses={standardCourses} />
+            <CourseCarousel title="📚 คอร์สอื่นๆ" courses={standardCourses} userId={userId}/>
+            <CourseCarousel title="🏃‍♂️ แพ็คคู่สุดคุ้ม" courses={standardCourses} userId={userId}/>
+            <CourseCarousel title="📝 คอร์สเสริมตะลุยโจทย์" courses={standardCourses} userId={userId}/>
+            <CourseCarousel title="🎓 ทดลองเรียน พื้นฐาน" courses={standardCourses} userId={userId}/>
           </>
         )}
       </div>
