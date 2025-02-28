@@ -150,6 +150,7 @@ const Admin = ({ user, setUser }) => {
     setEditingCourse(null);
     setFormData({
       title: "",
+      image: null,
       category: "",
       price: 0,
       isPopular: false,
@@ -164,28 +165,41 @@ const Admin = ({ user, setUser }) => {
 
   const handleAdd = async () => {
     console.log("Submitting formData:", { data: formData });
+  
+    // Sanitize formData: Convert empty strings to null
     const sanitizedData = Object.fromEntries(
-      Object.entries(formData).map(([key, value]) => [key, value || null])
+      Object.entries(formData).map(([key, value]) =>
+        value === "" ? [key, null] : [key, value]
+      )
     );
-
-    axios
-      .post(
+  
+    try {
+      // Step 1: Add the course without an image
+      const response = await axios.post(
         "http://localhost:1337/api/courses",
-        { data: sanitizedData },
+        { data: sanitizedData }, // Use sanitized data
         {
           headers: {
             Authorization: `Bearer ${authToken}`,
           },
         }
-      )
-      .then((response) => {
-        console.log("Course added successfully:", response.data);
-        fetchCourses();
-        setAddModalOpen(false);
-      })
-      .catch((error) => {
-        console.error("Error adding course:", error);
-      });
+      );
+  
+  
+      console.log("Course added successfully:", response.data);
+      const courseId = response.data.data.documentId; // Get the new course ID
+  
+      // Step 2: Upload image and update course
+      const imageId = await handleFileUploadAdd();
+      if (imageId) {
+        await updateAddFile(courseId, imageId);
+      }
+  
+      fetchCourses();
+      setAddModalOpen(false);
+    } catch (error) {
+      console.error("Error adding course:", error);
+    }
   };
 
   const handleChange = (field, value) => {
@@ -360,7 +374,6 @@ const Admin = ({ user, setUser }) => {
         // Get the uploaded image ID
         const imageId = response.data[0].id;
 
-        // Now, associate the image with the payment entry
         updateFile(imageId);
       })
       .catch(error => {
@@ -389,6 +402,56 @@ const Admin = ({ user, setUser }) => {
       .catch(error => {
         console.error("Error updating course:", error);
       });
+  };
+
+  const handleFileUploadAdd = async () => {
+    if (!selectedFile) {
+      alert("Please select a file to upload.");
+      return null;
+    }
+  
+    const formDataUpload = new FormData();
+    formDataUpload.append("files", selectedFile);
+  
+    try {
+      const response = await axios.post(
+        "http://localhost:1337/api/upload",
+        formDataUpload,
+        {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+  
+      console.log("Image uploaded successfully:", response.data);
+      return response.data[0].id; // Return uploaded image ID
+    } catch (error) {
+      console.error("Error uploading file:", error);
+      return null;
+    }
+  };
+
+  const updateAddFile = async (courseId, imageId) => {
+    try {
+      const response = await axios.put(
+        `http://localhost:1337/api/courses/${courseId}`,
+        {
+          data: { image: [imageId] }, // Attach the uploaded image ID
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+  
+      console.log("Image added to new course successfully:", response.data);
+    } catch (error) {
+      console.error("Error updating new course with image:", error);
+    }
   };
 
   return (
@@ -695,12 +758,22 @@ const Admin = ({ user, setUser }) => {
         onOk={handleAdd}
         onCancel={() => setAddModalOpen(false)}
       >
+
         <label>Course Title</label>
         <Input
           placeholder="Course Title"
           value={formData.title}
           onChange={(e) => handleChange("title", e.target.value)}
           style={{ marginBottom: "10px" }}
+        />
+
+        <label>Image</label>
+        <input
+          type="file"
+          accept="image/png, image/jpeg, image/jpg"
+          onChange={handleFileChange}
+          ref={fileInputRef}
+          className="file-input"
         />
 
         <label>Category</label>
