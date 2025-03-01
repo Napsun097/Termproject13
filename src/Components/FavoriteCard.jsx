@@ -104,10 +104,12 @@ function FavoriteCard({ favorite, onRemoveFavorite }) {
         return <p>Error: Favorite data is missing!</p>;
     }
 
-    const imageUrl = favorite.course.image.formats?.large?.url
-        ? `http://localhost:1337${favorite.course.image.formats.large.url}`
-        : null;
-
+    const imageUrl = favorite.course.image?.formats?.large?.url ||
+                 favorite.course.image?.formats?.medium?.url ||
+                 favorite.course.image?.formats?.small?.url ||
+                 favorite.course.image?.url
+                 ? `http://localhost:1337${favorite.course.image.url}`
+                 : null;
     return (
         <div className="course-card">
             <Link to={`/course/${favorite.course.documentId}`} className="course-link"> {/* ลิงก์ไปยังหน้ารายละเอียดคอร์ส */}

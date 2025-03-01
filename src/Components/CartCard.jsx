@@ -105,9 +105,12 @@ function CartCard({ cart, onRemoveCart }) {
         return <p>Error: Cart data is missing!</p>;
     }
 
-    const imageUrl = cart.course.image.formats?.large?.url
-        ? `http://localhost:1337${cart.course.image.formats.large.url}`
-        : null;
+    const imageUrl = cart.course.image?.formats?.large?.url ||
+                 cart.course.image?.formats?.medium?.url ||
+                 cart.course.image?.formats?.small?.url ||
+                 cart.course.image?.url
+                 ? `http://localhost:1337${cart.course.image.url}`
+                 : null;
 
     return (
         <div className="course-card-cart">
