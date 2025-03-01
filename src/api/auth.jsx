@@ -7,7 +7,7 @@ export const login = async (username, password) => {
   };
 
   try {
-    const response = await fetch(${API_URL}/auth/local, {
+    const response = await fetch(`${API_URL}/auth/local`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(loginData),
@@ -38,7 +38,7 @@ export const register = async (username, email, password) => {
   };
 
   try {
-    const response = await fetch(${API_URL}/auth/local/register, {
+    const response = await fetch(`${API_URL}/auth/local/register`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(registerData),
@@ -55,4 +55,3 @@ export const register = async (username, email, password) => {
     throw new Error(error.message);
   }
 };
-localhost
