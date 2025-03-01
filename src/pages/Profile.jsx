@@ -21,16 +21,20 @@ function Profile() {
     <div className="profile-container">
       <div className="profile-card">
         <div className="profile-header">
-          <h1>Your Profile</h1>
+          <h1>Profile</h1>
         </div>
         <div className="profile-details">
           <div className="profile-item">
-            <label className="profile-label">Username</label>
-            <p className="profile-value">{user.username}</p>
+            <label className="profile-label">Name</label>
+            <p className="profile-value">{user.FullName}</p>
           </div>
           <div className="profile-item">
             <label className="profile-label">Email</label>
-            <p className="profile-value">{user.email}</p>
+            <p className="profile-value">{user.email} </p>
+          </div>
+          <div className="profile-item">
+            <label className="profile-label">role</label>
+            <p className="profile-value">{user.roles} </p>
           </div>
         </div>
       </div>
