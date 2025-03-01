@@ -128,3 +128,12 @@
   color: hsl(192, 30%, 50%); /* Hover text color */
   background-color: #f0f0f0; /* Hover background */
 }
+
+
+.head-select-dropdown {
+  text-align: center; /* Center-aligns the text */
+  border-bottom: 2px solid #000; /* Adds the underline */
+  display: inline-block; /* Makes the underline only appear under the text */
+  padding-bottom: 5px; /* Adds spacing between the text and the underline */
+}
+

@@ -480,7 +480,7 @@ const Admin = ({ user, setUser }) => {
             User
           </li>
           <li className="back-home-btn" onClick={() => navigate("/")}>
-            หน้าเว็บไซต์
+          ⬅ หน้าเว็บไซต์
           </li>
         </ul>
 
@@ -490,14 +490,18 @@ const Admin = ({ user, setUser }) => {
       <div className="content">
         <nav className="navbar-admin">
           <div className="navbar-container">
-            <div className="navbar-brand">
-              <img src={logo} alt="Website Logo" className="logo-img" />
-            </div>
+            <div className="navbar-brand-admin">
+                      <Link to="/" onClick={closeNavbar}>
+                        <h1>UNIMASTER</h1>
+                      </Link>
+                      
+                      
+                    </div>
             <div className="navbar-icons">
               {user ? (
                 <div className={`profile-dropdown ${isDropdownOpen ? "open" : ""}`} ref={dropdownRef}>
                   <button
-                    className="profile-icon-btn"
+                    className="profile-icon-btn-admin"
                     onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                   >
                     <img

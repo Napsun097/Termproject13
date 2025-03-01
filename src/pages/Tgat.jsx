@@ -51,30 +51,30 @@ function Tgat() {
   return (
     <div className="tgat-page">
       <div className="sidebar-tgat-select">
-      <div className="link-tgat-tpat-alevel">
-      <Link
-        to="/tgat"
-        className={`nav-link ${activeLink === 'TGAT' ? 'active' : ''}`}
-        onClick={() => handleLinkClick('TGAT')}
-      >
-        TGAT
-      </Link>
-      <Link
-        to="/tpat"
-        className={`nav-link ${activeLink === 'TPAT' ? 'active' : ''}`}
-        onClick={() => handleLinkClick('TPAT')}
-      >
-        TPAT
-      </Link>
-      <Link
-        to="/a-level"
-        className={`nav-link ${activeLink === 'A-Level' ? 'active' : ''}`}
-        onClick={() => handleLinkClick('A-Level')}
-      >
-        A-Level
-      </Link>
-    </div>
-        <h2>TGAT</h2>
+        <div className="link-tgat-tpat-alevel">
+          <Link
+            to="/tgat"
+            className={`nav-link ${activeLink === 'TGAT' ? 'active' : ''}`}
+            onClick={() => handleLinkClick('TGAT')}
+          >
+            TGAT
+          </Link>
+          <Link
+            to="/tpat"
+            className={`nav-link ${activeLink === 'TPAT' ? 'active' : ''}`}
+            onClick={() => handleLinkClick('TPAT')}
+          >
+            TPAT
+          </Link>
+          <Link
+            to="/a-level"
+            className={`nav-link ${activeLink === 'A-Level' ? 'active' : ''}`}
+            onClick={() => handleLinkClick('A-Level')}
+          >
+            A-Level
+          </Link>
+        </div>
+        <h2 className="head-select-dropdown">TGAT</h2>
         <select className="dropdown" onChange={handleDropdownChange}>
           <option value="all">ทุกวิชา</option>
           {["TGAT1", "TGAT2", "TGAT3"].map((subject) => (

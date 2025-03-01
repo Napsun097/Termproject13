@@ -83,7 +83,7 @@ function Alevel() {
         A-Level
       </Link>
     </div>
-        <h2> A-Level </h2>
+        <h2 className="head-select-dropdown"> A-Level </h2>
         <select className="dropdown" onChange={handleDropdownChange}>
           <option value="all">ทุกวิชา</option>
           {["Math1", "Math2", "Physics", "Chemistry", "Biology", "English", "Thai", "Social", "Japan", "Science", "Germany", "Korea", "Bahli", "France"].map((subject) => (

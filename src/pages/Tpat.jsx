@@ -75,7 +75,7 @@ function Tpat() {
         A-Level
       </Link>
     </div>
-        <h2>TPAT</h2>
+        <h2 className="head-select-dropdown">TPAT</h2>
         <select className="dropdown" onChange={handleDropdownChange}>
           <option value="all">ทุกวิชา</option>
           {["TPAT1", "TPAT2", "TPAT3", "TPAT4", "TPAT5"].map((subject) => (

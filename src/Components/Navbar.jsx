@@ -91,7 +91,7 @@ function Navbar({ user, setUser }) {
       <div className="navbar-container">
         <div className="navbar-brand">
           <Link to="/" onClick={closeNavbar}>
-            <img src={logo} alt="Website Logo" className="logo-img" />
+            <h1>UNIMASTER</h1>
           </Link>
           
           
@@ -178,7 +178,7 @@ function Navbar({ user, setUser }) {
               </div>
             ) : (
               <Link to="/login" onClick={closeNavbar}>
-                <button className="login-btn"> เข้าสู่ระบบ </button>
+                <button className="login-btn-nav"> เข้าสู่ระบบ </button>
               </Link>
             )}
           </div>

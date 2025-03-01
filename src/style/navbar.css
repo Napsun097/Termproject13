@@ -1,6 +1,6 @@
 /* Navbar */
 .navbar {
-  background-color: #ffffff;
+  background-color: hsl(190, 30%, 42%);
   padding: 15px 20px;
   color: white;
   display: flex;
@@ -26,20 +26,21 @@
   white-space: nowrap; /* ป้องกันการตัดบรรทัดใหม่ */
 }
 
-/* โลโก้ */
-.navbar-brand img {
-  width: 200px;
-  height: auto;
-  white-space: nowrap; /* ป้องกันการตัดบรรทัดใหม่ */
-  background-color: #ffffff;
+
+
+.navbar-brand h1 {
+  color: white;
+  font-size: 2rem;
+  letter-spacing: 2px; /* ปรับระยะห่างระหว่างอักษร */
 }
+
 
 /* ปุ่มเปิด/ปิด Navbar สำหรับโหมดมือถือ */
 .navbar-toggle {
   display: none;
   background: none;
   border: none;
-  color: #000;
+  color: #f8f8f8;
   font-size: 28px;
   cursor: pointer;
 }
@@ -60,7 +61,6 @@
 }
 
 .nav-link {
-  color: rgb(0, 0, 0);
   text-decoration: none;
   font-size: 16px;
   padding: 10px 15px;
@@ -68,6 +68,14 @@
   white-space: nowrap; /* ป้องกันการตัดบรรทัดใหม่ */
 }
 
+.navbar-links .nav-link p {
+  color: white;
+  transition: color 0.3s ease;
+}
+
+.navbar-links .nav-link:hover p {
+  color: black;
+}
 
 /* แถบค้นหา */
 
@@ -147,10 +155,12 @@
   border-radius: 25px;
   transition: background 0.3s ease;
   white-space: nowrap; /* ป้องกันการตัดบรรทัดใหม่ */
+  color: white;
 }
 
 .profile-icon-btn:hover {
   background: #f0f0f0;
+  color: black;
 }
 
 .profile-icon-btn i {
@@ -215,17 +225,31 @@
   position: relative;
 }
 
-.login-btn{
-  padding: 8px 16px;
-  background-color: #008CBA;
-  color: white;
+.login-btn-nav {
+  padding: 12px 24px;  /* Increase padding for a bigger button */
+  background-color: #ffffff;
+  color: hsl(0, 0%, 0%);
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;  /* Slightly round the corners for a modern look */
   cursor: pointer;
-  font-size: 14px;
+  font-size: 16px;  /* Increase font size for better readability */
   transition: background-color 0.3s ease, transform 0.3s ease;
-  margin: 5px;
+  margin: 8px;  /* Add a bit more margin for spacing */
 }
+
+.login-btn-nav:hover {
+  padding: 12px 24px;  /* Keep padding consistent */
+  background-color: #000000;
+  color: hsl(0, 0%, 100%);
+  border: none;
+  border-radius: 8px;  /* Keep the same border-radius */
+  cursor: pointer;
+  font-size: 16px;  /* Keep font size consistent */
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  margin: 8px;
+  transform: scale(1.1);  /* Add a scale effect when hovering to make it more dynamic */
+}
+
 
 
 
@@ -242,7 +266,7 @@
     top: 80px;
     left: 0;
     width: 100%;
-    background-color: #ffffff;
+    background-color: hsl(190, 30%, 72%);
     padding: 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     z-index: 1000;
@@ -302,7 +326,7 @@
   align-items: center;
   justify-content: center;
   font-size: 1.2rem;
-  color: #333; /* Text color */
+  color: #ffffff; /* Text color */
   padding: 10px;
   border-radius: 50%;
   transition: background-color 0.3s ease, color 0.3s ease;

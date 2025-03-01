@@ -53,11 +53,14 @@
     padding: 4px;
 }
 
-.course-type{
+.course-type {
+    color: rgb(255, 255, 255);
+    background-color: hsl(190, 30%, 42%);
+    padding: 12px 24px;
+}
+.course-type h4{
     color: rgb(0, 0, 0);
-    background-color: hsl(192, 30%, 92%);
-    padding-left: 4px;
-    padding-right: 4px;
+    padding: 12px 24px;
 }
 
 .favorite-btn, .cart-btn {
