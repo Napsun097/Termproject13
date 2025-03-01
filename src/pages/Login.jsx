@@ -19,12 +19,16 @@ const Login = ({ setUser }) => {
 
       localStorage.setItem("token", data.jwt);
       localStorage.setItem("user", JSON.stringify(data.user));
-      localStorage.setItem("username", data.user.username);
       setUser(data.user);
 
-      navigate(data.user.roles?.includes("Admin") ? "/admin" : "/");
+      // ตรวจสอบ role ของ user
+      if (data.user?.roles?.some(role => role.name === "Admin")) {
+        navigate("/admin");
+      } else {
+        navigate("/");
+      }
     } catch (err) {
-      setError("ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง");
+      setError(err.message || "ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง");
     }
   };
 
@@ -32,7 +36,6 @@ const Login = ({ setUser }) => {
     <div className="login-container">
       <div className="login-form">
         <img className="logo-login-page" src={logo} alt="logo-web" />
-
         <form onSubmit={handleLogin}>
           <div className="input-group">
             <label htmlFor="username">Username:</label>
@@ -44,7 +47,6 @@ const Login = ({ setUser }) => {
               onChange={(e) => setUsername(e.target.value)}
               required
               autoComplete="username"
-              autoFocus
             />
           </div>
           <div className="input-group">
@@ -59,26 +61,15 @@ const Login = ({ setUser }) => {
               autoComplete="current-password"
             />
           </div>
-
-          {error && (
-            <p className="error-message text-red-500 mt-2" aria-live="polite">
-              {error}
-            </p>
-          )}
-
-          <div className="button-group mt-4 flex gap-3">
-            <button type="submit" className="login-btn">
-              เข้าสู่ระบบ
-            </button>
-
-            <button
-              type="button"
-              className="login-btn" // Updated class to match the "เข้าสู่ระบบ" button
-              onClick={() => navigate("/register")}
-            >
-              สมัครสมาชิก
-            </button>
-          </div>
+          {error && <p className="error-message">{error}</p>}
+          <button type="submit" className="login-btn">เข้าสู่ระบบ</button>
+          <button
+            type="button"
+            className="register-btn"
+            onClick={() => navigate("/register")}
+          >
+            สมัครสมาชิก
+          </button>
         </form>
       </div>
     </div>
