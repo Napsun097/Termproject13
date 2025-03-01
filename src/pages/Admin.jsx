@@ -556,6 +556,7 @@ const Admin = ({ user, setUser }) => {
                   const image = course.image;
                   const Hours = course.courseHours;
                   const shortDescription = course.shortDescription;
+                  const type = course.type;
 
                   // ✅ Extract large image URL
                   const imageUrl = course.image?.formats?.large?.url
@@ -582,7 +583,7 @@ const Admin = ({ user, setUser }) => {
                           <p className="short-describe">{shortDescription}</p>
                           <p className="course-hours-admin"> {Hours} ชั่วโมง</p>
                           <div className="type-course-admin">
-                            <p>premium</p>
+                            <p>{type || "no type"}</p>
                           </div>
                         </div>
                       </div>

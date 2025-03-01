@@ -181,7 +181,7 @@ const AdminDashboard = () => {
             }, {})
           ).sort((a, b) => b.count - a.count) // Sort by count in descending order
             .map((item) => {
-              const { title, image, Hours, shortDescription, price, count } = item;
+              const { title, image, Hours, shortDescription, price, type, count } = item;
 
               // ✅ Extract large image URL
               const imageUrl = item.image?.formats?.large?.url ||
@@ -209,7 +209,7 @@ const AdminDashboard = () => {
                       <p className="course-hours-admin"> ฿ {price} บาท</p>
                       <p className="course-hours-admin"> จำนวนการซื้อ: {count}</p>
                       <div className="type-course-admin">
-                        <p>premium</p>
+                        <p>{type || "no type"}</p>
                       </div>
                     </div>
                   </div>
