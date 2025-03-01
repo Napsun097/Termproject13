@@ -16,6 +16,7 @@ const AdminDashboard = () => {
   const [teacherId, setTeacherId] = useState(null);
   const [time, setTime] = useState(null);
   const [data, setData] = useState([]);
+  const [items, setItems] = useState([]);
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -45,7 +46,7 @@ const AdminDashboard = () => {
         setCourseCount(coursesResponse.data.data.length);
 
         // Fetch sold courses (orders)
-        const soldsResponse = await axios.get("http://localhost:1337/api/solds");
+        const soldsResponse = await axios.get("http://localhost:1337/api/solds?populate=image");
         const soldItems = soldsResponse.data.data;
         const groupedData = soldItems.reduce((acc, item) => {
           const time = new Date(item.createdAt).toLocaleDateString(); // Format time as date
@@ -60,10 +61,11 @@ const AdminDashboard = () => {
           name: time,
           value: groupedData[time]
         }));
-  
+
         setTotalRevenue(soldItems.reduce((total, item) => total + item.price, 0));
         setTime(soldItems[0]?.createdAt); // Store first item's time if available
         setData(formattedData);
+        setItems(soldItems);
 
         // Fetch total users (students)
         const usersResponse = await axios.get("http://localhost:1337/api/users?populate=*", { headers });
@@ -154,8 +156,8 @@ const AdminDashboard = () => {
               <ResponsiveContainer width="100%" height={300}>
                 <LineChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 10 }}>
                   <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="name" label={{ value: "Date", position: "insideBottom", offset: -5 }}/>
-                  <YAxis label={{ value: "Value (Baht)", angle: -90, position: "insideLeft" }}/>
+                  <XAxis dataKey="name" label={{ value: "Date", position: "insideBottom", offset: -5 }} />
+                  <YAxis label={{ value: "Value (Baht)", angle: -90, position: "insideLeft" }} />
                   <Tooltip />
                   <Legend />
                   <Line type="monotone" dataKey="value" stroke="#1890ff" strokeWidth={2} />
@@ -165,6 +167,60 @@ const AdminDashboard = () => {
           </Col>
         </Row>
       </div>
+      <h2>Sold Courses</h2>
+      <div className="course-list-admin">
+        {items.length > 0 ? (
+          Object.values(
+            items.reduce((acc, item) => {
+              if (acc[item.title]) {
+                acc[item.title].count += 1;
+              } else {
+                acc[item.title] = { ...item, count: 1 };
+              }
+              return acc;
+            }, {})
+          ).sort((a, b) => b.count - a.count) // Sort by count in descending order
+            .map((item) => {
+              const { title, image, Hours, shortDescription, price, count } = item;
+
+              // ✅ Extract large image URL
+              const imageUrl = item.image?.formats?.large?.url ||
+                item.image?.formats?.medium?.url ||
+                item.image?.formats?.small?.url ||
+                item.image?.url
+                ? `http://localhost:1337${item.image.url}`
+                : null;
+
+              return (
+                <div key={item.id} className="course-card-admin">
+                  {/* แถวบน: รูปภาพ + คำอธิบาย */}
+                  <div className="content-card">
+                    <div className="image-card">
+                      {imageUrl ? (
+                        <img src={imageUrl} alt={title} className="course-image-admin" />
+                      ) : (
+                        <p>No Image Available</p>
+                      )}
+                    </div>
+                    <div className="describe-card">
+                      <h3 className="head-text-card-admin">{title}</h3>
+                      <p className="short-describe">{shortDescription}</p>
+                      <p className="course-hours-admin"> {Hours} ชั่วโมง</p>
+                      <p className="course-hours-admin"> ฿ {price} บาท</p>
+                      <p className="course-hours-admin"> จำนวนการซื้อ: {count}</p>
+                      <div className="type-course-admin">
+                        <p>premium</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })
+        ) : (
+          <p>Loading courses...</p>
+        )}
+      </div>
+
     </div>
   );
 };
