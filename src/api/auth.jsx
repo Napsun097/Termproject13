@@ -1,10 +1,7 @@
 const API_URL = "http://localhost:1337/api";
 
 export const login = async (username, password) => {
-  const loginData = {
-    identifier: username,
-    password: password,
-  };
+  const loginData = { identifier: username, password: password };
 
   try {
     const response = await fetch(`${API_URL}/auth/local`, {
@@ -14,12 +11,9 @@ export const login = async (username, password) => {
     });
 
     const data = await response.json();
+    if (!response.ok) throw new Error(data.error?.message || "Login failed.");
 
-    if (!response.ok) {
-      throw new Error(data.error?.message || "Login failed.");
-    }
-
-    return data; 
+    return data; // return user + jwt
   } catch (error) {
     throw new Error(error.message);
   }
@@ -31,11 +25,7 @@ export const logout = () => {
 };
 
 export const register = async (username, email, password) => {
-  const registerData = {
-    username: username,
-    email: email,
-    password: password,
-  };
+  const registerData = { username, email, password };
 
   try {
     const response = await fetch(`${API_URL}/auth/local/register`, {
@@ -45,14 +35,14 @@ export const register = async (username, email, password) => {
     });
 
     const data = await response.json();
+    if (!response.ok) throw new Error(data.error?.message || "Registration failed.");
 
-    if (!response.ok) {
-      throw new Error(data.error?.message || "Registration failed.");
-    }
+    // เก็บ token หลังจากสมัครเสร็จ
+    localStorage.setItem("token", data.jwt);
+    localStorage.setItem("user", JSON.stringify(data.user));
 
     return data; 
   } catch (error) {
     throw new Error(error.message);
   }
 };
-
