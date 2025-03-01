@@ -423,6 +423,7 @@ export interface ApiCartCart extends Struct.CollectionTypeSchema {
         'A-LEVEL KOREA',
         'A-LEVEL BAHLI',
         'A-LEVEL ENGLISH',
+        'A-LEVEL SPAIN',
       ]
     >;
     title: Schema.Attribute.Text;
@@ -491,6 +492,7 @@ export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
         'A-LEVEL KOREA',
         'A-LEVEL BAHLI',
         'A-LEVEL ENGLISH',
+        'A-LEVEL SPAIN',
       ]
     >;
     title: Schema.Attribute.Text;
@@ -560,6 +562,7 @@ export interface ApiFavoriteFavorite extends Struct.CollectionTypeSchema {
         'A-LEVEL KOREA',
         'A-LEVEL BAHLI',
         'A-LEVEL ENGLISH',
+        'A-LEVEL SPAIN',
       ]
     >;
     title: Schema.Attribute.Text;
