@@ -1,45 +1,198 @@
+/* ปรับปรุงสไตล์เพิ่มเติมให้คลาสที่ยังไม่ได้ตกแต่ง */
+
+.cart-page {
+    padding: 20px;
+    width: 100%;
+    margin: 0 auto;
+    background-color: #f9f9f9;
+}
+
+.cart-head-text {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.cart-head {
+    font-size: 2.5rem;
+    color: #444;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+/* ปรับปรุงขนาดของรายการตะกร้า */
+.course-list-cart {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 80%;
+    justify-content: center;
+}
+
+.no-carts {
+    font-size: 1.5rem;
+    color: #888;
+    text-align: center;
+    padding: 20px;
+    font-style: italic;
+}
+
 .cart-container {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    width: 90%;
+    margin: 0 auto;
     gap: 20px;
-}
-
-.course-list {
-    flex: 3;
+    padding: 20px;
 }
 
 .cart-summary {
-    flex: 1;
-    background: #f8f8f8;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* ให้ปุ่มอยู่ด้านล่างเสมอ */
+    align-items: flex-end; /* จัดตำแหน่งทุกอย่างไปทางขวา */
+    width: 50%;
+    height: 320px;
     padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    text-align: center;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    text-align: right; /* ข้อความทั้งหมดจะอยู่ทางขวา */
+    border-left: 1px solid #ddd;
 }
 
-.cart-summary h2 {
-    margin-bottom: 15px;
-    font-size: 20px;
+.head-cart-summary {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 40px;
     color: #333;
+}
+
+.number-order {
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.cart-text-summary {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.cart-summary-footer {
+    margin-top: auto;
+    width: 100%; /* ให้ปุ่มเต็มพื้นที่ */
 }
 
 .payment-button {
     display: inline-block;
-    background-color: #4CAF50;
-    color: white;
-    padding: 12px 24px;
-    font-size: 16px;
-    border: none;
+    padding: 12px 30px;
+    background-color: #28a745;
+    color: #fff;
+    font-size: 1.2rem;
     border-radius: 5px;
     text-decoration: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
     text-align: center;
     width: 100%;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    font-weight: bold;
+    border: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .payment-button:hover {
-    background-color: #45a049;
+    background-color: #218838;
     transform: scale(1.05);
 }
+
+
+/* ปรับแต่ง card ของสินค้าในตะกร้าให้มีเงาเบา ๆ */
+.course-list-cart .cart-card {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive: เมื่อหน้าจอมีขนาดเล็กลง (max-width: 1024px) */
+@media (max-width: 1024px) {
+    .cart-container {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .course-list-cart {
+        width: 100%;
+        padding-right: 0;
+    }
+
+    .cart-summary {
+        width: 100%;
+        margin-top: 10px;
+        align-items: center;
+        text-align: center;
+    }
+}
+
+/* สำหรับหน้าจอขนาดเล็ก (max-width: 768px) */
+@media (max-width: 768px) {
+    .cart-page h1 {
+        font-size: 2rem;
+    }
+
+    .cart-summary h2 {
+        font-size: 1.5rem;
+    }
+
+    .cart-summary .cart-text-summary {
+        font-size: 1.2rem;
+    }
+
+    .payment-button {
+        padding: 10px 20px;
+        font-size: 1.1rem;
+    }
+}
+
+/* สำหรับหน้าจอขนาดเล็กมาก (max-width: 480px) */
+@media (max-width: 480px) {
+    .cart-page {
+        padding: 10px;
+    }
+
+    .cart-page h1 {
+        font-size: 1.8rem;
+    }
+
+    .cart-summary {
+        padding: 15px;
+        align-items: center;
+        text-align: center;
+    }
+
+    .cart-summary-footer {
+        width: 100%;
+    }
+
+    .payment-button {
+        padding: 8px 16px;
+        font-size: 1rem;
+    }
+
+    .cart-summary h2 {
+        font-size: 1.4rem;
+    }
+
+    .cart-summary .cart-text-summary {
+        font-size: 1.1rem;
+    }
+
+    .course-list-cart {
+        width: 100%;
+    }
+}
+
+
+

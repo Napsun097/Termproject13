@@ -38,10 +38,15 @@ const Cart = () => {
 
     return (
         <div className="cart-page">
-            <h1>Cart Courses</h1>
+            <div className="cart-head-text">
+                <h1 className="cart-head">Cart Courses</h1>
+            </div>
+
 
             <div className="cart-container">
-                <div className="course-list">
+
+                <div className="course-list-cart">
+
                     {carts.length > 0 ? (
                         carts.map(cart => (
                             <CartCard
@@ -58,12 +63,13 @@ const Cart = () => {
                 {/* Total price and payment button section */}
                 {carts.length > 0 && (
                     <div className="cart-summary">
-                        <h2>Total Price: {totalPrice.toFixed(2)} Baht</h2>
-                        <Link 
-                            to="/payment" 
-                            className="payment-button"
-                        >
-                            Proceed to Payment
+                        <h2 className="head-cart-summary">รายการชำระเงิน</h2>
+                        
+                        
+                        <p className="number-order">รายการทั้งหมด <strong>{carts.length}</strong> รายการ</p>
+                        <p className="cart-text-summary">รวมยอดสั่งซื้อ <strong> ฿ {totalPrice.toFixed(2)}</strong></p>
+                        <Link to="/payment" className="payment-button">
+                            ดำเนินการชำระเงิน
                         </Link>
                     </div>
                 )}

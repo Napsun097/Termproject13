@@ -1,21 +1,54 @@
-.cart-card-horizontal {
+.course-card-cart {
+    display: flex;             /* ใช้ Flexbox เพื่อจัดเรียงในแนวนอน */
+    align-items: center;       /* จัดตำแหน่งให้ทุกอย่างอยู่กลางแกน Y */
+    justify-content: flex-start; /* เรียงจากซ้ายไปขวา */
+    width: 100%;               /* ความกว้างเต็มพื้นที่ */
+    max-width: 800px;          /* กำหนดความกว้างสูงสุด */
+    padding: 15px;
+    border: 1px solid #ddd;    /* เส้นขอบ */
+    background-color: #fff;    /* สีพื้นหลัง */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);  /* เงา */
+    margin-bottom: 20px;       /* ระยะห่างระหว่างการ์ด */
+}
+
+.course-image-cart {
+    width: 30%;                /* ภาพจะใช้พื้นที่ 30% */
+    margin-right: 20px;        /* เพิ่มระยะห่างระหว่างภาพกับข้อมูล */
+}
+
+.course-details-cart {
+    width: 70%;                /* ข้อมูลจะใช้พื้นที่ 70% */
     display: flex;
+    flex-direction: column;    /* เรียงข้อมูลเป็นแนวตั้ง */
+}
+
+.course-title-cart {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.course-description-cart {
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.price-and-cart {
+    display: flex;
+    justify-content: space-between; /* จัดให้ราคาและปุ่มยกเลิกอยู่ข้างๆ กัน */
     align-items: center;
-    justify-content: space-between; /* Push content to the edges */
-    width: 100%; /* Ensure full width */
-    background-color: #f5f5f5;
-    padding: 10px;
-    border-radius: 5px;
 }
 
-.cart-details {
-    flex-grow: 1;
-}
-
-.remove-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: red;
+.course-price {
     font-size: 16px;
+    font-weight: bold;
+}
+
+.cancel-cart {
+    background-color: #f44336; /* สีแดง */
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
 }

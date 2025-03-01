@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FaHeart, FaRegHeart, FaShoppingCart, FaCartPlus } from "react-icons/fa";
-import "../style/coursecard.css";
+import "../style/cartcard.css";
 import axios from 'axios';
 import { Link } from "react-router-dom";
 
@@ -13,7 +13,7 @@ function CartCard({ cart, onRemoveCart }) {
         const FetchCartStatus = axios.get(`http://localhost:1337/api/carts/${cart.documentId}`)
         const FetchFavoriteStatus = axios.get(`http://localhost:1337/api/carts/${cart.documentId}?populate[course][populate]=*`)
 
-            Promise.all([FetchCartStatus, FetchFavoriteStatus])
+        Promise.all([FetchCartStatus, FetchFavoriteStatus])
             .then(([cartResponse, favoriteResponse]) => {
                 console.log("Cart Response:", cartResponse.data);
                 console.log("Favorite Response:", favoriteResponse.data);
@@ -32,22 +32,23 @@ function CartCard({ cart, onRemoveCart }) {
     }, [cart?.documentId]);
 
     function onCartClick() {
-            // Remove from favorites
-            axios.delete(`http://localhost:1337/api/carts/${cart.documentId}`)
-                .then(() => {
-                    console.log("Removed from carts:", cart.documentId);
-                    setIsInCart(false);
-                    onRemoveCart(cart.documentId); // Remove from UI
-                    window.location.reload();})
-                .catch(error => {
-                    console.error("Error removing from carts!", error);
-                });
+        // Remove from favorites
+        axios.delete(`http://localhost:1337/api/carts/${cart.documentId}`)
+            .then(() => {
+                console.log("Removed from carts:", cart.documentId);
+                setIsInCart(false);
+                onRemoveCart(cart.documentId); // Remove from UI
+                window.location.reload();
+            })
+            .catch(error => {
+                console.error("Error removing from carts!", error);
+            });
     }
 
     function onFavoriteClick() {
         const newFavoriteStatus = !isFavorite;
         setIsFavorite(newFavoriteStatus);
-    
+
         if (newFavoriteStatus) {
             // ✅ Extract correct data from cart.course
             const favoriteData = {
@@ -66,9 +67,9 @@ function CartCard({ cart, onRemoveCart }) {
                     }
                 }
             };
-    
+
             console.log("Sending data:", JSON.stringify(favoriteData, null, 2));
-    
+
             axios.post('http://localhost:1337/api/favorites', favoriteData)
                 .then(response => {
                     console.log('Course added to favorites:', response.data);
@@ -76,7 +77,7 @@ function CartCard({ cart, onRemoveCart }) {
                 .catch(error => {
                     console.error('There was an error adding the course to favorites!', error);
                 });
-    
+
         } else {
             // ✅ Fetch the favorite entry correctly
             axios.get(`http://localhost:1337/api/courses/${cart.course.documentId}?populate=favorite`)
@@ -109,46 +110,32 @@ function CartCard({ cart, onRemoveCart }) {
         : null;
 
     return (
-        <div className="course-card">
-            <Link to={`/course/${cart.documentId}`} className="course-link"> {/* ลิงก์ไปยังหน้ารายละเอียดคอร์ส */}
-                <div className="course-image">
-                    {imageUrl ? (
-                        <img src={imageUrl} alt={cart.title} />
-                    ) : (
-                        <p>No Image Available</p>
-                    )}
-                </div>
-            </Link>
+        <div className="course-card-cart">
+            <div className="course-image-cart">
+                {imageUrl ? (
+                    <img src={imageUrl} alt={cart.title} style={{ width: '100%', height: 'auto' }} />
+                ) : (
+                    <p>No Image Available</p>
+                )}
+            </div>
 
-            <div className="course-details">
-                <div className="type1">
+            <div className="course-details-cart">
+                <h3 className="course-title-cart">{cart.title}</h3>
+                <p className="course-description-cart">{cart.shortDescription}</p>
+
+                <div className="price-and-cart">
+                    <p className="course-price">฿ {cart.price}.00</p>
                     <button
-                        className={`favorite-btn ${isFavorite ? "active" : ""}`}
-                        onClick={onFavoriteClick}
+                        className="cancel-cart"
+                        onClick={onCartClick}
                     >
-                        {isFavorite ? <FaHeart className="heart-icon" /> : <FaRegHeart className="heart-icon" />}
+                        ยกเลิก
                     </button>
-                    <h4 className="course-type"> video course </h4>
-                </div>
-
-                <h3 className="course-title">{cart.title}</h3>
-                <p className="course-description">{cart.shortDescription}</p>
-
-                <div className="course-actions">
-                    <p className="course-hours"> ชั่วโมงเรียน: {cart.courseHours} ชั่วโมง</p>
-
-                    <div className="price-and-cart">
-                        <p className="course-price"> ราคา: {cart.price} บาท</p>
-                        <button
-                            className={`cart-btn in-cart`}
-                            onClick={onCartClick}
-                        >
-                            {<FaShoppingCart className="cart-icon" />}
-                        </button>
-                    </div>
                 </div>
             </div>
         </div>
+
+
     );
 }
 
