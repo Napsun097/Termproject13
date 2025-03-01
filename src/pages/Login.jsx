@@ -21,14 +21,13 @@ const Login = ({ setUser }) => {
       localStorage.setItem("user", JSON.stringify(data.user));
       setUser(data.user);
 
-      // ตรวจสอบ role ของ user
-      if (data.user?.roles?.some(role => role.name === "Admin")) {
+      if (data.user.roles && data.user.roles.includes("Admin")) {
         navigate("/admin");
       } else {
         navigate("/");
       }
     } catch (err) {
-      setError(err.message || "ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง");
+      setError("ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง");
     }
   };
 
@@ -38,7 +37,7 @@ const Login = ({ setUser }) => {
         <img className="logo-login-page" src={logo} alt="logo-web" />
         <form onSubmit={handleLogin}>
           <div className="input-group">
-            <label htmlFor="username">Username:</label>
+            <label htmlFor="username">username:</label>
             <input
               type="text"
               id="username"
@@ -50,7 +49,7 @@ const Login = ({ setUser }) => {
             />
           </div>
           <div className="input-group">
-            <label htmlFor="password">Password:</label>
+            <label htmlFor="password">password:</label>
             <input
               type="password"
               id="password"
@@ -63,6 +62,8 @@ const Login = ({ setUser }) => {
           </div>
           {error && <p className="error-message">{error}</p>}
           <button type="submit" className="login-btn">เข้าสู่ระบบ</button>
+
+          {/* ปุ่มสมัครสมาชิก */}
           <button
             type="button"
             className="register-btn"
@@ -70,6 +71,7 @@ const Login = ({ setUser }) => {
           >
             สมัครสมาชิก
           </button>
+
         </form>
       </div>
     </div>
