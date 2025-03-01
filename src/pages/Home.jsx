@@ -16,7 +16,7 @@ const CourseCarousel = ({ title, courses, userId }) => {
     <div className="course-category">
       <div className="head-card-home"><h2 >{title}</h2>
         <Link to="/" className="see-more">
-          เพิ่มเติม&nbsp;&nbsp;<ArrowRight />
+          ดูเพิ่มเติม&nbsp;&nbsp;<ArrowRight />
         </Link>
 
       </div>
@@ -24,13 +24,14 @@ const CourseCarousel = ({ title, courses, userId }) => {
       <Swiper
         modules={[Navigation, Pagination]}
         spaceBetween={20}
-        slidesPerView={3}
+        slidesPerView={4}  // เปลี่ยนค่าเริ่มต้นเป็น 4 คอร์ส
         navigation
         pagination={{ clickable: true }}
         breakpoints={{
-          640: { slidesPerView: 1 },
-          1024: { slidesPerView: 2 },
-          1280: { slidesPerView: 3 },
+          640: { slidesPerView: 1 },  // หน้าจอเล็กสุดแสดง 1 คอร์ส
+          1024: { slidesPerView: 2 }, // แท็บเล็ตแสดง 2 คอร์ส
+          1280: { slidesPerView: 3 }, // หน้าจอใหญ่ปานกลางแสดง 3 คอร์ส
+          1440: { slidesPerView: 4 }, // หน้าจอใหญ่แสดง 4 คอร์ส
         }}
       >
         {courses.map((course) => (
@@ -39,6 +40,7 @@ const CourseCarousel = ({ title, courses, userId }) => {
           </SwiperSlide>
         ))}
       </Swiper>
+
     </div>
   );
 };
@@ -65,7 +67,7 @@ function Home({ user }) {
     return (
       <div className="loading-container">
         <div className="spinner"></div>
-        <p>กำลังโหลด... ใจเย็นๆน่ะจ่ะ...</p>
+        <p>กำลังโหลด...</p>
       </div>
     );
   if (error) return <p>{error}</p>;
@@ -125,14 +127,15 @@ function Home({ user }) {
 
 
       <div className="head-course-home">
-          <h1>คอร์สเรียน</h1>
-        </div>
+        <h1>คอร์สเรียน</h1>
+      </div>
       <div className="course-container-home">
-        {premiumCourses.length > 0 && <CourseCarousel title="🔥 คอร์สเรียน Hot Selling" courses={premiumCourses} userId={userId} />}
+        {premiumCourses.length > 0 && <CourseCarousel title="🔥 คอร์สเรียน A-level / TGAT / TPAT สุดฮิต ไม่เรียนไม่ได้แล้ว!!!" courses={premiumCourses} userId={userId} />}
         {standardCourses.length > 0 && (
           <>
-            <CourseCarousel title="📚 คอร์สอื่นๆ" courses={standardCourses} userId={userId} />
-            <CourseCarousel title="🏃‍♂️ แพ็คคู่สุดคุ้ม" courses={standardCourses} userId={userId} />
+
+            <CourseCarousel title="😵‍💫 คอร์ส One Night Miracle เรียนคืนเดียว ไม่ได้ไรเลย" courses={standardCourses} userId={userId} />
+            <CourseCarousel title="📚 คอร์สสุดคุ้ม" courses={standardCourses} userId={userId} />
             <CourseCarousel title="📝 คอร์สเสริมตะลุยโจทย์" courses={standardCourses} userId={userId} />
             <CourseCarousel title="🎓 ทดลองเรียน พื้นฐาน" courses={standardCourses} userId={userId} />
           </>

@@ -103,7 +103,8 @@ function Navbar({ user, setUser }) {
 
 
         <div className="navbar-links">
-            <Link to="/" className="nav-link" onClick={closeNavbar}><p>HOME</p></Link>
+            <Link to="/" className="nav-link" onClick={closeNavbar}><p> หน้าแรก </p></Link>
+            <Link to="/allcourse" className="nav-link" onClick={closeNavbar}><p> คอร์สทั้งหมด </p></Link>
         </div>
           <div className="search-container">
             <form onSubmit={handleSearch} className="search-form">

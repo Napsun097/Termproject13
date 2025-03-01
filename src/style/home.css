@@ -22,7 +22,7 @@ a {
 /* ส่วนของหัวข้อ */
 .head-type-navlink-home {
   text-align: center; /* ให้อยู่กลาง */
-  font-size: 16px;
+  font-size: 20px;
   color: #333;
   font-weight: bold;
   margin-top: 40px;
@@ -31,7 +31,7 @@ a {
 
 .head-course-home {
   text-align: center; /* ให้อยู่กลาง */
-  font-size: 16px;
+  font-size: 20px;
   color: #333;
   font-weight: bold;
   margin-top: 80px;
@@ -175,7 +175,7 @@ a {
 }
 
 .head-promotion .text-welcome {
-  font-size: 2.2rem;
+  font-size: 2.6rem;
   color: #333;
   font-weight: bold;
 }
@@ -183,7 +183,7 @@ a {
 .head-promotion .text-welcome span {
   color: hsl(192, 30%, 40%);
   font-weight: bolder;
-  font-size: 2.2rem;
+  font-size: 2.6rem;
 }
 
 .head-promotion .text-welcome-sub {
@@ -206,6 +206,7 @@ a {
     justify-content: center; /* ปุ่มจะอยู่ตรงกลางแนวนอน */
     text-align: center;    /* ข้อความในปุ่มจะอยู่ตรงกลาง */
   }
+  
 }
 
 .head-promotion .about-page-go button {
@@ -274,7 +275,7 @@ a {
 }
 
 .swiper {
-  max-width: 90%;
+  max-width: 80%;
   margin: 0 auto;
   padding: 20px 0;
 }
@@ -300,7 +301,7 @@ a {
   width: 40px;
   height: 40px;
   border: 4px solid #ddd;
-  border-top: 4px solid #007bff;
+  border-top: 4px solid hsl(192, 30%, 12%);
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
@@ -360,11 +361,11 @@ a {
   }
 
   .head-promotion .text-welcome {
-    font-size: 1.5rem;
+    font-size: 2.4rem;
   }
 
   .head-promotion .text-welcome span {
-    font-size: 1.8rem;
+    font-size: 2.4rem;
   }
 
   .head-promotion .text-welcome-sub {
@@ -448,5 +449,8 @@ a {
       width: 80%;           /* ตั้งความกว้างของปุ่มให้เหมาะสม */
       margin: 0 auto;       /* จัดปุ่มให้อยู่ตรงกลาง */
       padding: 14px 28px;   /* เพิ่มขนาดปุ่ม */
+  }
+  .head-promotion .img-promotion {
+    display: none;  /* ซ่อนรูปเมื่อหน้าจอมีขนาดเล็ก */
   }
 }

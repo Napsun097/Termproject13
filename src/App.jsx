@@ -19,6 +19,7 @@ import EmptyCart from "./pages/EmptyCart";
 import axios from "axios";
 import Register from "./pages/Register"; // เพิ่มหน้า Register
 import Abouts from "./pages/About";
+import AllCourses from "./pages/AllCourse";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -69,6 +70,7 @@ function App() {
           <Route path="/admin" element={<Admin user={user} setUser={setUser} />} />
           <Route path="/register" element={<Register />} />
           <Route path="/about" element={<Abouts />} />
+          <Route path="/allcourse" element={<AllCourses />} />
         </Routes>
       </main>
 

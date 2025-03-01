@@ -165,14 +165,14 @@ const Admin = ({ user, setUser }) => {
 
   const handleAdd = async () => {
     console.log("Submitting formData:", { data: formData });
-  
+
     // Sanitize formData: Convert empty strings to null
     const sanitizedData = Object.fromEntries(
       Object.entries(formData).map(([key, value]) =>
         value === "" ? [key, null] : [key, value]
       )
     );
-  
+
     try {
       // Step 1: Add the course without an image
       const response = await axios.post(
@@ -184,17 +184,17 @@ const Admin = ({ user, setUser }) => {
           },
         }
       );
-  
-  
+
+
       console.log("Course added successfully:", response.data);
       const courseId = response.data.data.documentId; // Get the new course ID
-  
+
       // Step 2: Upload image and update course
       const imageId = await handleFileUploadAdd();
       if (imageId) {
         await updateAddFile(courseId, imageId);
       }
-  
+
       fetchCourses();
       setAddModalOpen(false);
     } catch (error) {
@@ -409,10 +409,10 @@ const Admin = ({ user, setUser }) => {
       alert("Please select a file to upload.");
       return null;
     }
-  
+
     const formDataUpload = new FormData();
     formDataUpload.append("files", selectedFile);
-  
+
     try {
       const response = await axios.post(
         "http://localhost:1337/api/upload",
@@ -424,7 +424,7 @@ const Admin = ({ user, setUser }) => {
           },
         }
       );
-  
+
       console.log("Image uploaded successfully:", response.data);
       return response.data[0].id; // Return uploaded image ID
     } catch (error) {
@@ -447,7 +447,7 @@ const Admin = ({ user, setUser }) => {
           },
         }
       );
-  
+
       console.log("Image added to new course successfully:", response.data);
     } catch (error) {
       console.error("Error updating new course with image:", error);
@@ -480,7 +480,7 @@ const Admin = ({ user, setUser }) => {
             User
           </li>
           <li className="back-home-btn" onClick={() => navigate("/")}>
-            กลับหน้าเว็บไซต์
+            หน้าเว็บไซต์
           </li>
         </ul>
 
@@ -542,9 +542,12 @@ const Admin = ({ user, setUser }) => {
         {activeTab === "course" && (
           <div>
             <h1 className="course-management-text">Course Management</h1>
-            <Button type="primary" size="large" onClick={handleAddClick}>
-              Add Course
-            </Button>
+            <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+              <Button type="primary" size="large" onClick={handleAddClick}>
+                เพิ่มรายการคอร์ส
+              </Button>
+            </div>
+
             <div className="course-list-admin">
               {courses.length > 0 ? (
                 courses.map((course) => {
@@ -738,6 +741,18 @@ const Admin = ({ user, setUser }) => {
           <Option value="A-LEVEL MATH1">A-LEVEL MATH1</Option>
           <Option value="A-LEVEL MATH2">A-LEVEL MATH2</Option>
           <Option value="A-LEVEL CHEMISTRY">A-LEVEL CHEMISTRY</Option>
+          <Option value="A-LEVEL BIOLOGY">A-LEVEL BIOLOGY</Option>
+          <Option value="A-LEVEL SOCIAL">A-LEVEL SOCIAL</Option>
+          <Option value="A-LEVEL SCIENCE">A-LEVEL SCIENCE</Option>
+          <Option value="A-LEVEL JAPAN">A-LEVEL JAPAN</Option>
+          <Option value="A-LEVEL THAI">A-LEVEL THAI</Option>
+          <Option value="A-LEVEL FRANCE">A-LEVEL FRANCE</Option>
+          <Option value="A-LEVEL GERMANY">A-LEVEL GERMANY</Option>
+          <Option value="A-LEVEL CHINESE">A-LEVEL CHINESE</Option>
+          <Option value="A-LEVEL KOREA">A-LEVEL KOREA</Option>
+          <Option value="A-LEVEL BALI">A-LEVEL BALI</Option>
+          <Option value="A-LEVEL ENGLISH">A-LEVEL ENGLISH</Option>
+
         </Select>
       </Modal>
       <Modal
@@ -747,18 +762,19 @@ const Admin = ({ user, setUser }) => {
         onCancel={() => setDeleteModalOpen(false)}
         okText="Yes, Delete"
         okType="danger"
-        cancelText="Cancel"
+        cancelText="ยกเลิก"
       >
         <p>Are you sure you want to delete this course?</p>
         <p>This will also delete related favorites and cart items.</p>
       </Modal>
       <Modal
-        title="Add Course"
+        title="+ เพิ่มรายการคอร์ส"
         open={addModalOpen}
         onOk={handleAdd}
         onCancel={() => setAddModalOpen(false)}
+        okText="ยืนยัน"
+        width={800}  // Set the width of the modal to 800px (you can change this value)
       >
-
         <label>Course Title</label>
         <Input
           placeholder="Course Title"
@@ -843,6 +859,7 @@ const Admin = ({ user, setUser }) => {
           rows={2}
           style={{ marginBottom: "10px" }}
         />
+
         <label>SubjectName</label>
         <Select
           placeholder="Select Subject"
@@ -862,8 +879,21 @@ const Admin = ({ user, setUser }) => {
           <Option value="A-LEVEL MATH1">A-LEVEL MATH1</Option>
           <Option value="A-LEVEL MATH2">A-LEVEL MATH2</Option>
           <Option value="A-LEVEL CHEMISTRY">A-LEVEL CHEMISTRY</Option>
+          <Option value="A-LEVEL BIOLOGY">A-LEVEL BIOLOGY</Option>
+          <Option value="A-LEVEL SOCIAL">A-LEVEL SOCIAL</Option>
+          <Option value="A-LEVEL SCIENCE">A-LEVEL SCIENCE</Option>
+          <Option value="A-LEVEL JAPAN">A-LEVEL JAPAN</Option>
+          <Option value="A-LEVEL THAI">A-LEVEL THAI</Option>
+          <Option value="A-LEVEL FRANCE">A-LEVEL FRANCE</Option>
+          <Option value="A-LEVEL GERMANY">A-LEVEL GERMANY</Option>
+          <Option value="A-LEVEL CHINESE">A-LEVEL CHINESE</Option>
+          <Option value="A-LEVEL KOREA">A-LEVEL KOREA</Option>
+          <Option value="A-LEVEL BALI">A-LEVEL BALI</Option>
+          <Option value="A-LEVEL ENGLISH">A-LEVEL ENGLISH</Option>
+
         </Select>
       </Modal>
+
     </div>
   );
 };
