@@ -110,7 +110,7 @@ function FavoriteCard({ favorite, onRemoveFavorite }) {
 
     return (
         <div className="course-card">
-            <Link to={`/course/${favorite.documentId}`} className="course-link"> {/* ลิงก์ไปยังหน้ารายละเอียดคอร์ส */}
+            <Link to={`/course/${favorite.course.documentId}`} className="course-link"> {/* ลิงก์ไปยังหน้ารายละเอียดคอร์ส */}
                 <div className="course-image">
                     {imageUrl ? (
                         <img src={imageUrl} alt={favorite.title} />

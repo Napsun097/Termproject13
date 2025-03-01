@@ -112,6 +112,14 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional shadow for a more polished look */
 }
 
+.watch-button.in-cart {
+    background-color: #e74c3c;  /* Red when in cart */
+}
+
+.watch-button.in-cart:hover {
+    background-color: #c0392b; /* Darker red */
+}
+
 
 /* Media Queries for Responsiveness */
 @media screen and (max-width: 768px) {
