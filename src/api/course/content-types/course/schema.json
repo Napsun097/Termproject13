@@ -104,12 +104,13 @@
       "type": "string"
     },
     "allVideo": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
       "allowedTypes": [
         "files",
         "videos"
-      ],
-      "type": "media",
-      "multiple": true
+      ]
     }
   }
 }

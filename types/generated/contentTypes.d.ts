@@ -412,6 +412,16 @@ export interface ApiCartCart extends Struct.CollectionTypeSchema {
         'A-LEVEL MATH1',
         'A-LEVEL MATH2',
         'A-LEVEL CHEMISTRY',
+        'A-LEVEL BIOLOGY',
+        'A-LEVEL SOCIAL',
+        'A-LEVEL SCIENCE',
+        'A-LEVEL JAPAN',
+        'A-LEVEL THAI',
+        'A-LEVEL FRANCE',
+        'A-LEVEL GERMANY',
+        'A-LEVEL CHINESE',
+        'A-LEVEL KOREA',
+        'A-LEVEL BAHLI',
       ]
     >;
     title: Schema.Attribute.Text;
@@ -537,6 +547,16 @@ export interface ApiFavoriteFavorite extends Struct.CollectionTypeSchema {
         'A-LEVEL MATH1',
         'A-LEVEL MATH2',
         'A-LEVEL CHEMISTRY',
+        'A-LEVEL BIOLOGY',
+        'A-LEVEL SOCIAL',
+        'A-LEVEL SCIENCE',
+        'A-LEVEL JAPAN',
+        'A-LEVEL THAI',
+        'A-LEVEL FRANCE',
+        'A-LEVEL GERMANY',
+        'A-LEVEL CHINESE',
+        'A-LEVEL KOREA',
+        'A-LEVEL BAHLI',
       ]
     >;
     title: Schema.Attribute.Text;
@@ -616,6 +636,16 @@ export interface ApiSoldSold extends Struct.CollectionTypeSchema {
         'A-LEVEL MATH1',
         'A-LEVEL MATH2',
         'A-LEVEL CHEMISTRY',
+        'A-LEVEL BIOLOGY',
+        'A-LEVEL SOCIAL',
+        'A-LEVEL SCIENCE',
+        'A-LEVEL JAPAN',
+        'A-LEVEL THAI',
+        'A-LEVEL FRANCE',
+        'A-LEVEL GERMANY',
+        'A-LEVEL CHINESE',
+        'A-LEVEL KOREA',
+        'A-LEVEL BAHLI',
       ]
     >;
     title: Schema.Attribute.Text;
@@ -629,6 +659,7 @@ export interface ApiSoldSold extends Struct.CollectionTypeSchema {
 export interface ApiTeacherTeacher extends Struct.CollectionTypeSchema {
   collectionName: 'teachers';
   info: {
+    description: '';
     displayName: 'Teacher';
     pluralName: 'teachers';
     singularName: 'teacher';
@@ -641,12 +672,14 @@ export interface ApiTeacherTeacher extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    lastname: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::teacher.teacher'
     > &
       Schema.Attribute.Private;
+    name: Schema.Attribute.Text;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
