@@ -35,7 +35,7 @@ const CourseCarousel = ({ title, courses, userId }) => {
       >
         {courses.map((course) => (
           <SwiperSlide key={course.id}>
-            <CourseCard course={course} userId={userId}/>
+            <CourseCard course={course} userId={userId} />
           </SwiperSlide>
         ))}
       </Swiper>
@@ -94,15 +94,47 @@ function Home({ user }) {
           <img src={picpromotion} alt="Promotion" />
         </div>
       </div>
+      <div className="type-area-home">
+        <div className="head-type-navlink-home">
+          <h1>ประเภทคอร์ส</h1>
+        </div>
+        <div className="type-course-container">
+          <div className="course-box">
+            <Link to="/tgat" className="nav-link-type-course">
+              <h1>TGAT</h1>
+              <p>Thai General Aptitude Test</p>
+              <p>วิชาความถนัดทั่วไป</p>
+            </Link>
+          </div>
+          <div className="course-box">
+            <Link to="/tpat" className="nav-link-type-course">
+              <h1>TPAT</h1>
+              <p>Thai Professional Aptitute Test</p>
+              <p>ข้อสอบวัดความถนัดทางวิชาชีพ</p>
+            </Link>
+          </div>
+          <div className="course-box">
+            <Link to="/a-level" className="nav-link-type-course">
+              <h1>A-level</h1>
+              <p>Applied Knowledge Level</p>
+              <p>ข้อสอบวัดความรู้พื้นฐานทางวิชาการ</p>
+            </Link>
+          </div>
+        </div>
+      </div>
 
+
+      <div className="head-course-home">
+          <h1>คอร์สเรียน</h1>
+        </div>
       <div className="course-container-home">
-        {premiumCourses.length > 0 && <CourseCarousel title="🔥 คอร์สเรียน Hot Selling" courses={premiumCourses} userId={userId}/>}
+        {premiumCourses.length > 0 && <CourseCarousel title="🔥 คอร์สเรียน Hot Selling" courses={premiumCourses} userId={userId} />}
         {standardCourses.length > 0 && (
           <>
-            <CourseCarousel title="📚 คอร์สอื่นๆ" courses={standardCourses} userId={userId}/>
-            <CourseCarousel title="🏃‍♂️ แพ็คคู่สุดคุ้ม" courses={standardCourses} userId={userId}/>
-            <CourseCarousel title="📝 คอร์สเสริมตะลุยโจทย์" courses={standardCourses} userId={userId}/>
-            <CourseCarousel title="🎓 ทดลองเรียน พื้นฐาน" courses={standardCourses} userId={userId}/>
+            <CourseCarousel title="📚 คอร์สอื่นๆ" courses={standardCourses} userId={userId} />
+            <CourseCarousel title="🏃‍♂️ แพ็คคู่สุดคุ้ม" courses={standardCourses} userId={userId} />
+            <CourseCarousel title="📝 คอร์สเสริมตะลุยโจทย์" courses={standardCourses} userId={userId} />
+            <CourseCarousel title="🎓 ทดลองเรียน พื้นฐาน" courses={standardCourses} userId={userId} />
           </>
         )}
       </div>

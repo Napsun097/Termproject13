@@ -2,12 +2,18 @@ import React, { useState, useEffect } from "react";
 import CourseCard from "../Components/CourseCard";
 import { fetchCoursesByCategory } from "../api/api";
 import "../style/tgat.css";
+import { Link } from "react-router-dom";
 
 function Tgat() {
   const [courses, setCourses] = useState([]);
   const [filteredCourses, setFilteredCourses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [activeLink, setActiveLink] = useState('TGAT'); // Default active link
+
+  const handleLinkClick = (link) => {
+    setActiveLink(link);
+  };
 
   useEffect(() => {
     async function getCourses() {
@@ -45,6 +51,29 @@ function Tgat() {
   return (
     <div className="tgat-page">
       <div className="sidebar-tgat-select">
+      <div className="link-tgat-tpat-alevel">
+      <Link
+        to="/tgat"
+        className={`nav-link ${activeLink === 'TGAT' ? 'active' : ''}`}
+        onClick={() => handleLinkClick('TGAT')}
+      >
+        TGAT
+      </Link>
+      <Link
+        to="/tpat"
+        className={`nav-link ${activeLink === 'TPAT' ? 'active' : ''}`}
+        onClick={() => handleLinkClick('TPAT')}
+      >
+        TPAT
+      </Link>
+      <Link
+        to="/a-level"
+        className={`nav-link ${activeLink === 'A-Level' ? 'active' : ''}`}
+        onClick={() => handleLinkClick('A-Level')}
+      >
+        A-Level
+      </Link>
+    </div>
         <h2>TGAT</h2>
         <select className="dropdown" onChange={handleDropdownChange}>
           <option value="all">ทุกวิชา</option>

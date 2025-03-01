@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import CourseCard from "../Components/CourseCard";
 import { fetchCoursesByCategory } from "../api/api";
 import "../style/tgat.css";
+import { Link } from "react-router-dom";
 
 function Alevel() {
   const [courses, setCourses] = useState([]);
@@ -9,6 +10,11 @@ function Alevel() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [activeLink, setActiveLink] = useState('A-Level'); // Default active link
+
+  const handleLinkClick = (link) => {
+    setActiveLink(link);
+  };
 
   useEffect(() => {
     async function getCourses() {
@@ -54,6 +60,29 @@ function Alevel() {
   return (
     <div className="tgat-page">
       <div className="sidebar-tgat-select">
+      <div className="link-tgat-tpat-alevel">
+      <Link
+        to="/tgat"
+        className={`nav-link ${activeLink === 'TGAT' ? 'active' : ''}`}
+        onClick={() => handleLinkClick('TGAT')}
+      >
+        TGAT
+      </Link>
+      <Link
+        to="/tpat"
+        className={`nav-link ${activeLink === 'TPAT' ? 'active' : ''}`}
+        onClick={() => handleLinkClick('TPAT')}
+      >
+        TPAT
+      </Link>
+      <Link
+        to="/a-level"
+        className={`nav-link ${activeLink === 'A-Level' ? 'active' : ''}`}
+        onClick={() => handleLinkClick('A-Level')}
+      >
+        A-Level
+      </Link>
+    </div>
         <h2> A-Level </h2>
         <select className="dropdown" onChange={handleDropdownChange}>
           <option value="all">ทุกวิชา</option>
@@ -64,14 +93,16 @@ function Alevel() {
           ))}
         </select>
       </div>
+
       <div className="course-list-tgat">
+
         {filteredCourses.length > 0 ? (
           filteredCourses.map((course) => <CourseCard key={course.id} course={course} />)
         ) : (
           <div className="no-course">
             <p>ไม่พบรายวิชา</p>
           </div>
-          
+
         )}
       </div>
     </div>

@@ -19,6 +19,135 @@ a {
   margin: 0 auto;
 }
 
+/* ส่วนของหัวข้อ */
+.head-type-navlink-home {
+  text-align: center; /* ให้อยู่กลาง */
+  font-size: 16px;
+  color: #333;
+  font-weight: bold;
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+.head-course-home {
+  text-align: center; /* ให้อยู่กลาง */
+  font-size: 16px;
+  color: #333;
+  font-weight: bold;
+  margin-top: 80px;
+  margin-bottom: 40px;
+}
+
+/* จัดเรียงกล่องให้เป็นแนวนอนและอยู่ตรงกลาง */
+.type-course-container {
+  display: flex;
+  justify-content: center;  /* จัดให้อยู่ตรงกลางแนวนอน */
+  align-items: center;      /* จัดให้อยู่ตรงกลางแนวตั้ง */
+  gap: 40px;                /* ระยะห่างระหว่างกล่อง */
+  height: auto;             /* ความสูงของ container ยืดหยุ่น */
+  width: 100%;              /* ให้กล่องอยู่ภายในพื้นที่เต็ม */
+  flex-wrap: wrap;          /* อนุญาตให้กล่องห่อไปยังบรรทัดถัดไป */
+}
+
+/* สไตล์สำหรับกล่อง */
+.course-box {
+  width: 280px;
+  height: 200px;
+  background: #e7e7e7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+/* ลิงก์ในกล่อง */
+.nav-link-type-course {
+  text-decoration: none;
+  color: rgb(0, 0, 0);
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center; /* ทำให้ข้อความในลิงก์อยู่ตรงกลาง */
+}
+
+.nav-link-type-course p{
+  font-size: 12px;
+  color: #333;
+}
+
+/* Effect เมื่อ hover */
+.course-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Media Queries สำหรับอุปกรณ์ขนาดเล็ก (max-width: 480px) */
+@media only screen and (max-width: 480px) {
+  .head-type-navlink-home, .head-course-navlink-home {
+    font-size: 14px; /* ลดขนาดฟอนต์ */
+    margin-top: 20px;
+  }
+  .type-course-container {
+    flex-direction: column; /* จัดเรียงกล่องในแนวตั้ง */
+    gap: 20px;               /* ระยะห่างระหว่างกล่องในแนวตั้ง */
+    height: auto;            /* ความสูงของ container เป็นอัตโนมัติ */
+  }
+  .course-box {
+    width: 90%;  /* ลดขนาดกล่องให้พอดีกับหน้าจอ */
+    height: 150px; /* ลดขนาดความสูงของกล่อง */
+  }
+}
+
+/* Media Queries สำหรับอุปกรณ์ที่มีขนาดหน้าจอปานกลาง (max-width: 768px) */
+@media only screen and (max-width: 768px) {
+  .head-type-navlink-home, .head-course-navlink-home {
+    font-size: 16px;
+    margin-top: 30px;
+  }
+  .type-course-container {
+    flex-direction: column; /* จัดเรียงกล่องในแนวตั้ง */
+    gap: 30px; /* ระยะห่างระหว่างกล่อง */
+    height: auto;
+  }
+  .course-box {
+    width: 80%; /* ลดขนาดกล่อง */
+    height: 180px; /* ลดขนาดความสูงของกล่อง */
+  }
+}
+
+/* Media Queries สำหรับ iPad Pro และหน้าจอขนาดใหญ่ (max-width: 1024px) */
+@media only screen and (max-width: 1024px) {
+  .head-type-navlink-home, .head-course-navlink-home {
+    font-size: 18px;
+    margin-top: 35px;
+  }
+  .type-course-container {
+    flex-direction: row; /* กลับมาเรียงกล่องในแนวนอน */
+    gap: 40px; /* ระยะห่างระหว่างกล่อง */
+  }
+  .course-box {
+    width: 260px; /* ลดขนาดกล่อง */
+    height: 200px; /* เพิ่มขนาดความสูงของกล่อง */
+  }
+}
+
+/* Media Queries สำหรับหน้าจอขนาดใหญ่มาก (min-width: 1200px) */
+@media only screen and (min-width: 1200px) {
+  .head-type-navlink-home, .head-course-navlink-home {
+    font-size: 20px;
+  }
+  .type-course-container {
+    flex-direction: row; /* จัดเรียงกล่องในแนวนอน */
+    gap: 50px; /* ระยะห่างระหว่างกล่อง */
+  }
+  .course-box {
+    width: 300px; /* เพิ่มขนาดกล่อง */
+    height: 220px; /* เพิ่มขนาดความสูงของกล่อง */
+  }
+}
+
+
 /* Promotion Section */
 .head-promotion {
   display: flex;
@@ -60,6 +189,23 @@ a {
 .head-promotion .text-welcome-sub {
   color: #727272;
   font-size: 1.1rem;
+}
+
+/* ให้ปุ่ม .about-page-go อยู่ตรงกลาง */
+.head-promotion .about-page-go {
+  display: flex;
+  justify-content: left;  /* จัดให้ปุ่มอยู่ตรงกลางแนวนอน */
+  align-items: center;      /* จัดให้ปุ่มอยู่ตรงกลางแนวตั้ง */
+  margin-top: 20px;         /* เพิ่มระยะห่างจากด้านบน */
+}
+
+/* Media Queries สำหรับหน้าจอขนาดเล็ก (max-width: 768px) */
+@media (max-width: 768px) {
+  .head-promotion .about-page-go {
+    width: 100%;          /* ให้ปุ่มมีความกว้างเต็มพื้นที่ */
+    justify-content: center; /* ปุ่มจะอยู่ตรงกลางแนวนอน */
+    text-align: center;    /* ข้อความในปุ่มจะอยู่ตรงกลาง */
+  }
 }
 
 .head-promotion .about-page-go button {
@@ -278,5 +424,29 @@ a {
 
   .swiper {
     padding: 10px;
+  }
+}
+
+
+/* Media Queries สำหรับหน้าจอขนาดเล็ก */
+@media (max-width: 768px) {
+  .head-promotion .img-promotion {
+    display: none;  /* ซ่อนรูปเมื่อหน้าจอมีขนาดเล็ก */
+  }
+
+  .head-promotion .about-page-go {
+    width: 100%;          /* ให้ปุ่มมีความกว้างเต็มพื้นที่ */
+    justify-content: center; /* ปุ่มจะอยู่ตรงกลางแนวนอน */
+    text-align: center;    /* ข้อความในปุ่มจะอยู่ตรงกลาง */
+  }
+}
+
+
+/* Media Queries สำหรับหน้าจอที่มีขนาด 770px ถึง 1024px */
+@media (min-width: 770px) and (max-width: 1024px) {
+  .head-promotion .about-page-go {
+      width: 80%;           /* ตั้งความกว้างของปุ่มให้เหมาะสม */
+      margin: 0 auto;       /* จัดปุ่มให้อยู่ตรงกลาง */
+      padding: 14px 28px;   /* เพิ่มขนาดปุ่ม */
   }
 }

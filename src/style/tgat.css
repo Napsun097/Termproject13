@@ -92,3 +92,39 @@
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   }
 }
+
+
+
+
+/* Styling for the link container */
+.link-tgat-tpat-alevel {
+  padding: 12px;
+  border-bottom: 1px solid #bdbdbd;
+  margin-bottom: 12px;
+  display: flex;
+  gap: 10px; /* Optional: Space between the links */
+}
+
+/* Default link styles */
+.nav-link {
+  font-size: 1rem;
+  color: #333;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 8px 12px;
+  transition: color 0.3s ease, background-color 0.3s ease;
+  border-radius: 5px; /* Optional: rounded corners */
+}
+
+/* Active link styles */
+.nav-link.active {
+  color: white;
+  background-color: hsl(192, 30%, 50%); /* Active color */
+  border-radius: 8px; /* Optional: rounded corners for active state */
+}
+
+/* Hover effect for inactive links */
+.nav-link:hover {
+  color: hsl(192, 30%, 50%); /* Hover text color */
+  background-color: #f0f0f0; /* Hover background */
+}

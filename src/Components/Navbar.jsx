@@ -93,18 +93,18 @@ function Navbar({ user, setUser }) {
           <Link to="/" onClick={closeNavbar}>
             <img src={logo} alt="Website Logo" className="logo-img" />
           </Link>
+          
+          
         </div>
+        
 
         <div className={`navbar-content ${isNavbarOpen ? "active" : ""}`}>
-          <div className="navbar-links">
-            <Link to="/" className="nav-link" onClick={closeNavbar}>หน้าแรก</Link>
-            <Link to="/tgat" className="nav-link" onClick={closeNavbar}>TGAT</Link>
-            <Link to="/tpat" className="nav-link" onClick={closeNavbar}>TPAT</Link>
-            <Link to="/a-level" className="nav-link" onClick={closeNavbar}>A-level</Link>
-          </div>
+          
 
 
-
+        <div className="navbar-links">
+            <Link to="/" className="nav-link" onClick={closeNavbar}><p>HOME</p></Link>
+        </div>
           <div className="search-container">
             <form onSubmit={handleSearch} className="search-form">
               <div className="search-box">
@@ -121,6 +121,7 @@ function Navbar({ user, setUser }) {
               </div>
             </form>
           </div>
+          
 
 
 
