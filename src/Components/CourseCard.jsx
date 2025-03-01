@@ -146,9 +146,12 @@ function CourseCard({ course }) {
 
     }
     // ตรวจสอบว่ามีค่า `image` หรือไม่ก่อนแสดงผล
-    const imageUrl = course.image
-        ? `http://localhost:1337${course.image.formats.large.url}`
-        : null;
+    const imageUrl = course.image?.formats?.large?.url ||
+                 course.image?.formats?.medium?.url ||
+                 course.image?.formats?.small?.url ||
+                 course.image?.url
+                 ? `http://localhost:1337${course.image.url}`
+                 : null;
 
     return (
         <div className="course-card">
