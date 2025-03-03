@@ -91,3 +91,28 @@ input {
       display: none; /* ซ่อนรูปภาพเมื่อหน้าจอมีขนาดเล็กกว่า 768px */
   }
 }
+
+
+
+
+.register-area {
+  margin-top: 40px;
+  display: flex;
+  align-items: center; /* จัดให้อยู่ตรงกลางแนวตั้ง */
+  gap: 10px; /* ระยะห่างระหว่างข้อความกับปุ่ม */
+  font-size: 18px;
+  margin-left: 20px;
+}
+
+.register-text {
+  margin: 0; /* ลบ margin ที่อาจทำให้เกิดการเว้นระยะ */
+}
+
+.register-btn {
+  padding: 8px 16px;
+  border: none;
+  background-color: hsl(190, 30%, 42%);
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+}

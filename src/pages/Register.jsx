@@ -126,11 +126,7 @@ const Register = () => {
                     <button type="submit" className="login-btn" disabled={loading}>
                         {loading ? "กำลังสมัครสมาชิก..." : "สมัครสมาชิก"}
                     </button>
-
-                    {/* ✅ ปุ่ม Facebook Login */}
-                    <button type="button" className="facebook-btn" onClick={handleFacebookLogin}>
-                        🔵 เข้าสู่ระบบด้วย Facebook
-                    </button>
+                        {/* facebook button */}
                 </form>
             </div>
         </div>
