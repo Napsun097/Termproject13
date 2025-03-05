@@ -5,6 +5,7 @@ import axios from "axios";
 import { Button, Card, Row, Col } from "antd";
 import { Input } from "antd";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import config from "../config";
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
@@ -42,11 +43,11 @@ const AdminDashboard = () => {
           Authorization: `Bearer ${token}`,
         };
         // Fetch total courses
-        const coursesResponse = await axios.get("http://localhost:1337/api/courses");
+        const coursesResponse = await axios.get(`${config.serverUrlPrefix}/courses`);
         setCourseCount(coursesResponse.data.data.length);
 
         // Fetch sold courses (orders)
-        const soldsResponse = await axios.get("http://localhost:1337/api/solds?populate=image");
+        const soldsResponse = await axios.get(`${config.serverUrlPrefix}/solds?populate=image`);
         const soldItems = soldsResponse.data.data;
         const groupedData = soldItems.reduce((acc, item) => {
           const time = new Date(item.createdAt).toLocaleDateString(); // Format time as date
@@ -68,12 +69,12 @@ const AdminDashboard = () => {
         setItems(soldItems);
 
         // Fetch total users (students)
-        const usersResponse = await axios.get("http://localhost:1337/api/users?populate=*", { headers });
+        const usersResponse = await axios.get(`${config.serverUrlPrefix}/users?populate=*`, { headers });
         const allUsers = usersResponse.data;
         const userRoleUsers = allUsers.filter(user => user.roles && user.roles === "User");
         setStudentCount(userRoleUsers.length);
 
-        const teachersResponse = await axios.get("http://localhost:1337/api/teachers", { headers });
+        const teachersResponse = await axios.get(`${config.serverUrlPrefix}/teachers`, { headers });
         if (teachersResponse.data.data.length > 0) {
           const teacherData = teachersResponse.data.data[0]; // Assuming there's only one teacher record
           setTeacherId(teacherData.documentId);
@@ -105,7 +106,7 @@ const AdminDashboard = () => {
       const headers = {
         Authorization: `Bearer ${token}`,
       };
-      await axios.put(`http://localhost:1337/api/teachers/${teacherId}`, {
+      await axios.put(`${config.serverUrlPrefix}/teachers/${teacherId}`, {
         data: {
           count: newTeacherCount
         }
@@ -188,7 +189,7 @@ const AdminDashboard = () => {
                 item.image?.formats?.medium?.url ||
                 item.image?.formats?.small?.url ||
                 item.image?.url
-                ? `http://localhost:1337${item.image.url}`
+                ? `${config.serverUrl}${item.image.url}`
                 : null;
 
               return (

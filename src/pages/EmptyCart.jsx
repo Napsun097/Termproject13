@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "../style/emptycart.css";
+import config from "../config"
 
 const EmptyCart = () => {
     return (

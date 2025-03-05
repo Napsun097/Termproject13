@@ -3,6 +3,7 @@ import { FaHeart, FaRegHeart, FaShoppingCart, FaCartPlus, FaClock, FaBook } from
 import { Link } from 'react-router-dom'; // นำเข้า Link จาก react-router-dom
 import axios from 'axios';
 import "../style/coursecard.css";
+import config from "../config"
 
 
 function CourseCard({ course }) {
@@ -23,7 +24,7 @@ function CourseCard({ course }) {
         localStorage.setItem(`favorite-${course.id}`, !isFavorite);
     }*/
         // Fetch favorite status from the database
-        axios.get(`http://localhost:1337/api/courses/${course.documentId}?populate=*`)
+        axios.get(`${config.serverUrlPrefix}/courses/${course.documentId}?populate=*`)
             .then(response => {
                 console.log("API Response:", response.data);
                 console.log("fav response:", response.data.data.favorite);
@@ -63,7 +64,7 @@ function CourseCard({ course }) {
             };
             console.log("Sending data:", JSON.stringify(favoriteData, null, 2));
             if (newFavoriteStatus) {
-                axios.post('http://localhost:1337/api/favorites', favoriteData)
+                axios.post(`${config.serverUrlPrefix}/favorites`, favoriteData)
                     .then(response => {
                         console.log('Course added to favorites:', response.data);
                         window.location.reload();})
@@ -72,11 +73,11 @@ function CourseCard({ course }) {
                     });
             }
         } else {
-            axios.get(`http://localhost:1337/api/courses/${course.documentId}?populate=favorite`)
+            axios.get(`${config.serverUrlPrefix}/courses/${course.documentId}?populate=favorite`)
             .then(response => {
                 const favoriteId = response.data.data.favorite.documentId;
                 if (favoriteId) {
-                    axios.delete(`http://localhost:1337/api/favorites/${favoriteId}`)
+                    axios.delete(`${config.serverUrlPrefix}/favorites/${favoriteId}`)
                         .then(() => {
                             console.log("Course removed from favorites");
                             window.location.reload();})
@@ -116,7 +117,7 @@ function CourseCard({ course }) {
             };
             console.log("Sending data:", JSON.stringify(cartData, null, 2));
             if (newCartStatus) {
-                axios.post('http://localhost:1337/api/carts', cartData)
+                axios.post(`${config.serverUrlPrefix}/carts`, cartData)
                     .then(response => {
                         console.log('Course added to carts:', response.data);
                         window.location.reload();})
@@ -125,11 +126,11 @@ function CourseCard({ course }) {
                     });
             }
         } else {
-            axios.get(`http://localhost:1337/api/courses/${course.documentId}?populate=cart`)
+            axios.get(`${config.serverUrlPrefix}/courses/${course.documentId}?populate=cart`)
             .then(response => {
                 const cartId = response.data.data.cart.documentId;
                 if (cartId) {
-                    axios.delete(`http://localhost:1337/api/carts/${cartId}`)
+                    axios.delete(`${config.serverUrlPrefix}/carts/${cartId}`)
                         .then(() => {
                             console.log("Course removed from carts");
                             window.location.reload();})
@@ -150,7 +151,7 @@ function CourseCard({ course }) {
                  course.image?.formats?.medium?.url ||
                  course.image?.formats?.small?.url ||
                  course.image?.url
-                 ? `http://localhost:1337${course.image.url}`
+                 ? `${config.serverUrl}${course.image.url}`
                  : null;
 
     return (

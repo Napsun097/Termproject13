@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import CourseCard from "../Components/CourseCard";
 import "../style/searchresult.css";
+import config from "../config";
 
 function SearchResults() {
   const query = new URLSearchParams(useLocation().search).get("query") || "";
@@ -13,7 +14,7 @@ function SearchResults() {
     async function fetchCourses() {
       setLoading(true);
       try {
-        const response = await fetch("http://localhost:1337/api/courses?populate=*");
+        const response = await fetch(`${config.serverUrlPrefix}/courses?populate=*`);
         const data = await response.json();
         setCourses(data.data || []);
       } catch (error) {

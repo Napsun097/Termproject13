@@ -4,6 +4,7 @@ import logo from "../assets/images/logo.png";
 import "../style/navbar.css";
 import { FaShoppingCart, FaHeart } from "react-icons/fa";
 import axios from 'axios';
+import config from "../config"
 
 function Navbar({ user, setUser }) {
   const [searchTerm, setSearchTerm] = useState("");
@@ -22,7 +23,7 @@ function Navbar({ user, setUser }) {
   useEffect(() => {
     const fetchCartItems = async () => {
       try {
-        const response = await axios.get("http://localhost:1337/api/carts");
+        const response = await axios.get(`${config.serverUrlPrefix}/carts`);
         console.log("Cart Items:", response.data);
         setCartItems(response.data.data || []); // Ensure it's an array
       } catch (error) {
@@ -72,7 +73,7 @@ function Navbar({ user, setUser }) {
 
   const handlePaymentClick = async (e) => {
     try {
-      const response = await axios.get("http://localhost:1337/api/carts");
+      const response = await axios.get(`${config.serverUrlPrefix}/carts`);
       console.log("Cart Items:", response.data);
 
       if (response.data.data.length === 0) {

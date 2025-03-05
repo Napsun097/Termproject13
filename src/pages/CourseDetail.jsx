@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { FaClock, FaBook } from "react-icons/fa";
 import axios from 'axios';
 import "../style/Detail.css";
+import config from "../config"
 
 function CourseDetail() {
     const { id } = useParams();  // Get the course ID from the URL
@@ -13,14 +14,14 @@ function CourseDetail() {
     const [cartId, setCartId] = useState(null);
 
     useEffect(() => {
-        axios.get(`http://localhost:1337/api/courses/${id}?populate=videoExample&populate=cart`) // Populate video1
+        axios.get(`${config.serverUrlPrefix}/courses/${id}?populate=videoExample&populate=cart`) // Populate video1
             .then(response => {
                 const courseData = response.data.data;
                 setCourse(courseData);
 
                 // Check if video1 exists
                 if (courseData.videoExample) {
-                    const videoExampleUrl = `http://localhost:1337${courseData.videoExample.url}`; // Construct URL for the video
+                    const videoExampleUrl = `${config.serverUrl}${courseData.videoExample.url}`; // Construct URL for the video
                     setExampleVideo(videoExampleUrl);
                 }
                 if (courseData.cart?.documentId) {
@@ -37,7 +38,7 @@ function CourseDetail() {
     function onCartClick() {
         if (cartId) {
             // 🗑️ Remove from cart
-            axios.delete(`http://localhost:1337/api/carts/${cartId}`)
+            axios.delete(`${config.serverUrlPrefix}/carts/${cartId}`)
                 .then(() => {
                     console.log("Course removed from cart");
                     setCartId(null);  // Update state to reflect removal
@@ -65,7 +66,7 @@ function CourseDetail() {
             };
             console.log("Sending data:", JSON.stringify(cartData, null, 2));
 
-            axios.post('http://localhost:1337/api/carts', cartData)
+            axios.post(`${config.serverUrlPrefix}/carts`, cartData)
                 .then(response => {
                     console.log('Course added to carts:', response.data);
                     setCartId(response.data.data.documentId);

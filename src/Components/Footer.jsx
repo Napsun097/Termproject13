@@ -1,5 +1,6 @@
 import React from "react";
 import "../style/Footer.css";
+import config from "../config"
 
 function Footer() {
   return (

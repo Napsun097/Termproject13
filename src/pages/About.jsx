@@ -1,5 +1,6 @@
 import React from 'react';
 import "../style/about.css";
+import config from "../config"
 
 const Abouts = () => {
   return (

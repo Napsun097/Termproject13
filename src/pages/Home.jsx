@@ -10,6 +10,7 @@ import "../style/home.css";
 import picpromotion from "../assets/images/promotion.webp";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
+import config from "../config"
 
 const CourseCarousel = ({ title, courses, userId }) => {
   return (

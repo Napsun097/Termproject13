@@ -3,6 +3,7 @@ import CourseCard from "../Components/CourseCard";
 import { fetchCoursesByCategory } from "../api/api";
 import "../style/tgat.css";
 import { Link } from "react-router-dom";
+import config from "../config"
 
 function Alevel() {
   const [courses, setCourses] = useState([]);

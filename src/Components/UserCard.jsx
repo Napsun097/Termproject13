@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import "../style/admin.css";
 import { Button, message } from "antd";
+import config from "../config"
 
 const UserCard = ({ user, onUserDeleted }) => {
   if (!user) return <p>No user selected</p>;
@@ -12,7 +13,7 @@ const UserCard = ({ user, onUserDeleted }) => {
     try {
       console.log("🗑️ Attempting to delete user:", user.id);
   
-      const response = await axios.delete(`http://localhost:1337/api/users/${user.id}`, {
+      const response = await axios.delete(`${config.serverUrlPrefix}/users/${user.id}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
   

@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import logo from "../assets/images/logo.png";
 import { Link } from "react-router-dom";
 import AdminDashboard from "../Components/AdminDashboard"; // หรือที่คุณเก็บไฟล์ Dashboard
+import config from "../config"
 
 
 const { confirm } = Modal;
@@ -60,7 +61,7 @@ const Admin = ({ user, setUser }) => {
 
   const fetchCourses = () => {
     axios
-      .get("http://localhost:1337/api/courses?populate=image")
+      .get(`${config.serverUrlPrefix}/courses?populate=image`)
       .then((response) => {
         console.log("Courses fetched after update:", response.data);
         if (response.data && response.data.data) {
@@ -84,7 +85,7 @@ const Admin = ({ user, setUser }) => {
 
   const fetchUsers = async () => {
     try {
-      const response = await axios.get("http://localhost:1337/api/users", {
+      const response = await axios.get(`${config.serverUrlPrefix}/users`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
 
@@ -176,7 +177,7 @@ const Admin = ({ user, setUser }) => {
     try {
       // Step 1: Add the course without an image
       const response = await axios.post(
-        "http://localhost:1337/api/courses",
+        `${config.serverUrlPrefix}/courses`,
         { data: sanitizedData }, // Use sanitized data
         {
           headers: {
@@ -228,7 +229,7 @@ const Admin = ({ user, setUser }) => {
 
       // 1️⃣ Update Course
       await axios.put(
-        `http://localhost:1337/api/courses/${editingCourse.documentId}`,
+        `${config.serverUrlPrefix}/courses/${editingCourse.documentId}`,
         updatedData,
         {
           headers: {
@@ -239,7 +240,7 @@ const Admin = ({ user, setUser }) => {
 
       // 2️⃣ Find Related `favorites` & `cart` Items
       const favoriteRes = await axios.get(
-        `http://localhost:1337/api/favorites?filters[course][documentId]=${editingCourse.documentId}`,
+        `${config.serverUrlPrefix}/favorites?filters[course][documentId]=${editingCourse.documentId}`,
         {
           headers: {
             Authorization: `Bearer ${authToken}`,
@@ -248,7 +249,7 @@ const Admin = ({ user, setUser }) => {
       );
 
       const cartRes = await axios.get(
-        `http://localhost:1337/api/carts?filters[course][documentId]=${editingCourse.documentId}`,
+        `${config.serverUrlPrefix}/carts?filters[course][documentId]=${editingCourse.documentId}`,
         {
           headers: {
             Authorization: `Bearer ${authToken}`,
@@ -263,7 +264,7 @@ const Admin = ({ user, setUser }) => {
       await Promise.all(
         favoriteItems.map((fav) =>
           axios.put(
-            `http://localhost:1337/api/favorites/${fav.documentId}`,
+            `${config.serverUrlPrefix}/favorites/${fav.documentId}`,
             { data: updatedData.data },
             {
               headers: { Authorization: `Bearer ${authToken}` },
@@ -276,7 +277,7 @@ const Admin = ({ user, setUser }) => {
       await Promise.all(
         cartItems.map((cart) =>
           axios.put(
-            `http://localhost:1337/api/carts/${cart.documentId}`,
+            `${config.serverUrlPrefix}/carts/${cart.documentId}`,
             { data: updatedData.data },
             {
               headers: { Authorization: `Bearer ${authToken}` },
@@ -308,13 +309,13 @@ const Admin = ({ user, setUser }) => {
 
       // 1️⃣ Delete Related `favorites`
       const favoriteRes = await axios.get(
-        `http://localhost:1337/api/favorites?filters[course][documentId]=${courseToDelete.documentId}`,
+        `${config.serverUrlPrefix}/favorites?filters[course][documentId]=${courseToDelete.documentId}`,
         { headers: { Authorization: `Bearer ${authToken}` } }
       );
       const favoriteItems = favoriteRes.data.data;
       await Promise.all(
         favoriteItems.map((fav) =>
-          axios.delete(`http://localhost:1337/api/favorites/${fav.documentId}`, {
+          axios.delete(`${config.serverUrlPrefix}/favorites/${fav.documentId}`, {
             headers: { Authorization: `Bearer ${authToken}` },
           })
         )
@@ -322,20 +323,20 @@ const Admin = ({ user, setUser }) => {
 
       // 2️⃣ Delete Related `cart` Items
       const cartRes = await axios.get(
-        `http://localhost:1337/api/carts?filters[course][documentId]=${courseToDelete.documentId}`,
+        `${config.serverUrlPrefix}/carts?filters[course][documentId]=${courseToDelete.documentId}`,
         { headers: { Authorization: `Bearer ${authToken}` } }
       );
       const cartItems = cartRes.data.data;
       await Promise.all(
         cartItems.map((cart) =>
-          axios.delete(`http://localhost:1337/api/carts/${cart.documentId}`, {
+          axios.delete(`${config.serverUrlPrefix}/carts/${cart.documentId}`, {
             headers: { Authorization: `Bearer ${authToken}` },
           })
         )
       );
 
       // 3️⃣ Delete Course
-      await axios.delete(`http://localhost:1337/api/courses/${courseToDelete.documentId}`, {
+      await axios.delete(`${config.serverUrlPrefix}/courses/${courseToDelete.documentId}`, {
         headers: { Authorization: `Bearer ${authToken}` },
       });
 
@@ -367,7 +368,7 @@ const Admin = ({ user, setUser }) => {
     const formData = new FormData();
     formData.append("files", selectedFile);
 
-    axios.post("http://localhost:1337/api/upload", formData)
+    axios.post(`${config.serverUrlPrefix}/upload`, formData)
       .then(response => {
         console.log("Image uploaded successfully:", response.data);
 
@@ -382,7 +383,7 @@ const Admin = ({ user, setUser }) => {
   };
 
   const updateFile = (imageId) => {
-    axios.put(`http://localhost:1337/api/courses/${editingCourse.documentId}`, {
+    axios.put(`${config.serverUrlPrefix}/courses/${editingCourse.documentId}`, {
       data: {
         image: [imageId],
       }
@@ -415,7 +416,7 @@ const Admin = ({ user, setUser }) => {
 
     try {
       const response = await axios.post(
-        "http://localhost:1337/api/upload",
+        `${config.serverUrlPrefix}/upload`,
         formDataUpload,
         {
           headers: {
@@ -436,7 +437,7 @@ const Admin = ({ user, setUser }) => {
   const updateAddFile = async (courseId, imageId) => {
     try {
       const response = await axios.put(
-        `http://localhost:1337/api/courses/${courseId}`,
+        `${config.serverUrlPrefix}/courses/${courseId}`,
         {
           data: { image: [imageId] }, // Attach the uploaded image ID
         },
@@ -567,7 +568,7 @@ const Admin = ({ user, setUser }) => {
                     || course.image?.formats?.medium?.url
                     || course.image?.formats?.small?.url
                     || course.image?.url
-                    ? `http://localhost:1337${course.image.url}`
+                    ? `${config.serverUrl}${course.image.url}`
                     : null;
 
 

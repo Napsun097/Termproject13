@@ -2,12 +2,13 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import FavoriteCard from "../Components/FavoriteCard";
 import "../style/favorite.css";
+import config from "../config"
 
 const Favorite = () => {
     const [favorites, setFavorites] = useState([]);
 
     useEffect(() => {
-        axios.get("http://localhost:1337/api/favorites?populate[course][populate]=image")
+        axios.get(`${config.serverUrlPrefix}/favorites?populate[course][populate]=image`)
             .then(response => {
                 console.log("Favorites fetched:", response.data); // Debugging log
 
@@ -22,7 +23,7 @@ const Favorite = () => {
     }, []);
 
     const handleRemoveFavorite = (favoriteId) => {
-        axios.delete(`http://localhost:1337/api/favorites/${favoriteId}`)
+        axios.delete(`${config.serverUrlPrefix}/favorites/${favoriteId}`)
             .then(() => {
                 setFavorites(favorites.filter(fav => fav.id !== favoriteId));
             })

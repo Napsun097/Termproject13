@@ -3,12 +3,13 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import CartCard from "../Components/CartCard";
 import "../style/cart.css";
+import config from "../config"
 
 const Cart = () => {
     const [carts, setCarts] = useState([]);
 
     useEffect(() => {
-        axios.get("http://localhost:1337/api/carts?populate[course][populate]=image")
+        axios.get(`${config.serverUrlPrefix}/carts?populate[course][populate]=image"`)
             .then(response => {
                 console.log("Carts fetched:", response.data);
 
@@ -22,7 +23,7 @@ const Cart = () => {
     }, []);
 
     const handleRemoveCart = (cartId) => {
-        axios.delete(`http://localhost:1337/api/carts/${cartId}`)
+        axios.delete(`${config.serverUrlPrefix}/carts/${cartId}`)
             .then(() => {
                 setCarts(carts.filter(cart => cart.id !== cartId));
             })

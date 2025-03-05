@@ -3,6 +3,7 @@ import CourseCard from "../Components/CourseCard";
 import { fetchCoursesByCategory } from "../api/api";
 import "../style/allcourse.css";
 import { Link } from "react-router-dom";
+import config from "../config"
 
 function AllCourses() {
   const [courses, setCourses] = useState([]);

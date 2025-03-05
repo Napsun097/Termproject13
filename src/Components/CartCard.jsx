@@ -3,6 +3,7 @@ import { FaHeart, FaRegHeart, FaShoppingCart, FaCartPlus } from "react-icons/fa"
 import "../style/cartcard.css";
 import axios from 'axios';
 import { Link } from "react-router-dom";
+import config from "../config";
 
 function CartCard({ cart, onRemoveCart }) {
     const [isFavorite, setIsFavorite] = useState(false);
@@ -10,8 +11,8 @@ function CartCard({ cart, onRemoveCart }) {
 
     useEffect(() => {
         if (!cart || !cart.documentId) return;
-        const FetchCartStatus = axios.get(`http://localhost:1337/api/carts/${cart.documentId}`)
-        const FetchFavoriteStatus = axios.get(`http://localhost:1337/api/carts/${cart.documentId}?populate[course][populate]=*`)
+        const FetchCartStatus = axios.get(`${config.serverUrlPrefix}/carts/${cart.documentId}`)
+        const FetchFavoriteStatus = axios.get(`${config.serverUrlPrefix}/carts/${cart.documentId}?populate[course][populate]=*`)
 
         Promise.all([FetchCartStatus, FetchFavoriteStatus])
             .then(([cartResponse, favoriteResponse]) => {
@@ -33,7 +34,7 @@ function CartCard({ cart, onRemoveCart }) {
 
     function onCartClick() {
         // Remove from favorites
-        axios.delete(`http://localhost:1337/api/carts/${cart.documentId}`)
+        axios.delete(`${config.serverUrlPrefix}/carts/${cart.documentId}`)
             .then(() => {
                 console.log("Removed from carts:", cart.documentId);
                 setIsInCart(false);
@@ -70,7 +71,7 @@ function CartCard({ cart, onRemoveCart }) {
 
             console.log("Sending data:", JSON.stringify(favoriteData, null, 2));
 
-            axios.post('http://localhost:1337/api/favorites', favoriteData)
+            axios.post(`${config.serverUrlPrefix}/favorites`, favoriteData)
                 .then(response => {
                     console.log('Course added to favorites:', response.data);
                 })
@@ -80,11 +81,11 @@ function CartCard({ cart, onRemoveCart }) {
 
         } else {
             // ✅ Fetch the favorite entry correctly
-            axios.get(`http://localhost:1337/api/courses/${cart.course.documentId}?populate=favorite`)
+            axios.get(`${config.serverUrlPrefix}/courses/${cart.course.documentId}?populate=favorite`)
                 .then(response => {
                     const favoriteId = response.data.data?.favorite?.documentId;
                     if (favoriteId) {
-                        axios.delete(`http://localhost:1337/api/favorites/${favoriteId}`)
+                        axios.delete(`${config.serverUrlPrefix}/favorites/${favoriteId}`)
                             .then(() => {
                                 console.log("Course removed from favorites");
                             })
@@ -109,7 +110,7 @@ function CartCard({ cart, onRemoveCart }) {
                  cart.course.image?.formats?.medium?.url ||
                  cart.course.image?.formats?.small?.url ||
                  cart.course.image?.url
-                 ? `http://localhost:1337${cart.course.image.url}`
+                 ? `${config.serverUrl}${cart.course.image.url}`
                  : null;
 
     return (
