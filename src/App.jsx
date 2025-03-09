@@ -20,6 +20,7 @@ import axios from "axios";
 import Register from "./pages/Register"; // เพิ่มหน้า Register
 import Abouts from "./pages/About";
 import AllCourses from "./pages/AllCourse";
+import config from "./config";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -36,7 +37,7 @@ function App() {
 
   const refreshCart = async () => {
     try {
-      const response = await axios.get("http://localhost:1337/api/carts?populate=*");
+      const response = await axios.get(`${config.serverUrlPrefix}/carts?populate=*`);
       setCartItems(response.data.data || []);
     } catch (error) {
       console.error("Error fetching cart items:", error);
