@@ -134,7 +134,7 @@ function Navbar({ user, setUser }) {
                 <FaHeart size={24} />
               </Link>
             )}
-
+  
             {user && user.roles && user.roles.includes("User") && (
               <Link to="/cart" className="nav-icon" onClick={() => setIsNavbarOpen(false)}>
                 <i className="fas fa-shopping-cart"></i>
